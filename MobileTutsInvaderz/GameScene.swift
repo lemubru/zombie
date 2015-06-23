@@ -66,21 +66,29 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     func loadBG(){
-        floor.position = CGPointMake(size.width/2,size.height/2 - 130)
+        var xspace = CGFloat(0.25)
+          for i in 0...1 {
+        let floor = SKSpriteNode(imageNamed: "floor")
+        floor.position = CGPointMake(size.width*xspace,size.height/2 - 160)
+            xspace = 0.86
         floor.name = "floor" //add reference to the button.
         floor.zPosition = 1
+       floor.setScale(0.5)
+     
         addChild(floor)
         
         floor.physicsBody = SKPhysicsBody(texture: floor.texture, size: floor.size)
         floor.physicsBody?.dynamic = false
         floor.physicsBody?.affectedByGravity = false
         floor.physicsBody?.allowsRotation = false
-        floor.physicsBody?.usesPreciseCollisionDetection = true
+        floor.physicsBody?.usesPreciseCollisionDetection = false
+        floor.physicsBody?.mass = 1000000
         
         
         floor.physicsBody?.categoryBitMask = CollisionCategories.floor
         floor.physicsBody?.contactTestBitMask = CollisionCategories.PlayerBullet | CollisionCategories.Invader | CollisionCategories.ScenePiece
         floor.physicsBody?.collisionBitMask = CollisionCategories.PlayerBullet | CollisionCategories.Invader | CollisionCategories.ScenePiece
+        }
 
         let rain = SKEmitterNode(fileNamed: "ash.sks")
         rain.position.x = self.size.width/2
@@ -104,7 +112,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         tempInvader.position.x = self.size.width-10
         tempInvader.position.y = self.size.height/2-54
         tempInvader.physicsBody?.velocity = CGVectorMake(-40, 0)
-        tempInvader.physicsBody?.mass = 100
+        tempInvader.physicsBody?.mass = 1000
         
     }
     
@@ -256,7 +264,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             if(weapon == 4){
                 //shotgun
                 bulletTexture = "ball"
-                var bulletScale = 0.4
+                var bulletScale = 0.05
                 speedMultiplier = CGFloat(0.001)
                 bulletSound = "shotgunsound.mp3"
                 canFireWait = 0.5
@@ -292,7 +300,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     override func update(currentTime: CFTimeInterval) {
-         floor.position = CGPointMake(size.width/2,size.height/2 - 130)
+         floor.position = CGPointMake(size.width/2,size.height/2 - 160)
         floor.physicsBody?.allowsRotation = false
         
         pointsLabel.text = String(points)
@@ -365,9 +373,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         var bulletName = "bullet"
         var bulletTexture = "ball"
         var bulletScale = CGFloat(0.4)
-        var speedMultiplier = CGFloat(0.002)
+        var speedMultiplier = CGFloat(0.001)
         var bulletSound = "machinegun.wav"
-        var canFireWait = 0.09
+        var canFireWait = 0.2
         var multiShot = false
      player.fireBullet(self, touchX:touchx, touchY:touchy, bulletTexture: bulletTexture, bulletScale: bulletScale, speedMultiplier: speedMultiplier, bulletSound: bulletSound, canFireWait: canFireWait, multiShot: multiShot, bulletName: bulletName)
         }
@@ -393,22 +401,6 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
            // NSLog(String(self.invaders))
             
             let invader = node as! SKSpriteNode
-            if(invader.userData?.objectForKey("c") != nil){
-                invader.physicsBody?.velocity = CGVectorMake(0, 0)
-            }else{
-                invader.physicsBody?.velocity = CGVectorMake(-40, 0)
-            }
-       let invaderObj = invader as! Invader
-           // NSLog(String(invaderObj.gethit()))
-            if(invaderObj.gethit() == 4){
-              
-                
-     
-         
-                
-                
-                
-            }
 
             if(invader.position.x < 0){
                 //self.setupEnemy()
@@ -420,9 +412,6 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 
                
             }
-            
-          
-            //invader.position.x -= CGFloat(self.invaderSpeed)
     }
         
     

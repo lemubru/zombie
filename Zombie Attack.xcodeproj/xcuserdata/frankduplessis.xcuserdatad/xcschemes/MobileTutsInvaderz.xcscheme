@@ -17,7 +17,7 @@
                BlueprintIdentifier = "745B96221A8BDC36006D014D"
                BuildableName = "MobileTutsInvaderz.app"
                BlueprintName = "MobileTutsInvaderz"
-               ReferencedContainer = "container:MobileTutsInvaderz.xcodeproj">
+               ReferencedContainer = "container:Zombie Attack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,7 +31,7 @@
                BlueprintIdentifier = "745B963B1A8BDC36006D014D"
                BuildableName = "MobileTutsInvaderzTests.xctest"
                BlueprintName = "MobileTutsInvaderzTests"
-               ReferencedContainer = "container:MobileTutsInvaderz.xcodeproj">
+               ReferencedContainer = "container:Zombie Attack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "745B963B1A8BDC36006D014D"
                BuildableName = "MobileTutsInvaderzTests.xctest"
                BlueprintName = "MobileTutsInvaderzTests"
-               ReferencedContainer = "container:MobileTutsInvaderz.xcodeproj">
+               ReferencedContainer = "container:Zombie Attack.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -59,7 +59,7 @@
             BlueprintIdentifier = "745B96221A8BDC36006D014D"
             BuildableName = "MobileTutsInvaderz.app"
             BlueprintName = "MobileTutsInvaderz"
-            ReferencedContainer = "container:MobileTutsInvaderz.xcodeproj">
+            ReferencedContainer = "container:Zombie Attack.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -79,7 +79,7 @@
             BlueprintIdentifier = "745B96221A8BDC36006D014D"
             BuildableName = "MobileTutsInvaderz.app"
             BlueprintName = "MobileTutsInvaderz"
-            ReferencedContainer = "container:MobileTutsInvaderz.xcodeproj">
+            ReferencedContainer = "container:Zombie Attack.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -98,7 +98,7 @@
             BlueprintIdentifier = "745B96221A8BDC36006D014D"
             BuildableName = "MobileTutsInvaderz.app"
             BlueprintName = "MobileTutsInvaderz"
-            ReferencedContainer = "container:MobileTutsInvaderz.xcodeproj">
+            ReferencedContainer = "container:Zombie Attack.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
