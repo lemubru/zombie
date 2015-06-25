@@ -36,7 +36,7 @@ class ScenePiece: SKSpriteNode {
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisionCategories.ScenePiece
         self.physicsBody?.contactTestBitMask = CollisionCategories.Invader | CollisionCategories.PlayerBullet | CollisionCategories.floor
-        self.physicsBody?.collisionBitMask = CollisionCategories.PlayerBullet | CollisionCategories.floor
+        self.physicsBody?.collisionBitMask = CollisionCategories.floor
         
         
     }

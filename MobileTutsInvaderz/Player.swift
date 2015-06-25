@@ -62,7 +62,7 @@ class Player: SKSpriteNode {
             let opposite = touchY -  self.position.y
             let adjacent = touchX - self.position.x
             let Pi = CGFloat(M_PI)
-            let spread = CGFloat(5)
+            let spread = CGFloat(2)
             let DegreesToRadians = Pi / 180
             let RadiansToDegrees = 180 / Pi
             let angle = atan2(opposite,adjacent)
@@ -77,6 +77,7 @@ class Player: SKSpriteNode {
             bullet.position.y = self.position.y
             bullet.setScale(bulletScale)
             bullet.zRotation = angle
+           // bullet.zRotation = self.zRotation
             bullet.physicsBody?.applyImpulse(CGVectorMake(newX*projectileSpeedMultiplier,
                 newY*projectileSpeedMultiplier))
             
@@ -93,6 +94,11 @@ class Player: SKSpriteNode {
                     bullet2.setScale(bulletScale)
                     bullet2.zRotation = angle + spread * DegreesToRadians
                     bullet2.physicsBody?.applyImpulse(CGVectorMake(newX2*projectileSpeedMultiplier, newY2*projectileSpeedMultiplier))
+            }
+            if(bulletSound == "shotgunsound.mp3"){
+            let wait  = SKAction.waitForDuration(1)
+            let reloadsound = SKAction.playSoundFileNamed("shotgunreload.mp3", waitForCompletion: true)
+            runAction(SKAction.sequence([wait,reloadsound]))
             }
             let waitToEnableFire = SKAction.waitForDuration(canFireWait)
             runAction(waitToEnableFire,completion:{

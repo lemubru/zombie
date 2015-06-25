@@ -17,7 +17,7 @@ class Invader: SKSpriteNode {
     var invaderhit = UInt32()
     
     init(scene: SKScene, scale: CGFloat, invaderhit: UInt32, animprefix:String?, name:String?) {
-        let texture = SKTexture(imageNamed: "soldierrun2")
+        let texture = SKTexture(imageNamed: "soldierrun0")
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
         self.setScale(scale)
         scene.addChild(self)
@@ -25,8 +25,13 @@ class Invader: SKSpriteNode {
         var hits = 0
         self.invaderhit = invaderhit
         animate(animprefix)
-        self.physicsBody =
-            SKPhysicsBody(texture: self.texture, size: self.size)
+        if(name == "heavy"){
+            self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width*0.35, center: CGPoint(x: self.position.x , y: self.position.y-10))
+        }else{
+            self.physicsBody =
+                SKPhysicsBody(rectangleOfSize: CGSize(width: self.size.width*0.2, height: self.size.height*0.7), center: CGPoint(x:self.position.x,y:self.position.y-10))
+        }
+        
         self.physicsBody?.dynamic = true
         self.physicsBody?.affectedByGravity = true
         self.physicsBody?.mass = 10.0;
@@ -35,7 +40,7 @@ class Invader: SKSpriteNode {
         self.physicsBody?.angularDamping = 0.0;
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisionCategories.Invader
-        self.physicsBody?.contactTestBitMask = CollisionCategories.floor | CollisionCategories.PlayerBullet
+        self.physicsBody?.contactTestBitMask = CollisionCategories.floor | CollisionCategories.PlayerBullet | CollisionCategories.ScenePiece
         self.physicsBody?.collisionBitMask = CollisionCategories.floor | CollisionCategories.PlayerBullet
     }
     
