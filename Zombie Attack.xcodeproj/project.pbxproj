@@ -159,7 +159,6 @@
 		148123C01B30E6C70056992C /* halfarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 148123BF1B30E6C70056992C /* halfarrow.png */; };
 		148123C31B30EEBE0056992C /* ArrowHitTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 148123C11B30EEBE0056992C /* ArrowHitTexture.png */; };
 		148123C41B30EEBE0056992C /* ArrowTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 148123C21B30EEBE0056992C /* ArrowTexture.png */; };
-		148123C61B31DBBB0056992C /* MyScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 148123C51B31DBBB0056992C /* MyScene.sks */; };
 		148123C81B31DCE60056992C /* ScenePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148123C71B31DCE60056992C /* ScenePiece.swift */; };
 		1485583B1B2F0AA300EBD93A /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 148558391B2F0AA300EBD93A /* spark.png */; };
 		1485583D1B2F12A200EBD93A /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1485583C1B2F12A200EBD93A /* blood.sks */; };
@@ -345,7 +344,6 @@
 		148123BF1B30E6C70056992C /* halfarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = halfarrow.png; sourceTree = "<group>"; };
 		148123C11B30EEBE0056992C /* ArrowHitTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowHitTexture.png; sourceTree = "<group>"; };
 		148123C21B30EEBE0056992C /* ArrowTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowTexture.png; sourceTree = "<group>"; };
-		148123C51B31DBBB0056992C /* MyScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyScene.sks; sourceTree = "<group>"; };
 		148123C71B31DCE60056992C /* ScenePiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScenePiece.swift; sourceTree = "<group>"; };
 		148558391B2F0AA300EBD93A /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		1485583C1B2F12A200EBD93A /* blood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = blood.sks; sourceTree = "<group>"; };
@@ -600,7 +598,6 @@
 				147D28A41B2C829100BD025A /* Bullet.swift */,
 				745B962C1A8BDC36006D014D /* GameScene.swift */,
 				145006831B38B89D00E191C8 /* GameOver.swift */,
-				148123C51B31DBBB0056992C /* MyScene.sks */,
 				1485583C1B2F12A200EBD93A /* blood.sks */,
 				144731331B32453C00A34790 /* flamer.sks */,
 				144731AA1B3771C800A34790 /* spark.sks */,
@@ -793,7 +790,6 @@
 				148123AC1B30B7700056992C /* mummy7.png in Resources */,
 				145006A51B3B3BE400E191C8 /* zombie3.png in Resources */,
 				145006A21B3B3BE400E191C8 /* zombie0.png in Resources */,
-				148123C61B31DBBB0056992C /* MyScene.sks in Resources */,
 				144731A41B376ADE00A34790 /* heavy9.png in Resources */,
 				1447318A1B36F9EF00A34790 /* flamedeath18.png in Resources */,
 				1485583F1B2F1AC400EBD93A /* MyParticleSystem.scnp in Resources */,
