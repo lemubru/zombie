@@ -36,8 +36,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var invadersWhoCanFire:[Invader] = []
     var invaderArr:[Invader] = []//array of the invaders who can fire.
     let player:Player = Player()
+    let turret:Player = Player()
     let flameEmmiter = SKEmitterNode(fileNamed: "flamer.sks")
     let flameNode = ScenePiece(pieceName: "flamenode", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
+    let turretRad = ScenePiece(pieceName: "turretRad", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
     let floor = SKSpriteNode(imageNamed: "floor")
     var weapon = 0
     var trap = 0
@@ -49,12 +51,15 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var autoShottie = false
     var points = 0
     var shotgunround  = 0
+    var placeTurretMode = false
 
     let timer = Timer() // the timer calculates the time step value dt for every frame
     let scheduler = Scheduler() // an event scheduler
     let scheduleHeavy = Scheduler() // an event scheduler
     let weaponLabel = SKLabelNode(fontNamed: "COPPERPLATE")
     let pointsLabel = SKLabelNode(fontNamed: "COPPERPLATE")
+    let trapLabel = SKLabelNode(fontNamed: "COPPERPLATE")
+
     
     override func didMoveToView(view: SKView) {
         backgroundColor = SKColor.darkGrayColor()
@@ -73,6 +78,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         weapon = 0
         trap = 0
         setupPlayer()
+        
+        
+        //turret.position.x = -self.size.width/2+300
+        //turret.position.y = self.size.height*0.75
         loadHud()
         startSchedulers()
     }
@@ -90,8 +99,6 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         rain.position.y = self.size.height
         rain.zPosition = 2
         self.addChild(rain)
-        
-        
     }
     
 
@@ -102,6 +109,21 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         player.position.y = self.size.height/2
         player.zPosition = 7
         addChild(player)
+    }
+    
+    func setupTurret(x: CGFloat,y: CGFloat){
+        turretRad
+        turret.position.x = x
+        turret.position.y = y
+        turret.zPosition = 7
+        addChild(turret)
+        turretRad.hidden = true
+        turretRad.position.x = turret.position.x
+        turretRad.position.y = turret.position.y
+        turretRad.AddPhysics(self, dynamic: false)
+        turretRad.zPosition = 3
+        
+      
     }
     
     func setupEnemy(){
@@ -126,9 +148,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func startSchedulers(){
         scheduleHeavy.every(5.5).perform(self=>GameScene.setupHeavyEnemy)
-        scheduleHeavy.start()
-        scheduler.every(2.0).perform(self=>GameScene.setupEnemy)
-        let wait = SKAction.waitForDuration(10)
+        //scheduleHeavy.start()
+        scheduler.every(5).perform(self=>GameScene.setupEnemy)
+        let wait = SKAction.waitForDuration(1)
         let startnormal  = SKAction.runBlock(){
             self.scheduler.start()
             self.scheduleHeavy.stop()
@@ -137,25 +159,30 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             self.scheduler.stop()
             self.scheduleHeavy.every(5.5).perform(self=>GameScene.setupHeavyEnemy)
             self.scheduleHeavy.start()
-            
-           
         }
         self.runAction(SKAction.sequence([wait,startnormal]))
         //scheduler.start()
-        
 
     }
     func loadHud(){
         weaponLabel.text = "pistol";
-        weaponLabel.position.x = self.size.width*0.84
-        weaponLabel.position.y = self.size.height - 20
+        weaponLabel.position.x = self.size.width*0.86
+        weaponLabel.position.y = self.size.height - 55
         weaponLabel.zPosition = 2
         weaponLabel.fontSize = 17
+        
+        trapLabel.text = "rock fall";
+        trapLabel.position.x = self.size.width*0.5
+        trapLabel.position.y = self.size.height - 55
+        trapLabel.zPosition = 2
+        trapLabel.fontSize = 17
+        
         pointsLabel.text = String(points)
         pointsLabel.position = CGPoint(x: 30,y: self.size.height-20)
         pointsLabel.fontSize = 30
         pointsLabel.zPosition = 3
         self.addChild(pointsLabel)
+        self.addChild(trapLabel)
         self.addChild(weaponLabel)
         
         
@@ -180,16 +207,30 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let touch = touches.first as! UITouch
         touching = true
         var weaponCap  = 7 //meaning 6 weapons - it starts at 1
-        var trapCap = 1
+        var trapCap = 2 //meaning 3
         let touchLocation = touch.locationInNode(self)
         touchx = touchLocation.x
         touchy = touchLocation.y
         let touchedNode = self.nodeAtPoint(touchLocation) //touchedNode is the node being touched
-        
+        if(placeTurretMode){
+            setupTurret(touchx, y: touchy)
+            placeTurretMode = false
+        }else
         if(touchedNode.name == "nexttrap"){
             trap++
+            if(trap == 2){
+                trapLabel.text = "touch to place turret";
+                placeTurretMode = true
+            }
+            if(trap == 1){
+                trapLabel.text = "deathswing";
+            }
+        
+          
             if(trap > trapCap){
+                trapLabel.text = "rock fall";
                 trap = 0
+                placeTurretMode = false
             }
         }
         
@@ -365,15 +406,30 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
     }
     
+    func fireTurret(sound: String, scale: CGFloat, bulletTexture: String, bulletName: String,speedMulti: CGFloat,multiShot: Bool,canFireWait: Double, enemyx: CGFloat, enemyy: CGFloat){
+      
+            var bulletName = bulletName
+            var bulletTexture = bulletTexture
+            var bulletScale = scale
+            var speedMultiplier = speedMulti
+            var bulletSound = sound
+            var canFireWait = canFireWait
+            var multiShot = multiShot
+            turret.fireBullet(self, touchX:enemyx, touchY:enemyy, bulletTexture: bulletTexture, bulletScale: bulletScale, speedMultiplier: speedMultiplier, bulletSound: bulletSound, canFireWait: canFireWait, multiShot: multiShot, bulletName: bulletName)
+        
+        
+    }
+    
      func swingingSpikeBall(){
         
-        let anchor = ScenePiece(pieceName: "rock", textTureName: "saw3", dynamic: true, scale: 0.2,x : self.size.width/2,y: self.size.height + 40)
+        let anchor = ScenePiece(pieceName: "rock", textTureName: "saw3", dynamic: true, scale: 0.2,x : self.size.width*0.5,y: self.size.height + 20)
         
         anchor.AddPhysics(self, dynamic: false)
         
         
-        let rock1 = ScenePiece(pieceName: "spikeball", textTureName: "spikeball", dynamic: true, scale: 0.4,x : 30,y: self.size.height - 40)
+        let rock1 = ScenePiece(pieceName: "saw", textTureName: "saw3", dynamic: true, scale: 1,x : 20,y: self.size.height)
         rock1.AddPhysics(self, dynamic: true)
+        rock1.zPosition = 13
         rock1.zRotation = rock1.zRotation - 180 * DegreesToRadians
         
         let myJoint = SKPhysicsJointLimit.jointWithBodyA(anchor.physicsBody, bodyB: rock1.physicsBody, anchorA: anchor.position, anchorB: rock1.position)
@@ -442,7 +498,15 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             self.invaders++
            // NSLog(String(self.invaders))
             
-            let invader = node as! SKSpriteNode
+            let invader = node as! Invader
+            if(invader.getLock()){
+                NSLog("invader locked")
+                self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 1, enemyx: invader.position.x, enemyy: invader.position.y)
+            
+ 
+            }
+            
+            
 
             if(invader.position.x < 0){
                 //self.setupEnemy()
@@ -664,7 +728,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         if ((firstBody.categoryBitMask & CollisionCategories.Invader != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.ScenePiece != 0)) {
                 if(secondBody.node?.name == "flamenode"){
-                    firstBody.categoryBitMask = CollisionCategories.Player
+                  
                     let invaderObj = firstBody.node as! Invader
                     invaderObj.hit(invaderObj.gethit()+10)
                
@@ -681,14 +745,15 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         firstBody.node?.removeFromParent()
                         // self.playerDead = true
                     })
+                }
                 
                 
-                
-                
-                
-                
-                
-                
+                if(secondBody.node?.name == "turretRad"){
+                  
+                    let invaderObj = firstBody.node as! Invader
+                    invaderObj.setLocked()
+                    
+           
                 }
                 
                 if(secondBody.node?.name == "rocks"){

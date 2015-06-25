@@ -24,9 +24,17 @@ class ScenePiece: SKSpriteNode {
     func AddPhysics(scene: SKScene, dynamic: Bool){
         
         scene.addChild(self)
-      
-        self.physicsBody =
-            SKPhysicsBody(texture: self.texture, size: self.size)
+        if(self.name == "rocks" || self.name == "saw"){
+            
+            self.physicsBody =
+                SKPhysicsBody(circleOfRadius: self.size.width/2)
+        }else if(self.name == "turretRad"){
+            self.physicsBody =
+                SKPhysicsBody(circleOfRadius: self.size.width)
+        }else{
+            self.physicsBody =
+                SKPhysicsBody(texture: self.texture, size: self.size)
+        }
         self.physicsBody?.dynamic = dynamic
         self.physicsBody?.affectedByGravity = true
         self.physicsBody?.mass = 10.0;

@@ -77,7 +77,12 @@ class Player: SKSpriteNode {
             bullet.position.y = self.position.y
             bullet.setScale(bulletScale)
             bullet.zRotation = angle
-           // bullet.zRotation = self.zRotation
+            
+      
+            self.zRotation = angle - 90 * DegreesToRadians
+            
+            
+           //bullet.zRotation = self.zRotation
             bullet.physicsBody?.applyImpulse(CGVectorMake(newX*projectileSpeedMultiplier,
                 newY*projectileSpeedMultiplier))
             

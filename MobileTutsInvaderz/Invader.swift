@@ -15,6 +15,7 @@ class Invader: SKSpriteNode {
     var invaderColumn = 0
     var invaderSpeed = 3
     var invaderhit = UInt32()
+    var lockedOn = false
     
     init(scene: SKScene, scale: CGFloat, invaderhit: UInt32, animprefix:String?, name:String?) {
         let texture = SKTexture(imageNamed: "soldierrun0")
@@ -22,6 +23,7 @@ class Invader: SKSpriteNode {
         self.setScale(scale)
         scene.addChild(self)
         self.name = name
+        self.lockedOn = false
         var hits = 0
         self.invaderhit = invaderhit
         animate(animprefix)
@@ -59,6 +61,14 @@ class Invader: SKSpriteNode {
     
     func gethit() -> UInt32{
         return self.invaderhit
+    }
+    
+    func getLock() -> Bool{
+        return lockedOn
+    }
+    func setLocked(){
+        
+        self.lockedOn = true
     }
     
     required init?(coder aDecoder: NSCoder) {
