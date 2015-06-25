@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "288"
             endingLineNumber = "288"
-            landmarkName = "touchesBegan(_:withEvent:)"
+            landmarkName = "touchesMoved(_:withEvent:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -110,7 +110,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "175"
             endingLineNumber = "175"
-            landmarkName = "loadHud()"
+            landmarkName = "touchesBegan(_:withEvent:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -125,9 +125,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "723"
-            endingLineNumber = "723"
-            landmarkName = "didBeginContact(_:)"
-            landmarkType = "5">
+            endingLineNumber = "723">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -174,7 +172,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "154"
             endingLineNumber = "154"
-            landmarkName = "startSchedulers()"
+            landmarkName = "loadHud()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -190,7 +188,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "328"
             endingLineNumber = "328"
-            landmarkName = "touchesMoved(_:withEvent:)"
+            landmarkName = "swingingSpikeBall()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -254,7 +252,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "450"
             endingLineNumber = "450"
-            landmarkName = "moveInvaders()"
+            landmarkName = "didBeginContact(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -270,7 +268,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "448"
             endingLineNumber = "448"
-            landmarkName = "moveInvaders()"
+            landmarkName = "didBeginContact(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -318,7 +316,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "336"
             endingLineNumber = "336"
-            landmarkName = "touchesEnded(_:withEvent:)"
+            landmarkName = "swingingSpikeBall()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -350,8 +348,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "397"
             endingLineNumber = "397"
-            landmarkName = "spikeFall()"
-            landmarkType = "5">
+            landmarkName = "GameScene"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -366,8 +364,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "396"
             endingLineNumber = "396"
-            landmarkName = "spikeFall()"
-            landmarkType = "5">
+            landmarkName = "GameScene"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
