@@ -149,7 +149,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     func startSchedulers(){
         scheduleHeavy.every(5.5).perform(self=>GameScene.setupHeavyEnemy)
         //scheduleHeavy.start()
-        scheduler.every(5).perform(self=>GameScene.setupEnemy)
+        scheduler.every(3).perform(self=>GameScene.setupEnemy)
         let wait = SKAction.waitForDuration(1)
         let startnormal  = SKAction.runBlock(){
             self.scheduler.start()
@@ -427,8 +427,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         anchor.AddPhysics(self, dynamic: false)
         
         
-        let rock1 = ScenePiece(pieceName: "saw", textTureName: "saw3", dynamic: true, scale: 1,x : 20,y: self.size.height)
+        let rock1 = ScenePiece(pieceName: "saw", textTureName: "saw3", dynamic: true, scale: 1,x : 0,y: self.size.height)
         rock1.AddPhysics(self, dynamic: true)
+        rock1.physicsBody?.angularVelocity = 23
         rock1.zPosition = 13
         rock1.zRotation = rock1.zRotation - 180 * DegreesToRadians
         
@@ -495,26 +496,15 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func moveInvaders(){
         enumerateChildNodesWithName("invader") { node, stop in
-            self.invaders++
-           // NSLog(String(self.invaders))
-            
             let invader = node as! Invader
             if(invader.getLock()){
-                NSLog("invader locked")
                 self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 1, enemyx: invader.position.x, enemyy: invader.position.y)
-            
- 
             }
-            
-            
-
             if(invader.position.x < 0){
                 //self.setupEnemy()
                 self.playerDead = false
                 invader.removeFromParent()
                 self.gameOver()
-                
-               
             }
     }
         
@@ -557,38 +547,56 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     })
                     
                 }
-                
-             // NSLog("enemy hit by"+String(stringInterpolationSegment: secondBody.node?.name))
-            // firstBody.node?.removeFromParent()
-                
               
                 self.hits++
-                NSLog(String(hits))
+            
                 if(hits == 1){
                     let contactPoint = contact.contactPoint
        
                     
                  
                if(firstBody.node?.name == "invader"){
-                  runAction(SKAction.playSoundFileNamed("hit.mp3", waitForCompletion: false))
                 let sparkEmmiter = SKEmitterNode(fileNamed: "blood.sks")
-                let invaderObj = firstBody.node as! Invader
-                let bullet = secondBody.node as! PlayerBullet
-                invaderObj.hit(invaderObj.gethit()+1)
-                sparkEmmiter.zPosition = 3
-                self.addChild(sparkEmmiter)
+                sparkEmmiter.zPosition = 14
                 sparkEmmiter.position.x = contactPoint.x - 10
                 sparkEmmiter.position.y = contactPoint.y
-              
+                self.addChild(sparkEmmiter)
+                runAction(SKAction.playSoundFileNamed("hit.mp3", waitForCompletion: false))
+                let invaderObj = firstBody.node as! Invader
+                let bullet = secondBody.node as! PlayerBullet
+                invaderObj.hit(invaderObj.gethit()+2)
                 if(secondBody.node?.name == "arrow"){
    
                     let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
                     self.physicsWorld.addJoint(myJoint)
                     if(contactPoint.y > invaderObj.position.y){
-                         invaderObj.hit(invaderObj.gethit()+6)
+                        
                     }
                     bullet.texture = SKTexture(imageNamed: "ArrowHitTexture")
                    
+                }
+                
+                if(contactPoint.y > invaderObj.position.y){
+                    let deadlabel = SKLabelNode(fontNamed: "COPPERPLATE")
+                    deadlabel.fontColor = SKColor .lightGrayColor()
+                     invaderObj.hit(invaderObj.gethit()+2)
+                    deadlabel.text = "headshot!";
+                    self.points = self.points + 1
+                    deadlabel.position.x = invaderObj.position.x
+                    deadlabel.position.y = invaderObj.position.y + invaderObj.size.height*0.5
+                    deadlabel.zPosition = 10
+                    deadlabel.fontSize = 14
+                    self.addChild(deadlabel)
+                    let fadein = SKAction.fadeInWithDuration(0.1)
+                    let fadeout = SKAction.fadeOutWithDuration(0.2)
+                    let wait = SKAction.waitForDuration(0.1)
+                    let flash = SKAction.sequence([fadein,wait,fadeout])
+                    
+                    
+                    deadlabel.runAction(flash,completion:{
+                        deadlabel.removeFromParent()
+                    })
+                    
                 }
                 
                 let waitToEnableFire = SKAction.waitForDuration(0.3)
@@ -657,7 +665,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         runAction(waitToEnableFire,completion:{
                             sparkEmmiter.removeFromParent()
                         })
-                        
+               
                         if(invaderObj.gethit() == 10){
                             
                             let deadlabel = SKLabelNode(fontNamed: "COPPERPLATE")
@@ -772,6 +780,25 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         sparkEmmiter.removeFromParent()
                        // secondBody.node?.removeFromParent()
                     })
+                }
+                
+                if(secondBody.node?.name == "saw"){
+            
+                    let contactPoint = contact.contactPoint
+                    let sparkEmmiter = SKEmitterNode(fileNamed: "blood.sks")
+                    sparkEmmiter.zPosition = 14
+                    //  NSLog(String(stringInterpolationSegment: firstBody.node?.children))
+                    self.addChild(sparkEmmiter)
+                    sparkEmmiter.position.x = contactPoint.x
+                    sparkEmmiter.position.y = contactPoint.y
+                    firstBody.node?.removeFromParent()
+                    
+                    let waitToEnableFire = SKAction.waitForDuration(0.3)
+                    runAction(waitToEnableFire,completion:{
+                        sparkEmmiter.removeFromParent()
+                        // secondBody.node?.removeFromParent()
+                    })
+                    self.physicsWorld.removeAllJoints()
                 }
                 //NSLog("Invader and Player Collision Contact")
         }
