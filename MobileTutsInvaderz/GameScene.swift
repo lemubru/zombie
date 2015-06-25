@@ -52,6 +52,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var points = 0
     var shotgunround  = 0
     var placeTurretMode = false
+    var placeMudMode = false
     var numTurrets = 0
     let invaderLife = UInt32(20)
 
@@ -126,8 +127,16 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         turretRad.position.y = turret.position.y
         turretRad.AddPhysics(self, dynamic: false)
         turretRad.zPosition = 3
-        
-      
+    }
+    
+    func placeMud(x: CGFloat,y: CGFloat){
+        let mud = ScenePiece(pieceName: "mud", textTureName: "floor", dynamic: false, scale: 0.1,x : 2,y: 2)
+        addChild(turret)
+        mud.hidden = true
+        mud.position.x = x
+        mud.position.y = y
+        mud.AddPhysics(self, dynamic: false)
+        mud.zPosition = 3
     }
     
     func setupEnemy(){
@@ -211,12 +220,18 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let touch = touches.first as! UITouch
         touching = true
         var turretLimit = 4
-        var weaponCap  = 7 //meaning 6 weapons - it starts at 1
-        var trapCap = 2 //meaning 3
+        var weaponCap  = 7 //meaning +1 weapons - it starts at 1
+        var trapCap = 3 //meaning +1 traps
         let touchLocation = touch.locationInNode(self)
         touchx = touchLocation.x
         touchy = touchLocation.y
         let touchedNode = self.nodeAtPoint(touchLocation) //touchedNode is the node being touched
+        
+        if(placeMudMode){
+            
+            
+        }else
+        
         if(placeTurretMode){
             setupTurret(touchx, y: touchy)
             placeTurretMode = false
@@ -226,14 +241,23 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         }else
         if(touchedNode.name == "nexttrap"){
             trap++
+            
+            if(trap == 3){
+                placeTurretMode = false
+               
+             
+                trapLabel.text = "press T to place mud";
+            }
             if(trap == 2){
-                trapLabel.text = "touch to place turret";
+               
                 if(numTurrets < turretLimit){
-                      placeTurretMode = true
+                     trapLabel.text = "press T to place turret";
+                    
                     
                 }else{
-                    trapLabel.text = "turret Limit";
+                    trapLabel.text = "turret Limit:" + String(turretLimit);
                 }
+              
               
             }
             if(trap == 1){
@@ -242,9 +266,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
           
             if(trap > trapCap){
+                placeMudMode = false
                 trapLabel.text = "rock fall";
                 trap = 0
-                placeTurretMode = false
+                
             }
         }
         
@@ -308,13 +333,25 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 autoCrossBow = false
                 autoShottie = true
             }
-            NSLog("buttonpressed"+String(weapon))
+           // NSLog("buttonpressed"+String(weapon))
         }else if(touchedNode.name == "trapbtn"){
             enableTrapDoor = true
             if(trap == 0){
                 spikeFall()
-            }else{
+            }else if(trap == 1){
                 swingingSpikeBall()
+            }else if(trap == 2){
+                if(numTurrets < turretLimit){
+                     trapLabel.text = "touch to place";
+                    placeTurretMode = true
+                    
+                }else{
+                    trapLabel.text = "turret Limit:" + String(turretLimit);
+                }
+                
+            }else if(trap == 3){
+                trapLabel.text = "touch to place";
+                
             }
         } else{
             var bulletName = "bullet"
@@ -784,11 +821,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 
                 
                 if(secondBody.node?.name == "turretRad"){
-                  
                     let invaderObj = firstBody.node as! Invader
                     invaderObj.setLocked()
-                    
-           
                 }
                 
                 if(secondBody.node?.name == "rocks"){
