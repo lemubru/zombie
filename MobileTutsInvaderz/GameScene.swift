@@ -786,13 +786,24 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 if(secondBody.node?.name == "saw"){
             
                     let contactPoint = contact.contactPoint
-                    let sparkEmmiter = SKEmitterNode(fileNamed: "blood.sks")
+                    let sparkEmmiter = SKEmitterNode(fileNamed: "heavyblood.sks")
                     sparkEmmiter.zPosition = 14
                     //  NSLog(String(stringInterpolationSegment: firstBody.node?.children))
                     self.addChild(sparkEmmiter)
                     sparkEmmiter.position.x = contactPoint.x
                     sparkEmmiter.position.y = contactPoint.y
-                    firstBody.node?.removeFromParent()
+                    
+                    //animate
+                    var playerTextures:[SKTexture] = []
+                    for i in 0...14 {
+                    
+                      playerTextures.append(SKTexture(imageNamed: "deadsoldier\(i)"))
+                     }
+                    let playerAnimation = SKAction.animateWithTextures(playerTextures, timePerFrame: 0.1)
+                    firstBody.node?.runAction(playerAnimation, completion:{
+                      firstBody.node?.removeFromParent()
+                    })
+                  
                     
                     let waitToEnableFire = SKAction.waitForDuration(0.3)
                     runAction(waitToEnableFire,completion:{
