@@ -22,7 +22,7 @@ class Player: SKSpriteNode {
         self.name = "player"
         
     }
-    
+    //LOLOLOLOL
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
