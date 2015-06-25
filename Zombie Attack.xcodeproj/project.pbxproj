@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14105ED91B3CB0C20040A0E1 /* slice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14105ED81B3CB0C20040A0E1 /* slice.mp3 */; };
 		141997C81B2F98CC0087792A /* soldierrun0.png in Resources */ = {isa = PBXBuildFile; fileRef = 141997BF1B2F98CC0087792A /* soldierrun0.png */; };
 		141997C91B2F98CC0087792A /* soldierrun1.png in Resources */ = {isa = PBXBuildFile; fileRef = 141997C01B2F98CC0087792A /* soldierrun1.png */; };
 		141997CA1B2F98CC0087792A /* soldierrun2.png in Resources */ = {isa = PBXBuildFile; fileRef = 141997C11B2F98CC0087792A /* soldierrun2.png */; };
@@ -192,6 +193,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14105ED81B3CB0C20040A0E1 /* slice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slice.mp3; sourceTree = "<group>"; };
 		141997BF1B2F98CC0087792A /* soldierrun0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soldierrun0.png; path = soldierrun/soldierrun0.png; sourceTree = "<group>"; };
 		141997C01B2F98CC0087792A /* soldierrun1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soldierrun1.png; path = soldierrun/soldierrun1.png; sourceTree = "<group>"; };
 		141997C11B2F98CC0087792A /* soldierrun2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soldierrun2.png; path = soldierrun/soldierrun2.png; sourceTree = "<group>"; };
@@ -682,6 +684,7 @@
 				145006891B3A385800E191C8 /* hit.mp3 */,
 				1450068F1B3B364600E191C8 /* night.png */,
 				745B965C1A8C057A006D014D /* newgamebtn.png */,
+				14105ED81B3CB0C20040A0E1 /* slice.mp3 */,
 				1450068B1B3AC4D900E191C8 /* smash.wav */,
 				745B965D1A8C057A006D014D /* nextlevelbtn.png */,
 				745B96601A8C057A006D014D /* star.png */,
@@ -863,6 +866,7 @@
 				144731391B3357A700A34790 /* shotgunreload.mp3 in Resources */,
 				1450068E1B3AD99A00E191C8 /* autolaser.mp3 in Resources */,
 				141997EF1B2F98E30087792A /* deadsoldier14.png in Resources */,
+				14105ED91B3CB0C20040A0E1 /* slice.mp3 in Resources */,
 				144731421B342B1100A34790 /* machinegun.wav in Resources */,
 				145006861B38B9E300E191C8 /* gameover.png in Resources */,
 				144731AB1B3771C800A34790 /* spark.sks in Resources */,

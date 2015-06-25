@@ -12,14 +12,14 @@ import SpriteKit
 class Player: SKSpriteNode {
     private var canFire = true
     
-    init() {
+    init(name: String) {
         let texture = SKTexture(imageNamed: "turret")
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
 
         //animate()
         
         
-        self.name = "player"
+        self.name = name
         
     }
     //LOLOLOLOL

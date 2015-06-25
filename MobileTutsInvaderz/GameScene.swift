@@ -35,8 +35,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var rightBounds = CGFloat(0)
     var invadersWhoCanFire:[Invader] = []
     var invaderArr:[Invader] = []//array of the invaders who can fire.
-    let player:Player = Player()
-    let turret:Player = Player()
+    let player:Player = Player(name: "player")
+    let turret:Player = Player(name: "turret")
     let flameEmmiter = SKEmitterNode(fileNamed: "flamer.sks")
     let flameNode = ScenePiece(pieceName: "flamenode", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
     let turretRad = ScenePiece(pieceName: "turretRad", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
@@ -52,6 +52,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var points = 0
     var shotgunround  = 0
     var placeTurretMode = false
+    var numTurrets = 0
+    let invaderLife = 20
 
     let timer = Timer() // the timer calculates the time step value dt for every frame
     let scheduler = Scheduler() // an event scheduler
@@ -112,6 +114,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     func setupTurret(x: CGFloat,y: CGFloat){
+        let turretRad = ScenePiece(pieceName: "turretRad", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
+        let turret:Player = Player(name: "turret")
         turretRad
         turret.position.x = x
         turret.position.y = y
@@ -206,6 +210,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
 
         let touch = touches.first as! UITouch
         touching = true
+        var turretLimit = 4
         var weaponCap  = 7 //meaning 6 weapons - it starts at 1
         var trapCap = 2 //meaning 3
         let touchLocation = touch.locationInNode(self)
@@ -215,12 +220,19 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         if(placeTurretMode){
             setupTurret(touchx, y: touchy)
             placeTurretMode = false
+            numTurrets++
         }else
         if(touchedNode.name == "nexttrap"){
             trap++
             if(trap == 2){
                 trapLabel.text = "touch to place turret";
-                placeTurretMode = true
+                if(numTurrets < turretLimit){
+                      placeTurretMode = true
+                    
+                }else{
+                    trapLabel.text = "turret Limit";
+                }
+              
             }
             if(trap == 1){
                 trapLabel.text = "deathswing";
@@ -407,7 +419,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     func fireTurret(sound: String, scale: CGFloat, bulletTexture: String, bulletName: String,speedMulti: CGFloat,multiShot: Bool,canFireWait: Double, enemyx: CGFloat, enemyy: CGFloat){
-      
+        enumerateChildNodesWithName("turret") { node, stop in
+            let turret = node as! Player
             var bulletName = bulletName
             var bulletTexture = bulletTexture
             var bulletScale = scale
@@ -416,7 +429,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             var canFireWait = canFireWait
             var multiShot = multiShot
             turret.fireBullet(self, touchX:enemyx, touchY:enemyy, bulletTexture: bulletTexture, bulletScale: bulletScale, speedMultiplier: speedMultiplier, bulletSound: bulletSound, canFireWait: canFireWait, multiShot: multiShot, bulletName: bulletName)
-        
+        }
         
     }
     
@@ -498,7 +511,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         enumerateChildNodesWithName("invader") { node, stop in
             let invader = node as! Invader
             if(invader.getLock()){
-                self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 1, enemyx: invader.position.x, enemyy: invader.position.y)
+                self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 1, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
             }
             if(invader.position.x < 0){
                 //self.setupEnemy()
@@ -784,7 +797,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 }
                 
                 if(secondBody.node?.name == "saw"){
-            
+                    runAction(SKAction.playSoundFileNamed("slice.mp3", waitForCompletion: false))
                     let contactPoint = contact.contactPoint
                     let sparkEmmiter = SKEmitterNode(fileNamed: "heavyblood.sks")
                     sparkEmmiter.zPosition = 14
