@@ -131,7 +131,6 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func placeMud(x: CGFloat,y: CGFloat){
         let mud = ScenePiece(pieceName: "mud", textTureName: "floor", dynamic: false, scale: 0.1,x : 2,y: 2)
-        addChild(turret)
         mud.hidden = true
         mud.position.x = x
         mud.position.y = y
@@ -228,11 +227,13 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let touchedNode = self.nodeAtPoint(touchLocation) //touchedNode is the node being touched
         
         if(placeMudMode){
-            
-            
+            trapLabel.text = "mud placed!";
+            placeMud(touchx, y: touchy)
+            placeMudMode  = false
         }else
         
         if(placeTurretMode){
+            trapLabel.text = "turret placed!";
             setupTurret(touchx, y: touchy)
             placeTurretMode = false
             numTurrets++
@@ -351,6 +352,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 
             }else if(trap == 3){
                 trapLabel.text = "touch to place";
+                placeMudMode = true
                 
             }
         } else{
@@ -823,6 +825,12 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 if(secondBody.node?.name == "turretRad"){
                     let invaderObj = firstBody.node as! Invader
                     invaderObj.setLocked()
+                }
+                
+                if(secondBody.node?.name == "mud"){
+                    let invaderObj = firstBody.node as! Invader
+                    invaderObj.physicsBody?.velocity = CGVectorMake(-20, 0)
+                    secondBody.node?.removeFromParent()
                 }
                 
                 if(secondBody.node?.name == "rocks"){

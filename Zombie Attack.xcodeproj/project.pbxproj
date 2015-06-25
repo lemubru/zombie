@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		14105ED91B3CB0C20040A0E1 /* slice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14105ED81B3CB0C20040A0E1 /* slice.mp3 */; };
+		14105EDB1B3CCBA40040A0E1 /* mud.gif in Resources */ = {isa = PBXBuildFile; fileRef = 14105EDA1B3CCBA40040A0E1 /* mud.gif */; };
 		141997C81B2F98CC0087792A /* soldierrun0.png in Resources */ = {isa = PBXBuildFile; fileRef = 141997BF1B2F98CC0087792A /* soldierrun0.png */; };
 		141997C91B2F98CC0087792A /* soldierrun1.png in Resources */ = {isa = PBXBuildFile; fileRef = 141997C01B2F98CC0087792A /* soldierrun1.png */; };
 		141997CA1B2F98CC0087792A /* soldierrun2.png in Resources */ = {isa = PBXBuildFile; fileRef = 141997C11B2F98CC0087792A /* soldierrun2.png */; };
@@ -194,6 +195,7 @@
 
 /* Begin PBXFileReference section */
 		14105ED81B3CB0C20040A0E1 /* slice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slice.mp3; sourceTree = "<group>"; };
+		14105EDA1B3CCBA40040A0E1 /* mud.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = mud.gif; sourceTree = "<group>"; };
 		141997BF1B2F98CC0087792A /* soldierrun0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soldierrun0.png; path = soldierrun/soldierrun0.png; sourceTree = "<group>"; };
 		141997C01B2F98CC0087792A /* soldierrun1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soldierrun1.png; path = soldierrun/soldierrun1.png; sourceTree = "<group>"; };
 		141997C11B2F98CC0087792A /* soldierrun2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soldierrun2.png; path = soldierrun/soldierrun2.png; sourceTree = "<group>"; };
@@ -685,6 +687,7 @@
 				1450068F1B3B364600E191C8 /* night.png */,
 				745B965C1A8C057A006D014D /* newgamebtn.png */,
 				14105ED81B3CB0C20040A0E1 /* slice.mp3 */,
+				14105EDA1B3CCBA40040A0E1 /* mud.gif */,
 				1450068B1B3AC4D900E191C8 /* smash.wav */,
 				745B965D1A8C057A006D014D /* nextlevelbtn.png */,
 				745B96601A8C057A006D014D /* star.png */,
@@ -903,6 +906,7 @@
 				1447319B1B376ADE00A34790 /* heavy0.png in Resources */,
 				145006B01B3B3BE400E191C8 /* zombie14.png in Resources */,
 				141997E71B2F98E30087792A /* deadsoldier6.png in Resources */,
+				14105EDB1B3CCBA40040A0E1 /* mud.gif in Resources */,
 				148123A71B30B7700056992C /* mummy2.png in Resources */,
 				745B96341A8BDC36006D014D /* Images.xcassets in Resources */,
 				141997E11B2F98E30087792A /* deadsoldier0.png in Resources */,
