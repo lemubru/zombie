@@ -565,6 +565,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 let invaderObj = firstBody.node as! Invader
                 let bullet = secondBody.node as! PlayerBullet
                 invaderObj.hit(invaderObj.gethit()+2)
+                let waitToEnableFire = SKAction.waitForDuration(0.2)
+                runAction(waitToEnableFire,completion:{
+                    sparkEmmiter.removeFromParent()
+                })
                 if(secondBody.node?.name == "arrow"){
    
                     let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
@@ -599,10 +603,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     
                 }
                 
-                let waitToEnableFire = SKAction.waitForDuration(0.3)
-                runAction(waitToEnableFire,completion:{
-                    sparkEmmiter.removeFromParent()
-                })
+               
                     if(invaderObj.gethit() > 5){
                         firstBody.categoryBitMask = CollisionCategories.Player
                         let deadlabel = SKLabelNode(fontNamed: "COPPERPLATE")
