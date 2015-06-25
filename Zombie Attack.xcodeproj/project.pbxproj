@@ -34,7 +34,7 @@
 		141997F31B2FB4220087792A /* turret.png in Resources */ = {isa = PBXBuildFile; fileRef = 141997F21B2FB4220087792A /* turret.png */; };
 		141997F51B2FB4F10087792A /* bullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 141997F41B2FB4F10087792A /* bullet.png */; };
 		144731271B32039900A34790 /* sawblade.png in Resources */ = {isa = PBXBuildFile; fileRef = 144731261B32039900A34790 /* sawblade.png */; };
-		1447312B1B3210C000A34790 /* smallblood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1447312A1B3210C000A34790 /* smallblood.sks */; };
+		1447312B1B3210C000A34790 /* heavyblood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1447312A1B3210C000A34790 /* heavyblood.sks */; };
 		144731301B323BA100A34790 /* nwbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1447312F1B323BA100A34790 /* nwbutton.png */; };
 		144731341B32453C00A34790 /* flamer.sks in Resources */ = {isa = PBXBuildFile; fileRef = 144731331B32453C00A34790 /* flamer.sks */; };
 		144731361B32D66700A34790 /* flamersound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 144731351B32D66700A34790 /* flamersound.mp3 */; };
@@ -220,7 +220,7 @@
 		141997F21B2FB4220087792A /* turret.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = turret.png; sourceTree = "<group>"; };
 		141997F41B2FB4F10087792A /* bullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bullet.png; sourceTree = "<group>"; };
 		144731261B32039900A34790 /* sawblade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sawblade.png; sourceTree = "<group>"; };
-		1447312A1B3210C000A34790 /* smallblood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = smallblood.sks; sourceTree = "<group>"; };
+		1447312A1B3210C000A34790 /* heavyblood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = heavyblood.sks; sourceTree = "<group>"; };
 		1447312F1B323BA100A34790 /* nwbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nwbutton.png; sourceTree = "<group>"; };
 		144731331B32453C00A34790 /* flamer.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = flamer.sks; sourceTree = "<group>"; };
 		144731351B32D66700A34790 /* flamersound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = flamersound.mp3; sourceTree = "<group>"; };
@@ -604,6 +604,7 @@
 				1485583C1B2F12A200EBD93A /* blood.sks */,
 				144731331B32453C00A34790 /* flamer.sks */,
 				144731AA1B3771C800A34790 /* spark.sks */,
+				1447312A1B3210C000A34790 /* heavyblood.sks */,
 				1447313F1B339F3800A34790 /* ash.sks */,
 				1485583E1B2F1AC400EBD93A /* MyParticleSystem.scnp */,
 				148558391B2F0AA300EBD93A /* spark.png */,
@@ -613,7 +614,6 @@
 				745B96331A8BDC36006D014D /* Images.xcassets */,
 				745B96351A8BDC36006D014D /* LaunchScreen.xib */,
 				745B96261A8BDC36006D014D /* Supporting Files */,
-				1447312A1B3210C000A34790 /* smallblood.sks */,
 			);
 			path = MobileTutsInvaderz;
 			sourceTree = "<group>";
@@ -907,7 +907,7 @@
 				745B96341A8BDC36006D014D /* Images.xcassets in Resources */,
 				141997E11B2F98E30087792A /* deadsoldier0.png in Resources */,
 				1447313C1B335B6700A34790 /* flamergoing.wav in Resources */,
-				1447312B1B3210C000A34790 /* smallblood.sks in Resources */,
+				1447312B1B3210C000A34790 /* heavyblood.sks in Resources */,
 				745B96321A8BDC36006D014D /* Main.storyboard in Resources */,
 				144731631B36E4B500A34790 /* expdeath7.png in Resources */,
 				1447313A1B3357A700A34790 /* shotgunsound.mp3 in Resources */,

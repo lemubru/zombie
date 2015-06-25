@@ -35,11 +35,7 @@ class GameOver: SKScene {
         let startGameButton = SKSpriteNode(imageNamed: "gameover")
         startGameButton.position = CGPointMake(size.width/2,size.height/2 - 100)
         startGameButton.name = "restart" //add reference to the button.
-        addChild(startGameButton) //add button to scene
-        
-        
-        
-        
+        addChild(startGameButton) //add button to scene   
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
