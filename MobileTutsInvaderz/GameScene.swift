@@ -53,7 +53,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var shotgunround  = 0
     var placeTurretMode = false
     var numTurrets = 0
-    let invaderLife = 20
+    let invaderLife = UInt32(20)
 
     let timer = Timer() // the timer calculates the time step value dt for every frame
     let scheduler = Scheduler() // an event scheduler
@@ -221,6 +221,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             setupTurret(touchx, y: touchy)
             placeTurretMode = false
             numTurrets++
+        }else if(touchedNode.name == "turret"){
+            touchedNode.removeFromParent()
         }else
         if(touchedNode.name == "nexttrap"){
             trap++
@@ -511,13 +513,13 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         enumerateChildNodesWithName("invader") { node, stop in
             let invader = node as! Invader
             if(invader.getLock()){
-                self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 1, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
+                self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
             }
             if(invader.position.x < 0){
                 //self.setupEnemy()
                 self.playerDead = false
                 invader.removeFromParent()
-                self.gameOver()
+                //self.gameOver()
             }
     }
         
@@ -617,7 +619,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 }
                 
                
-                    if(invaderObj.gethit() > 5){
+                    if(invaderObj.gethit() > self.invaderLife){
                         firstBody.categoryBitMask = CollisionCategories.Player
                         let deadlabel = SKLabelNode(fontNamed: "COPPERPLATE")
                         deadlabel.fontColor = SKColor .yellowColor()
@@ -744,6 +746,17 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     secondBody.node?.removeFromParent()
                     //sparkEmmiter.removeFromParent()
                    // secondBody.node?.removeFromParent()
+                })
+        }
+        
+        if ((firstBody.categoryBitMask & CollisionCategories.PlayerBullet != 0) &&
+            (secondBody.categoryBitMask & CollisionCategories.floor != 0)) {
+                //  NSLog("Bullet hit floor")
+                let waitToEnableFire = SKAction.waitForDuration(0.1)
+                runAction(waitToEnableFire,completion:{
+                    firstBody.node?.removeFromParent()
+                    //sparkEmmiter.removeFromParent()
+                    // secondBody.node?.removeFromParent()
                 })
         }
         
