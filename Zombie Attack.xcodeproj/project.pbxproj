@@ -165,6 +165,7 @@
 		1485583B1B2F0AA300EBD93A /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 148558391B2F0AA300EBD93A /* spark.png */; };
 		1485583D1B2F12A200EBD93A /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1485583C1B2F12A200EBD93A /* blood.sks */; };
 		1485583F1B2F1AC400EBD93A /* MyParticleSystem.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1485583E1B2F1AC400EBD93A /* MyParticleSystem.scnp */; };
+		14B88C2A1B3E0230005C3E90 /* Ally.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B88C291B3E0230005C3E90 /* Ally.swift */; };
 		745B96291A8BDC36006D014D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B96281A8BDC36006D014D /* AppDelegate.swift */; };
 		745B962D1A8BDC36006D014D /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B962C1A8BDC36006D014D /* GameScene.swift */; };
 		745B962F1A8BDC36006D014D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B962E1A8BDC36006D014D /* GameViewController.swift */; };
@@ -352,6 +353,7 @@
 		148558391B2F0AA300EBD93A /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		1485583C1B2F12A200EBD93A /* blood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = blood.sks; sourceTree = "<group>"; };
 		1485583E1B2F1AC400EBD93A /* MyParticleSystem.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = MyParticleSystem.scnp; sourceTree = "<group>"; };
+		14B88C291B3E0230005C3E90 /* Ally.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ally.swift; sourceTree = "<group>"; };
 		745B96231A8BDC36006D014D /* MobileTutsInvaderz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileTutsInvaderz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		745B96271A8BDC36006D014D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		745B96281A8BDC36006D014D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -601,6 +603,7 @@
 				147D28A21B2C7EA000BD025A /* Player.swift */,
 				147D28A41B2C829100BD025A /* Bullet.swift */,
 				745B962C1A8BDC36006D014D /* GameScene.swift */,
+				14B88C291B3E0230005C3E90 /* Ally.swift */,
 				145006831B38B89D00E191C8 /* GameOver.swift */,
 				1485583C1B2F12A200EBD93A /* blood.sks */,
 				144731331B32453C00A34790 /* flamer.sks */,
@@ -959,6 +962,7 @@
 				147D28A11B2C790900BD025A /* Invader.swift in Sources */,
 				148123C81B31DCE60056992C /* ScenePiece.swift in Sources */,
 				1481238F1B30AF3E0056992C /* Globals.swift in Sources */,
+				14B88C2A1B3E0230005C3E90 /* Ally.swift in Sources */,
 				145006841B38B89D00E191C8 /* GameOver.swift in Sources */,
 				147D28A51B2C829100BD025A /* Bullet.swift in Sources */,
 				745B962F1A8BDC36006D014D /* GameViewController.swift in Sources */,

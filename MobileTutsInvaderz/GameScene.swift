@@ -39,7 +39,6 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     let turret:Player = Player(name: "turret")
     let flameEmmiter = SKEmitterNode(fileNamed: "flamer.sks")
     let flameNode = ScenePiece(pieceName: "flamenode", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
-    let turretRad = ScenePiece(pieceName: "turretRad", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
     let floor = SKSpriteNode(imageNamed: "floor")
     var weapon = 0
     var trap = 0
@@ -115,18 +114,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     func setupTurret(x: CGFloat,y: CGFloat){
-        let turretRad = ScenePiece(pieceName: "turretRad", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
-        let turret:Player = Player(name: "turret")
-        turretRad
-        turret.position.x = x
-        turret.position.y = y
-        turret.zPosition = 7
-        addChild(turret)
-        turretRad.hidden = true
-        turretRad.position.x = turret.position.x
-        turretRad.position.y = turret.position.y
-        turretRad.AddPhysics(self, dynamic: false)
-        turretRad.zPosition = 3
+        let turret:Ally = Ally(scene: self,name: "turret",x: x,y: y)
     }
     
     func placeMud(x: CGFloat,y: CGFloat){
@@ -238,7 +226,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             placeTurretMode = false
             numTurrets++
         }else if(touchedNode.name == "turret"){
-            touchedNode.removeFromParent()
+            let turret = touchedNode as! Ally
+            turret.removeFromParent()
+            turret.removeTurRad()
+            
         }else
         if(touchedNode.name == "nexttrap"){
             trap++
@@ -461,7 +452,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func fireTurret(sound: String, scale: CGFloat, bulletTexture: String, bulletName: String,speedMulti: CGFloat,multiShot: Bool,canFireWait: Double, enemyx: CGFloat, enemyy: CGFloat){
         enumerateChildNodesWithName("turret") { node, stop in
-            let turret = node as! Player
+            let turret = node as! Ally
             var bulletName = bulletName
             var bulletTexture = bulletTexture
             var bulletScale = scale
@@ -559,6 +550,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 self.playerDead = false
                 invader.removeFromParent()
                 //self.gameOver()
+            }
+            
+            if(self.points == 300){
+                self.gameOver()
             }
     }
         
