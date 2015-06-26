@@ -19,7 +19,7 @@ class StartGameScene: SKScene {
         let touchLocation = touch.locationInNode(self) //all touches in screen
         let touchedNode = self.nodeAtPoint(touchLocation) //touchedNode is the node being touched
         if(touchedNode.name == "startgame"){
-            let gameOverScene = GameScene(size: size) //make next scene
+            let gameOverScene = GameScene(size: size, points: 0, ef: 3.0, level: 1) //make next scene
             gameOverScene.scaleMode = scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(gameOverScene,transition: transitionType) //move to the next scene

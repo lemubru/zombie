@@ -11,12 +11,15 @@ import SpriteKit
 
 class GameOver: SKScene {
     var text = ""
-   
-    init(size: CGSize, points: String){
-         text = String(points)
+    var points = UInt32(0)
+    var EnemyFreq = Double(0)
+    var level = UInt32(0)
+    init(size: CGSize, points: UInt32, ef: Double, level: UInt32){
+       //  text = String(points)
         super.init(size: size)
-       
-        
+        self.points = points
+        self.EnemyFreq = ef - 0.5
+        self.level = level + 1
         
     }
     
@@ -43,12 +46,12 @@ class GameOver: SKScene {
         let touchLocation = touch.locationInNode(self) //all touches in screen
         let touchedNode = self.nodeAtPoint(touchLocation) //touchedNode is the node being touched
         if(touchedNode.name == "restart"){
-            let gameOverScene = GameScene(size: size) //make next scene
+            let gameOverScene = GameScene(size: size, points:self.points, ef:EnemyFreq, level:level) //make next scene
             gameOverScene.scaleMode = scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(gameOverScene,transition: transitionType) //move to the next scene
         }
-    }
+    }//dfdf
     
     
    

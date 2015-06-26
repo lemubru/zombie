@@ -48,20 +48,39 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var enableTrapDoor = false
     var autoCrossBow = false
     var autoShottie = false
-    var points = 0
+    var points = UInt32(0)
     var shotgunround  = 0
     var placeTurretMode = false
     var placeMudMode = false
     var numTurrets = 0
     let invaderLife = UInt32(20)
+    var EnemyFreq = Double(3)
 
     let timer = Timer() // the timer calculates the time step value dt for every frame
     let scheduler = Scheduler() // an event scheduler
     let scheduleHeavy = Scheduler() // an event scheduler
     let weaponLabel = SKLabelNode(fontNamed: "COPPERPLATE")
+    let levelLabel = SKLabelNode(fontNamed: "COPPERPLATE")
     let pointsLabel = SKLabelNode(fontNamed: "COPPERPLATE")
     let trapLabel = SKLabelNode(fontNamed: "COPPERPLATE")
+    var level = UInt32(0)
+    var text = ""
 
+    
+    init(size: CGSize, points: UInt32, ef: Double, level: UInt32){
+        text = String(points)
+        super.init(size: size)
+        self.points = points
+        self.EnemyFreq = ef
+        self.level = level
+        
+    }
+    
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func didMoveToView(view: SKView) {
         backgroundColor = SKColor.darkGrayColor()
@@ -149,7 +168,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     func startSchedulers(){
         scheduleHeavy.every(5.5).perform(self=>GameScene.setupHeavyEnemy)
         //scheduleHeavy.start()
-        scheduler.every(3).perform(self=>GameScene.setupEnemy)
+      
+        scheduler.every(EnemyFreq).perform(self=>GameScene.setupEnemy)
         let wait = SKAction.waitForDuration(1)
         let startnormal  = SKAction.runBlock(){
             self.scheduler.start()
@@ -165,6 +185,14 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
 
     }
     func loadHud(){
+        levelLabel.text = "level: " + String(level)
+        levelLabel.position.x = self.size.width*0.25
+        levelLabel.position.y = self.size.height - 10
+        levelLabel.zPosition = 2
+        levelLabel.fontSize = 17
+        
+        
+        
         weaponLabel.text = "pistol";
         weaponLabel.position.x = self.size.width*0.86
         weaponLabel.position.y = self.size.height - 55
@@ -184,6 +212,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         self.addChild(pointsLabel)
         self.addChild(trapLabel)
         self.addChild(weaponLabel)
+        self.addChild(levelLabel)
         
         
         
@@ -549,18 +578,19 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 //self.setupEnemy()
                 self.playerDead = false
                 invader.removeFromParent()
-                //self.gameOver()
+               // self.gameOver()
             }
             
-            if(self.points == 300){
-                self.gameOver()
+            if(self.points % 10 == 0 && self.points != 0){
+                self.points++
+               self.gameOver()
             }
     }
         
     
     }
     func gameOver(){
-        let scene = GameOver(size: self.size, points: self.pointsLabel.text)
+        let scene = GameOver(size: self.size, points: self.points,ef: EnemyFreq, level: self.level)
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         self.view?.presentScene(scene, transition: transitionType)
         
@@ -658,7 +688,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         let deadlabel = SKLabelNode(fontNamed: "COPPERPLATE")
                         deadlabel.fontColor = SKColor .yellowColor()
                         deadlabel.text = "+5";
-                        self.points = self.points + 5
+                        self.points = self.points + 1
                         deadlabel.position.x = invaderObj.position.x
                         deadlabel.position.y = invaderObj.position.y + invaderObj.size.height*0.25
                         deadlabel.zPosition = 10
