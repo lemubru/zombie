@@ -12,7 +12,7 @@ var invaderNum = 1
 struct CollisionCategories{
     static let Invader : UInt32 = 0x1 << 0
     static let Player: UInt32 = 0x1 << 1
-    static let InvaderBullet: UInt32 = 0x1 << 2
+    static let EnemyBullet: UInt32 = 0x1 << 2
     static let PlayerBullet: UInt32 = 0x1 << 3
     static let floor: UInt32 = 0x1 << 4
     static let ScenePiece: UInt32 = 0x1 << 5
@@ -65,6 +65,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     let trapLabel = SKLabelNode(fontNamed: "COPPERPLATE")
     var level = UInt32(0)
     var text = ""
+    var movingR = false
+    var movingL = false
 
     
     init(size: CGSize, points: UInt32, ef: Double, level: UInt32){
@@ -84,7 +86,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     override func didMoveToView(view: SKView) {
         backgroundColor = SKColor.darkGrayColor()
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1000, height: 10), center: CGPoint(x:self.size.width/2,y:0))
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1000, height: 10), center: CGPoint(x:self.size.width/2,y:40))
         self.physicsBody?.dynamic = false
         self.physicsBody?.allowsRotation = false
         self.physicsBody?.pinned = true
@@ -127,7 +129,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func setupPlayer(){
         player.position.x = -self.size.width/2+300
-        player.position.y = self.size.height/2
+        player.position.y = self.size.height*0.7
         player.zPosition = 7
         addChild(player)
     }
@@ -230,6 +232,15 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         nextTrapButton.zPosition = 2
         self.addChild(nextTrapButton)
         
+        let moveR = ScenePiece(pieceName: "moveR", textTureName: "movebtn", dynamic: false, scale: 1,x : 100,y:  20)
+        moveR.zPosition = 2
+        self.addChild(moveR)
+        
+        
+        let moveL = ScenePiece(pieceName: "moveL", textTureName: "movebtn", dynamic: false, scale: 1,x : 20,y:  20)
+        moveL.zPosition = 2
+        self.addChild(moveL)
+        
         
     }
     
@@ -244,7 +255,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         touchx = touchLocation.x
         touchy = touchLocation.y
         let touchedNode = self.nodeAtPoint(touchLocation) //touchedNode is the node being touched
-        
+   
         if(placeMudMode){
             trapLabel.text = "mud placed!";
             placeMud(touchx, y: touchy)
@@ -425,6 +436,14 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             let newY = sin(angle)*700
             let newX = cos(angle)*700
         }
+        
+         if(touchedNode.name == "moveR"){
+           // movingR = true
+           // movingL = false
+        }else if(touchedNode.name == "moveL"){
+            //movingR = false
+            //movingL = true
+        }
     }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -434,10 +453,22 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let touchLocation = touch.locationInNode(self)
         touchx = touchLocation.x
         touchy = touchLocation.y
+    
+        let touchedNode = self.nodeAtPoint(touchLocation)
+        
+        if(touchedNode.name == "moveR"){
+          //  movingR = true
+           // movingL = false
+        }else if(touchedNode.name == "moveL"){
+           // movingR = false
+           // movingL = true
+        }
         
     }
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         touching = false
+        movingR = false
+        movingL = false
         
     }
     
@@ -576,6 +607,11 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             if(invader.getLock()){
                 self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
             }
+            if(self.movingL){
+                self.player.position.x--
+            }else if(self.movingR){
+                 self.player.position.x++
+            }
             if(invader.position.x < 0){
                 //self.setupEnemy()
                 self.playerDead = false
@@ -583,7 +619,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                // self.gameOver()
             }
             
-            if(self.points % 10 == 0 && self.points != 0){
+            if(self.points % 50 == 0 && self.points != 0){
                 self.points++
                self.gameOver()
             }
@@ -905,7 +941,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         sparkEmmiter.removeFromParent()
                         // secondBody.node?.removeFromParent()
                     })
-                    self.physicsWorld.removeAllJoints()
+                   // self.physicsWorld.removeJoint(joint:)
                 }
                 //NSLog("Invader and Player Collision Contact")
         }

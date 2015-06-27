@@ -120,7 +120,7 @@
 		145006AF1B3B3BE400E191C8 /* zombie13.png in Resources */ = {isa = PBXBuildFile; fileRef = 1450069F1B3B3BE400E191C8 /* zombie13.png */; };
 		145006B01B3B3BE400E191C8 /* zombie14.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006A01B3B3BE400E191C8 /* zombie14.png */; };
 		145006B11B3B3BE400E191C8 /* zombie15.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006A11B3B3BE400E191C8 /* zombie15.png */; };
-		145006B31B3B493000E191C8 /* ccbButtonNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006B21B3B492F00E191C8 /* ccbButtonNormal.png */; };
+		145006B31B3B493000E191C8 /* movebtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006B21B3B492F00E191C8 /* movebtn.png */; };
 		146A530E1B30212F0005C7F0 /* saw1.png in Resources */ = {isa = PBXBuildFile; fileRef = 146A530D1B30212F0005C7F0 /* saw1.png */; };
 		146A53101B3021A30005C7F0 /* saw2.png in Resources */ = {isa = PBXBuildFile; fileRef = 146A530F1B3021A30005C7F0 /* saw2.png */; };
 		146A53121B3023620005C7F0 /* saw3.png in Resources */ = {isa = PBXBuildFile; fileRef = 146A53111B3023620005C7F0 /* saw3.png */; };
@@ -166,6 +166,7 @@
 		1485583D1B2F12A200EBD93A /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1485583C1B2F12A200EBD93A /* blood.sks */; };
 		1485583F1B2F1AC400EBD93A /* MyParticleSystem.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1485583E1B2F1AC400EBD93A /* MyParticleSystem.scnp */; };
 		14B88C2A1B3E0230005C3E90 /* Ally.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B88C291B3E0230005C3E90 /* Ally.swift */; };
+		14B88C2C1B3E2277005C3E90 /* EnemyBullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B88C2B1B3E2277005C3E90 /* EnemyBullet.swift */; };
 		745B96291A8BDC36006D014D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B96281A8BDC36006D014D /* AppDelegate.swift */; };
 		745B962D1A8BDC36006D014D /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B962C1A8BDC36006D014D /* GameScene.swift */; };
 		745B962F1A8BDC36006D014D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B962E1A8BDC36006D014D /* GameViewController.swift */; };
@@ -308,7 +309,7 @@
 		1450069F1B3B3BE400E191C8 /* zombie13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie13.png; sourceTree = "<group>"; };
 		145006A01B3B3BE400E191C8 /* zombie14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie14.png; sourceTree = "<group>"; };
 		145006A11B3B3BE400E191C8 /* zombie15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie15.png; sourceTree = "<group>"; };
-		145006B21B3B492F00E191C8 /* ccbButtonNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccbButtonNormal.png; sourceTree = "<group>"; };
+		145006B21B3B492F00E191C8 /* movebtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movebtn.png; sourceTree = "<group>"; };
 		146A530D1B30212F0005C7F0 /* saw1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saw1.png; sourceTree = "<group>"; };
 		146A530F1B3021A30005C7F0 /* saw2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saw2.png; sourceTree = "<group>"; };
 		146A53111B3023620005C7F0 /* saw3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saw3.png; sourceTree = "<group>"; };
@@ -354,6 +355,7 @@
 		1485583C1B2F12A200EBD93A /* blood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = blood.sks; sourceTree = "<group>"; };
 		1485583E1B2F1AC400EBD93A /* MyParticleSystem.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = MyParticleSystem.scnp; sourceTree = "<group>"; };
 		14B88C291B3E0230005C3E90 /* Ally.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ally.swift; sourceTree = "<group>"; };
+		14B88C2B1B3E2277005C3E90 /* EnemyBullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyBullet.swift; sourceTree = "<group>"; };
 		745B96231A8BDC36006D014D /* MobileTutsInvaderz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileTutsInvaderz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		745B96271A8BDC36006D014D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		745B96281A8BDC36006D014D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -601,6 +603,7 @@
 				148123B71B30B9F50056992C /* Mummy.swift */,
 				147D28AA1B2D9C5E00BD025A /* Utilities.swift */,
 				147D28A21B2C7EA000BD025A /* Player.swift */,
+				14B88C2B1B3E2277005C3E90 /* EnemyBullet.swift */,
 				147D28A41B2C829100BD025A /* Bullet.swift */,
 				745B962C1A8BDC36006D014D /* GameScene.swift */,
 				14B88C291B3E0230005C3E90 /* Ally.swift */,
@@ -650,7 +653,7 @@
 		745B96551A8C057A006D014D /* images */ = {
 			isa = PBXGroup;
 			children = (
-				145006B21B3B492F00E191C8 /* ccbButtonNormal.png */,
+				145006B21B3B492F00E191C8 /* movebtn.png */,
 				745B965E1A8C057A006D014D /* player1.png */,
 				146A530D1B30212F0005C7F0 /* saw1.png */,
 				141997F41B2FB4F10087792A /* bullet.png */,
@@ -885,7 +888,7 @@
 				1450068C1B3AC4D900E191C8 /* smash.wav in Resources */,
 				144731341B32453C00A34790 /* flamer.sks in Resources */,
 				1447317E1B36F9EF00A34790 /* flamedeath6.png in Resources */,
-				145006B31B3B493000E191C8 /* ccbButtonNormal.png in Resources */,
+				145006B31B3B493000E191C8 /* movebtn.png in Resources */,
 				141997CF1B2F98CC0087792A /* soldierrun7.png in Resources */,
 				1447315E1B36E4B500A34790 /* expdeath2.png in Resources */,
 				148123C01B30E6C70056992C /* halfarrow.png in Resources */,
@@ -953,6 +956,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14B88C2C1B3E2277005C3E90 /* EnemyBullet.swift in Sources */,
 				148123911B30AF3E0056992C /* Scheduler.swift in Sources */,
 				147D28A91B2C880000BD025A /* PlayerBullet.swift in Sources */,
 				745B962D1A8BDC36006D014D /* GameScene.swift in Sources */,
