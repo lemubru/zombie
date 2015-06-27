@@ -194,16 +194,18 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
         
         weaponLabel.text = "pistol";
-        weaponLabel.position.x = self.size.width*0.86
+        weaponLabel.position.x = self.size.width*0.99
         weaponLabel.position.y = self.size.height - 55
         weaponLabel.zPosition = 2
         weaponLabel.fontSize = 17
+        weaponLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
         
         trapLabel.text = "rock fall";
-        trapLabel.position.x = self.size.width*0.5
+        trapLabel.position.x = self.size.width*0.59
         trapLabel.position.y = self.size.height - 55
         trapLabel.zPosition = 2
         trapLabel.fontSize = 17
+        trapLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
         
         pointsLabel.text = String(points)
         pointsLabel.position = CGPoint(x: 30,y: self.size.height-20)
