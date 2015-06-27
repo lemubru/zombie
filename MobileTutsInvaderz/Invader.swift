@@ -10,20 +10,22 @@ import UIKit
 import SpriteKit
 
 class Invader: SKSpriteNode {
-    
+    private var canFire = true
     var invaderRow = 0
     var invaderColumn = 0
     var invaderSpeed = 3
     var invaderhit = UInt32()
     var lockedOn = false
+    var gunner = false
     
-    init(scene: SKScene, scale: CGFloat, invaderhit: UInt32, animprefix:String?, name:String?) {
+    init(scene: SKScene, scale: CGFloat, invaderhit: UInt32, animprefix:String?, name:String?,gunner: Bool) {
         let texture = SKTexture(imageNamed: "soldierrun0")
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
         self.setScale(scale)
         scene.addChild(self)
         self.name = name
         self.lockedOn = false
+        self.gunner = gunner
         var hits = 0
         self.invaderhit = invaderhit
         animate(animprefix)
@@ -45,6 +47,10 @@ class Invader: SKSpriteNode {
         self.physicsBody?.contactTestBitMask = CollisionCategories.floor | CollisionCategories.PlayerBullet | CollisionCategories.ScenePiece
         self.physicsBody?.collisionBitMask = CollisionCategories.floor | CollisionCategories.PlayerBullet
     }
+    func isGunner() -> Bool{
+        return gunner
+    }
+    
     
     internal func animate(animprefix: String?){
         var playerTextures:[SKTexture] = []
@@ -73,6 +79,69 @@ class Invader: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    func fireBullet(scene: SKScene, touchX: CGFloat, touchY: CGFloat, bulletTexture: String,bulletScale: CGFloat, speedMultiplier: CGFloat, bulletSound: String, canFireWait: Double, multiShot: Bool, bulletName: String){
+        if(!canFire){
+            return
+        }else{
+          
+            let projectileSpeedMultiplier = speedMultiplier
+            //"ArrowTexture"
+            canFire = false
+            let bullet = EnemyBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName)
+            
+            let opposite = touchY -  self.position.y
+            let adjacent = touchX - self.position.x
+            let Pi = CGFloat(M_PI)
+            let spread = CGFloat(2)
+            let DegreesToRadians = Pi / 180
+            let RadiansToDegrees = 180 / Pi
+            let angle = atan2(opposite,adjacent)
+            let newY = sin(angle)*2000
+            let newX = cos(angle)*2000
+            let newY1 = sin(angle - spread * DegreesToRadians)*2000
+            let newX1 = cos(angle - spread * DegreesToRadians)*2000
+            let newY2 = sin(angle + spread * DegreesToRadians)*2000
+            let newX2 = cos(angle + spread * DegreesToRadians)*2000
+            
+            bullet.position.x = self.position.x
+            bullet.position.y = self.position.y
+            bullet.setScale(bulletScale)
+            bullet.zRotation = angle
+            
+            
+            //self.zRotation = angle - 90 * DegreesToRadians
+            
+            
+            //bullet.zRotation = self.zRotation
+            bullet.physicsBody?.applyImpulse(CGVectorMake(newX*projectileSpeedMultiplier,
+                newY*projectileSpeedMultiplier))
+            
+            if(multiShot){
+                let bullet1 = EnemyBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName)
+                bullet1.position.x = self.position.x
+                bullet1.position.y = self.position.y
+                bullet1.setScale(bulletScale)
+                bullet1.zRotation = angle - spread * DegreesToRadians
+                bullet1.physicsBody?.applyImpulse(CGVectorMake(newX1*projectileSpeedMultiplier, newY1*projectileSpeedMultiplier))
+                let bullet2 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName)
+                bullet2.position.x = self.position.x
+                bullet2.position.y = self.position.y
+                bullet2.setScale(bulletScale)
+                bullet2.zRotation = angle + spread * DegreesToRadians
+                bullet2.physicsBody?.applyImpulse(CGVectorMake(newX2*projectileSpeedMultiplier, newY2*projectileSpeedMultiplier))
+            }
+            if(bulletSound == "shotgunsound.mp3"){
+                let wait  = SKAction.waitForDuration(1)
+                let reloadsound = SKAction.playSoundFileNamed("shotgunreload.mp3", waitForCompletion: true)
+                runAction(SKAction.sequence([wait,reloadsound]))
+            }
+            let waitToEnableFire = SKAction.waitForDuration(canFireWait)
+            runAction(waitToEnableFire,completion:{
+                self.canFire = true
+            })
+        }
     }
     
     

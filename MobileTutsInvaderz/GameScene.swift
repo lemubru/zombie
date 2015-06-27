@@ -39,7 +39,6 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     let turret:Player = Player(name: "turret")
     let flameEmmiter = SKEmitterNode(fileNamed: "flamer.sks")
     let flameNode = ScenePiece(pieceName: "flamenode", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
-    let floor = SKSpriteNode(imageNamed: "floor")
     var weapon = 0
     var trap = 0
     var canFire = true
@@ -67,7 +66,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var text = ""
     var movingR = false
     var movingL = false
-
+    //Flying enemy
+    //shooting enemy
+    //
     
     init(size: CGSize, points: UInt32, ef: Double, level: UInt32){
         text = String(points)
@@ -77,9 +78,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         self.level = level
         
     }
-    
-    
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -110,13 +109,12 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     func loadBG(){
-      let background = SKSpriteNode(imageNamed: "night")
-       background.anchorPoint = CGPointMake(0, 1)
-       background.position = CGPointMake(0, size.height)
-      background.zPosition = 1
-       background.size = CGSize(width: self.view!.bounds.size.width, height:self.view!.bounds.size.height)
-       addChild(background)
-
+        let background = SKSpriteNode(imageNamed: "night")
+        background.anchorPoint = CGPointMake(0, 1)
+        background.position = CGPointMake(0, size.height)
+        background.zPosition = 1
+        background.size = CGSize(width: self.view!.bounds.size.width, height:self.view!.bounds.size.height)
+        addChild(background)
         let rain = SKEmitterNode(fileNamed: "ash.sks")
         rain.position.x = self.size.width/2
         rain.position.y = self.size.height
@@ -124,13 +122,15 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         self.addChild(rain)
     }
     
-
-    
-    
     func setupPlayer(){
         player.position.x = -self.size.width/2+300
         player.position.y = self.size.height*0.7
         player.zPosition = 7
+        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width/2)
+        player.physicsBody?.dynamic = false
+        player.physicsBody?.categoryBitMask = CollisionCategories.Player
+        player.physicsBody?.contactTestBitMask = CollisionCategories.EnemyBullet
+        player.physicsBody?.collisionBitMask =  CollisionCategories.EnemyBullet
         addChild(player)
     }
     
@@ -148,17 +148,24 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     func setupEnemy(){
-        let tempInvader:Invader = Invader(scene: self,scale: CGFloat(1.3), invaderhit: 0, animprefix:"soldierrun", name:"invader")
+        var random = randRange(0, upper: 2)
+        NSLog(String(random))
+        var gunner = false
+        if(random == 0){
+            gunner = true
+        }
+        let tempInvader:Invader = Invader(scene: self,scale: CGFloat(1.3), invaderhit: 0, animprefix:"soldierrun", name:"invader", gunner: gunner)
         tempInvader.zPosition = 6
         tempInvader.position.x = self.size.width
-        tempInvader.position.y = self.size.height/2-64
+        tempInvader.position.y = self.size.height/2-74
         tempInvader.physicsBody?.velocity = CGVectorMake(-40, 0)
         tempInvader.physicsBody?.mass = 10000
+        tempInvader.physicsBody?.affectedByGravity = false
         
     }
     
     func setupHeavyEnemy(){
-        let tempInvader:Invader = Invader(scene: self,scale: CGFloat(1.3), invaderhit: 0, animprefix:"heavy", name:"heavy")
+        let tempInvader:Invader = Invader(scene: self,scale: CGFloat(1.3), invaderhit: 0, animprefix:"heavy", name:"heavy", gunner: true)
         tempInvader.zPosition = 9
         tempInvader.position.x = self.size.width
         tempInvader.position.y = self.size.height/2-54
@@ -168,22 +175,23 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     func startSchedulers(){
-        scheduleHeavy.every(5.5).perform(self=>GameScene.setupHeavyEnemy)
-        //scheduleHeavy.start()
+    
+        let wait = SKAction.waitForDuration(2, withRange: 1)
+         let longwait = SKAction.waitForDuration(10)
+        let spawn = SKAction.runBlock(){
+            self.setupEnemy()
+        }
       
-        scheduler.every(EnemyFreq).perform(self=>GameScene.setupEnemy)
-        let wait = SKAction.waitForDuration(1)
-        let startnormal  = SKAction.runBlock(){
-            self.scheduler.start()
-            self.scheduleHeavy.stop()
-        }
-        let startHeavy  = SKAction.runBlock(){
-            self.scheduler.stop()
-            self.scheduleHeavy.every(5.5).perform(self=>GameScene.setupHeavyEnemy)
-            self.scheduleHeavy.start()
-        }
-        self.runAction(SKAction.sequence([wait,startnormal]))
-        //scheduler.start()
+        let spawnAndWait = SKAction.sequence([spawn,wait])
+        self.runAction(SKAction.repeatActionForever(spawnAndWait), withKey:"spawnandwait")
+        
+       
+        
+       self.runAction(longwait,completion:{
+         self.removeActionForKey("spawnandwait")
+            // self.playerDead = true
+        })
+       
 
     }
     func loadHud(){
@@ -234,12 +242,12 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
         let moveR = ScenePiece(pieceName: "moveR", textTureName: "movebtn", dynamic: false, scale: 1,x : 100,y:  20)
         moveR.zPosition = 2
-        self.addChild(moveR)
+        //self.addChild(moveR)
         
         
         let moveL = ScenePiece(pieceName: "moveL", textTureName: "movebtn", dynamic: false, scale: 1,x : 20,y:  20)
         moveL.zPosition = 2
-        self.addChild(moveL)
+        //self.addChild(moveL)
         
         
     }
@@ -314,8 +322,6 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             if(weapon > weaponCap)
             {
                 autoShottie = false
-               
-               
                 weaponLabel.text = "pistol"
                 weapon = 0
             }
@@ -473,14 +479,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     override func update(currentTime: CFTimeInterval) {
-         floor.position = CGPointMake(size.width/2,size.height/2 - 160)
-        floor.physicsBody?.allowsRotation = false
+
         
         pointsLabel.text = String(points)
         hits = 0
-        timer.advance()
-        scheduler.update(timer.dt)
-        scheduleHeavy.update(timer.dt)
        moveInvaders()
         if(touching){
             rotateGunToTouch()
@@ -594,39 +596,58 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         var scale = CGFloat(randRange(lower, upper: upper))
         return CGFloat(scale/10)
     }
-    
 
-
-    
-
-   
-    
     func moveInvaders(){
         enumerateChildNodesWithName("invader") { node, stop in
             let invader = node as! Invader
             if(invader.getLock()){
-                self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
+                self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "playerbullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
+            }
+            if(invader.isGunner()){
+           // invader.fireBullet(self, touchX: self.player.position.x, touchY: self.player.position.y + CGFloat(self.randRange(0, upper: 80)), bulletTexture: "ball", bulletScale: 0.5, speedMultiplier: CGFloat(0.002), bulletSound: "gunshot.mp3", canFireWait: 2, multiShot: false, bulletName: "invaderbullet")
             }
             if(self.movingL){
                 self.player.position.x--
             }else if(self.movingR){
                  self.player.position.x++
             }
-            if(invader.position.x < 0){
-                //self.setupEnemy()
-                self.playerDead = false
-                invader.removeFromParent()
-               // self.gameOver()
-            }
+  
             
             if(self.points % 50 == 0 && self.points != 0){
                 self.points++
                self.gameOver()
             }
-    }
+           
+            }
+        // self.removeBullets()
+  
+        }
+    
+   
+    
+    override func didSimulatePhysics() {
+        enumerateChildNodesWithName("invaderbullet") { node, stop in
+            let bullet = node as! EnemyBullet
+            if(bullet.position.y > self.size.height - 100 || bullet.position.y < 0 + 30 || bullet.position.x > self.size.width + 100){
+                bullet.removeFromParent()
+            }
+            
+        }
+          enumerateChildNodesWithName("invader") { node, stop in
+            let invader = node as! Invader
+            if(invader.position.x < 0){
+                //self.setupEnemy()
+                self.playerDead = false
+                invader.removeFromParent()
+                // self.gameOver()
+            }
+            
+        }
         
     
     }
+    
+
     func gameOver(){
         let scene = GameOver(size: self.size, points: self.points,ef: EnemyFreq, level: self.level)
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)

@@ -19,6 +19,7 @@ class EnemyBullet: Bullet {
         self.zPosition = CGFloat(5)
         self.physicsBody = SKPhysicsBody(texture: self.texture, size: self.size)
         self.physicsBody?.dynamic = true
+        self.physicsBody?.affectedByGravity = false
         self.physicsBody?.usesPreciseCollisionDetection = false
         self.physicsBody?.restitution = 0.5;
         //   self.physicsBody?.mass = 0
