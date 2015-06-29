@@ -119,12 +119,12 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         rain.position.x = self.size.width/2
         rain.position.y = self.size.height
         rain.zPosition = 2
-        self.addChild(rain)
+       // self.addChild(rain)
     }
     
     func setupPlayer(){
         player.position.x = -self.size.width/2+300
-        player.position.y = self.size.height*0.7
+        player.position.y = self.size.height*0.8
         player.zPosition = 7
         player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width/2)
         player.physicsBody?.dynamic = false
@@ -168,7 +168,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let tempInvader:Invader = Invader(scene: self,scale: CGFloat(1.3), invaderhit: 0, animprefix:"heavy", name:"heavy", gunner: true)
         tempInvader.zPosition = 9
         tempInvader.position.x = self.size.width
-        tempInvader.position.y = self.size.height/2-54
+        tempInvader.position.y = self.size.height/2-74
         tempInvader.physicsBody?.velocity = CGVectorMake(-20, 0)
         tempInvader.physicsBody?.mass = 10000
         
@@ -176,28 +176,39 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func startSchedulers(){
     
-        let wait = SKAction.waitForDuration(2, withRange: 1)
-         let longwait = SKAction.waitForDuration(10)
-        let spawn = SKAction.runBlock(){
+        let wait1 = SKAction.waitForDuration(2, withRange: 1)
+        let wait2 = SKAction.waitForDuration(3, withRange: 1)
+         let longwait = SKAction.waitForDuration(30)
+        let spawnNormal = SKAction.runBlock(){
             self.setupEnemy()
         }
-      
-        let spawnAndWait = SKAction.sequence([spawn,wait])
+        let spawnHeavy = SKAction.runBlock(){
+            self.setupHeavyEnemy()
+        }
+        let spawnAndWait = SKAction.sequence([spawnNormal,wait1])
+        let spawnAndWaitHeavy = SKAction.sequence([spawnHeavy,wait2])
         self.runAction(SKAction.repeatActionForever(spawnAndWait), withKey:"spawnandwait")
         
        
         
        self.runAction(longwait,completion:{
          self.removeActionForKey("spawnandwait")
+        self.runAction(SKAction.repeatActionForever(spawnAndWaitHeavy), withKey:"spawnandwaitheavy")
+        self.runAction(longwait,completion:{
+            self.removeActionForKey("spawnandwaitheavy")
+            
             // self.playerDead = true
         })
+            // self.playerDead = true
+        })
+     
        
 
     }
     func loadHud(){
         levelLabel.text = "level: " + String(level)
         levelLabel.position.x = self.size.width*0.25
-        levelLabel.position.y = self.size.height - 10
+        levelLabel.position.y = 10
         levelLabel.zPosition = 2
         levelLabel.fontSize = 17
         
@@ -218,7 +229,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         trapLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
         
         pointsLabel.text = String(points)
-        pointsLabel.position = CGPoint(x: 30,y: self.size.height-20)
+        pointsLabel.position = CGPoint(x: 30,y: 10)
         pointsLabel.fontSize = 30
         pointsLabel.zPosition = 3
         self.addChild(pointsLabel)
@@ -227,6 +238,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         self.addChild(levelLabel)
         
         
+        
+        let dock = ScenePiece(pieceName: "dock", textTureName: "dock.png", dynamic: false, scale: 1, x: 100, y: self.size.height - 20)
+        dock.zPosition = 2
+        self.addChild(dock)
         
         let nextWeaponButton = ScenePiece(pieceName: "nwbutton", textTureName: "nwbutton", dynamic: false, scale: 0.4,x : self.size.width - 20,y: self.size.height - 20)
         nextWeaponButton.zPosition = 2
@@ -635,7 +650,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         }
           enumerateChildNodesWithName("invader") { node, stop in
             let invader = node as! Invader
-            if(invader.position.x < 0){
+            if(invader.position.x < 5){
                 //self.setupEnemy()
                 self.playerDead = false
                 invader.removeFromParent()
