@@ -52,7 +52,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var placeTurretMode = false
     var placeMudMode = false
     var numTurrets = 0
-    let invaderLife = UInt32(20)
+    let invaderLife = UInt32(6)
     var EnemyFreq = Double(3)
 
     let timer = Timer() // the timer calculates the time step value dt for every frame
@@ -168,12 +168,14 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     func setupHeavyEnemy(){
+        let invaderFrame = SKNode()
         let tempInvader:Invader = Invader(scene: self,scale: CGFloat(1.3), invaderhit: 0, animprefix:"heavy", name:"heavy", gunner: true)
         tempInvader.zPosition = 9
         tempInvader.position.x = self.size.width
         tempInvader.position.y = self.size.height/2-74
         tempInvader.physicsBody?.velocity = CGVectorMake(-20, 0)
         tempInvader.physicsBody?.mass = 10000
+        tempInvader.physicsBody?.affectedByGravity = false
         
     }
     
@@ -286,7 +288,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         touchx = touchLocation.x
         touchy = touchLocation.y
         let touchedNode = self.nodeAtPoint(touchLocation) //touchedNode is the node being touched
-        NSLog(touchedNode.name!)
+        //NSLog(touchedNode.name!)
         if(placeMudMode){
             trapLabel.text = "mud placed!";
             placeMud(touchx, y: touchy)
@@ -869,6 +871,20 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         runAction(waitToEnableFire,completion:{
                             sparkEmmiter.removeFromParent()
                         })
+                        
+                          if(invaderObj.gethit() == 5){
+                            
+                            let smoke = SKEmitterNode(fileNamed: "smoke")
+                         
+                            smoke.zPosition = 3
+                            firstBody.node?.addChild(smoke)
+                           // smoke.position.y = parent!.position.y + 20
+                           // smoke.targetNode = self.scene
+                          
+                            
+                         
+                            
+                        }
                
                         if(invaderObj.gethit() == 10){
                             
@@ -889,7 +905,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             let fadeout = SKAction.fadeOutWithDuration(0.3)
                             let wait = SKAction.waitForDuration(0.1)
                             let flash = SKAction.sequence([fadein,wait,fadeout])
-                            
+                            firstBody.node?.removeAllChildren()
                             
                             deadlabel.runAction(flash,completion:{
                                 deadlabel.removeFromParent()
@@ -929,6 +945,21 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         if ((firstBody.categoryBitMask & CollisionCategories.floor != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.ScenePiece != 0)) {
               //  NSLog("Bullet hit floor")
+                
+                let contactPoint = contact.contactPoint
+                let sparkEmmiter = SKEmitterNode(fileNamed: "dirt.sks")
+                
+                sparkEmmiter.zPosition = 3
+                self.addChild(sparkEmmiter)
+                sparkEmmiter.position.x = contactPoint.x
+                sparkEmmiter.position.y = contactPoint.y
+                
+                
+                let wait = SKAction.waitForDuration(1)
+                runAction(wait,completion:{
+                    sparkEmmiter.removeFromParent()
+                })
+                
                 let waitToEnableFire = SKAction.waitForDuration(0.3)
                 runAction(waitToEnableFire,completion:{
                     secondBody.node?.removeFromParent()
@@ -937,26 +968,43 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 })
         }
         
+        if ((firstBody.categoryBitMask & CollisionCategories.Player != 0) &&
+            (secondBody.categoryBitMask & CollisionCategories.Invader != 0)) {
+                firstBody.node?.removeFromParent()
+                
+        }
+        
         if ((firstBody.categoryBitMask & CollisionCategories.PlayerBullet != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.floor != 0)) {
                 //  NSLog("Bullet hit floor")
                 
                 let contactPoint = contact.contactPoint
-             
+                let sparkEmmiter = SKEmitterNode(fileNamed: "dirt.sks")
+              
+                sparkEmmiter.zPosition = 3
+                self.addChild(sparkEmmiter)
+                sparkEmmiter.position.x = contactPoint.x
+                sparkEmmiter.position.y = contactPoint.y+7
                 
-                if(secondBody.node?.name == "arrow"){
-                    
+                
+                let waitToEnableFire = SKAction.waitForDuration(0.2)
+                runAction(waitToEnableFire,completion:{
+                    sparkEmmiter.removeFromParent()
+                })
+                
+                if(firstBody.node?.name == "arrow"){
+                    firstBody.categoryBitMask = CollisionCategories.Player
+                     firstBody.contactTestBitMask = CollisionCategories.Invader
                     let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
                     self.physicsWorld.addJoint(myJoint)
-                  
-                    
-                    
-                }else{
-                    let waitToEnableFire = SKAction.waitForDuration(0.1)
+                    let waitToEnableFire = SKAction.waitForDuration(2)
                     runAction(waitToEnableFire,completion:{
                         firstBody.node?.removeFromParent()
-                        //sparkEmmiter.removeFromParent()
-                        // secondBody.node?.removeFromParent()
+                    })
+                }else{
+                    let waitToEnableFire = SKAction.waitForDuration(0.01)
+                    runAction(waitToEnableFire,completion:{
+                        firstBody.node?.removeFromParent()
                     })
                 }
         }

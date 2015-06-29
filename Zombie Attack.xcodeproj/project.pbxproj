@@ -135,6 +135,9 @@
 		147E29F71B41EB6C0043C662 /* dock.png in Resources */ = {isa = PBXBuildFile; fileRef = 147E29F61B41EB6C0043C662 /* dock.png */; };
 		147E29F91B41F9410043C662 /* grass1.png in Resources */ = {isa = PBXBuildFile; fileRef = 147E29F81B41F9410043C662 /* grass1.png */; };
 		147E29FB1B41FBA40043C662 /* grass2.png in Resources */ = {isa = PBXBuildFile; fileRef = 147E29FA1B41FBA40043C662 /* grass2.png */; };
+		147E29FD1B41FCBF0043C662 /* dirt.sks in Resources */ = {isa = PBXBuildFile; fileRef = 147E29FC1B41FCBF0043C662 /* dirt.sks */; };
+		147E29FF1B4205430043C662 /* smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = 147E29FE1B4205430043C662 /* smoke.sks */; };
+		147E2A011B42117A0043C662 /* arrow1.png in Resources */ = {isa = PBXBuildFile; fileRef = 147E2A001B42117A0043C662 /* arrow1.png */; };
 		1481238E1B30AF3E0056992C /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481238A1B30AF3E0056992C /* Timer.swift */; };
 		1481238F1B30AF3E0056992C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481238B1B30AF3E0056992C /* Globals.swift */; };
 		148123901B30AF3E0056992C /* TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481238C1B30AF3E0056992C /* TargetAction.swift */; };
@@ -327,6 +330,9 @@
 		147E29F61B41EB6C0043C662 /* dock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dock.png; sourceTree = "<group>"; };
 		147E29F81B41F9410043C662 /* grass1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass1.png; sourceTree = "<group>"; };
 		147E29FA1B41FBA40043C662 /* grass2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass2.png; sourceTree = "<group>"; };
+		147E29FC1B41FCBF0043C662 /* dirt.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = dirt.sks; sourceTree = "<group>"; };
+		147E29FE1B4205430043C662 /* smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = smoke.sks; sourceTree = "<group>"; };
+		147E2A001B42117A0043C662 /* arrow1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow1.png; sourceTree = "<group>"; };
 		1481238A1B30AF3E0056992C /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		1481238B1B30AF3E0056992C /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		1481238C1B30AF3E0056992C /* TargetAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetAction.swift; sourceTree = "<group>"; };
@@ -614,6 +620,7 @@
 				745B962C1A8BDC36006D014D /* GameScene.swift */,
 				14B88C291B3E0230005C3E90 /* Ally.swift */,
 				145006831B38B89D00E191C8 /* GameOver.swift */,
+				147E29FC1B41FCBF0043C662 /* dirt.sks */,
 				1485583C1B2F12A200EBD93A /* blood.sks */,
 				144731331B32453C00A34790 /* flamer.sks */,
 				144731AA1B3771C800A34790 /* spark.sks */,
@@ -622,6 +629,7 @@
 				1485583E1B2F1AC400EBD93A /* MyParticleSystem.scnp */,
 				148558391B2F0AA300EBD93A /* spark.png */,
 				745B962E1A8BDC36006D014D /* GameViewController.swift */,
+				147E29FE1B4205430043C662 /* smoke.sks */,
 				745B964C1A8BFFD4006D014D /* StartGameScene.swift */,
 				745B96301A8BDC36006D014D /* Main.storyboard */,
 				745B96331A8BDC36006D014D /* Images.xcassets */,
@@ -667,6 +675,7 @@
 				1479C6881B2F3AA3001C73E8 /* ball.png */,
 				146A530F1B3021A30005C7F0 /* saw2.png */,
 				146A53111B3023620005C7F0 /* saw3.png */,
+				147E2A001B42117A0043C662 /* arrow1.png */,
 				148123BB1B30CFB30056992C /* arrow.png */,
 				148123BF1B30E6C70056992C /* halfarrow.png */,
 				148123C11B30EEBE0056992C /* ArrowHitTexture.png */,
@@ -833,6 +842,7 @@
 				148123B31B30B7700056992C /* mummy14.png in Resources */,
 				144731A21B376ADE00A34790 /* heavy7.png in Resources */,
 				144731A61B376ADE00A34790 /* heavy11.png in Resources */,
+				147E29FF1B4205430043C662 /* smoke.sks in Resources */,
 				141997EA1B2F98E30087792A /* deadsoldier9.png in Resources */,
 				144731831B36F9EF00A34790 /* flamedeath11.png in Resources */,
 				745B96631A8C057A006D014D /* CONQUEST.ttf in Resources */,
@@ -886,6 +896,7 @@
 				144731391B3357A700A34790 /* shotgunreload.mp3 in Resources */,
 				1450068E1B3AD99A00E191C8 /* autolaser.mp3 in Resources */,
 				141997EF1B2F98E30087792A /* deadsoldier14.png in Resources */,
+				147E2A011B42117A0043C662 /* arrow1.png in Resources */,
 				14105ED91B3CB0C20040A0E1 /* slice.mp3 in Resources */,
 				144731421B342B1100A34790 /* machinegun.wav in Resources */,
 				145006861B38B9E300E191C8 /* gameover.png in Resources */,
@@ -914,6 +925,7 @@
 				1485583D1B2F12A200EBD93A /* blood.sks in Resources */,
 				145006AA1B3B3BE400E191C8 /* zombie8.png in Resources */,
 				745B966E1A8C057A006D014D /* start_btn.png in Resources */,
+				147E29FD1B41FCBF0043C662 /* dirt.sks in Resources */,
 				141997CC1B2F98CC0087792A /* soldierrun4.png in Resources */,
 				144731361B32D66700A34790 /* flamersound.mp3 in Resources */,
 				148123AD1B30B7700056992C /* mummy8.png in Resources */,

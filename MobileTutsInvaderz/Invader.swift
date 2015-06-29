@@ -44,8 +44,8 @@ class Invader: SKSpriteNode {
         self.physicsBody?.angularDamping = 0.0;
         self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.categoryBitMask = CollisionCategories.Invader
-        self.physicsBody?.contactTestBitMask = CollisionCategories.floor | CollisionCategories.PlayerBullet | CollisionCategories.ScenePiece
-        self.physicsBody?.collisionBitMask = CollisionCategories.floor | CollisionCategories.PlayerBullet
+        self.physicsBody?.contactTestBitMask = CollisionCategories.floor | CollisionCategories.PlayerBullet | CollisionCategories.ScenePiece | CollisionCategories.Player
+        self.physicsBody?.collisionBitMask = CollisionCategories.floor | CollisionCategories.PlayerBullet  | CollisionCategories.Player
     }
     func isGunner() -> Bool{
         return gunner
