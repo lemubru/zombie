@@ -133,6 +133,8 @@
 		147D28A91B2C880000BD025A /* PlayerBullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A81B2C880000BD025A /* PlayerBullet.swift */; };
 		147D28AB1B2D9C5E00BD025A /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28AA1B2D9C5E00BD025A /* Utilities.swift */; };
 		147E29F71B41EB6C0043C662 /* dock.png in Resources */ = {isa = PBXBuildFile; fileRef = 147E29F61B41EB6C0043C662 /* dock.png */; };
+		147E29F91B41F9410043C662 /* grass1.png in Resources */ = {isa = PBXBuildFile; fileRef = 147E29F81B41F9410043C662 /* grass1.png */; };
+		147E29FB1B41FBA40043C662 /* grass2.png in Resources */ = {isa = PBXBuildFile; fileRef = 147E29FA1B41FBA40043C662 /* grass2.png */; };
 		1481238E1B30AF3E0056992C /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481238A1B30AF3E0056992C /* Timer.swift */; };
 		1481238F1B30AF3E0056992C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481238B1B30AF3E0056992C /* Globals.swift */; };
 		148123901B30AF3E0056992C /* TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481238C1B30AF3E0056992C /* TargetAction.swift */; };
@@ -323,6 +325,8 @@
 		147D28A81B2C880000BD025A /* PlayerBullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerBullet.swift; sourceTree = "<group>"; };
 		147D28AA1B2D9C5E00BD025A /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		147E29F61B41EB6C0043C662 /* dock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dock.png; sourceTree = "<group>"; };
+		147E29F81B41F9410043C662 /* grass1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass1.png; sourceTree = "<group>"; };
+		147E29FA1B41FBA40043C662 /* grass2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass2.png; sourceTree = "<group>"; };
 		1481238A1B30AF3E0056992C /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		1481238B1B30AF3E0056992C /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		1481238C1B30AF3E0056992C /* TargetAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetAction.swift; sourceTree = "<group>"; };
@@ -692,8 +696,10 @@
 				144731381B3357A700A34790 /* shotgunsound.mp3 */,
 				1479C6921B2F8D57001C73E8 /* floor.png */,
 				147E29F61B41EB6C0043C662 /* dock.png */,
+				147E29F81B41F9410043C662 /* grass1.png */,
 				145006891B3A385800E191C8 /* hit.mp3 */,
 				1450068F1B3B364600E191C8 /* night.png */,
+				147E29FA1B41FBA40043C662 /* grass2.png */,
 				745B965C1A8C057A006D014D /* newgamebtn.png */,
 				14105ED81B3CB0C20040A0E1 /* slice.mp3 */,
 				14105EDA1B3CCBA40040A0E1 /* mud.gif */,
@@ -812,6 +818,7 @@
 				1447319C1B376ADE00A34790 /* heavy1.png in Resources */,
 				145006A71B3B3BE400E191C8 /* zombie5.png in Resources */,
 				1447314A1B362AD800A34790 /* rock3.png in Resources */,
+				147E29FB1B41FBA40043C662 /* grass2.png in Resources */,
 				141997E51B2F98E30087792A /* deadsoldier4.png in Resources */,
 				144731301B323BA100A34790 /* nwbutton.png in Resources */,
 				141997E41B2F98E30087792A /* deadsoldier3.png in Resources */,
@@ -868,6 +875,7 @@
 				745B96691A8C057A006D014D /* newgamebtn.png in Resources */,
 				141997EC1B2F98E30087792A /* deadsoldier11.png in Resources */,
 				144731611B36E4B500A34790 /* expdeath5.png in Resources */,
+				147E29F91B41F9410043C662 /* grass1.png in Resources */,
 				148123B41B30B7700056992C /* mummy15.png in Resources */,
 				144731811B36F9EF00A34790 /* flamedeath9.png in Resources */,
 				745B966D1A8C057A006D014D /* star.png in Resources */,

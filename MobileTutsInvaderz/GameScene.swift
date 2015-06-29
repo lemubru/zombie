@@ -89,6 +89,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         self.physicsBody?.dynamic = false
         self.physicsBody?.allowsRotation = false
         self.physicsBody?.pinned = true
+        
         self.physicsBody?.mass = 10000000
         self.physicsBody?.categoryBitMask = CollisionCategories.floor
         self.physicsBody?.contactTestBitMask = CollisionCategories.PlayerBullet | CollisionCategories.Invader | CollisionCategories.ScenePiece
@@ -110,6 +111,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func loadBG(){
         let background = SKSpriteNode(imageNamed: "night")
+        background.name = "BG"
         background.anchorPoint = CGPointMake(0, 1)
         background.position = CGPointMake(0, size.height)
         background.zPosition = 1
@@ -136,6 +138,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func setupTurret(x: CGFloat,y: CGFloat){
         let turret:Ally = Ally(scene: self,name: "turret",x: x,y: y)
+        turret.zPosition = 20
     }
     
     func placeMud(x: CGFloat,y: CGFloat){
@@ -207,8 +210,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     func loadHud(){
         levelLabel.text = "level: " + String(level)
-        levelLabel.position.x = self.size.width*0.25
-        levelLabel.position.y = 10
+        levelLabel.position.x = self.size.width*0.6
+        levelLabel.position.y = self.size.height*0.9
         levelLabel.zPosition = 2
         levelLabel.fontSize = 17
         
@@ -229,7 +232,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         trapLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
         
         pointsLabel.text = String(points)
-        pointsLabel.position = CGPoint(x: 30,y: 10)
+        pointsLabel.position = CGPoint(x: 7,y: 5)
+        pointsLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
         pointsLabel.fontSize = 30
         pointsLabel.zPosition = 3
         self.addChild(pointsLabel)
@@ -239,20 +243,24 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
         
         
-        let dock = ScenePiece(pieceName: "dock", textTureName: "dock.png", dynamic: false, scale: 1, x: 100, y: self.size.height - 20)
-        dock.zPosition = 2
+        let dock = ScenePiece(pieceName: "dock", textTureName: "dock.png", dynamic: false, scale: 1, x: 10, y: self.size.height - 20)
+        dock.zPosition = 18
         self.addChild(dock)
         
+        let grass = ScenePiece(pieceName: "grass", textTureName: "grass2.png", dynamic: false, scale: 1, x: self.size.width/2, y:20)
+        grass.zPosition = 20
+        self.addChild(grass)
+        
         let nextWeaponButton = ScenePiece(pieceName: "nwbutton", textTureName: "nwbutton", dynamic: false, scale: 0.4,x : self.size.width - 20,y: self.size.height - 20)
-        nextWeaponButton.zPosition = 2
+        nextWeaponButton.zPosition = 14
         self.addChild(nextWeaponButton)
         // nextWeaponButton.AddPhysics(self, dynamic: false)
         
         let trapButton = ScenePiece(pieceName: "trapbtn", textTureName: "trapbtn", dynamic: false, scale: 0.4,x : self.size.width - 300,y: self.size.height - 20)
         self.addChild(trapButton)
-        trapButton.zPosition = 2
+        trapButton.zPosition = 14
         let nextTrapButton = ScenePiece(pieceName: "nexttrap", textTureName: "nxttrapbtn", dynamic: false, scale: 0.4,x : self.size.width - 250,y: self.size.height - 20)
-        nextTrapButton.zPosition = 2
+        nextTrapButton.zPosition = 14
         self.addChild(nextTrapButton)
         
         let moveR = ScenePiece(pieceName: "moveR", textTureName: "movebtn", dynamic: false, scale: 1,x : 100,y:  20)
@@ -278,14 +286,14 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         touchx = touchLocation.x
         touchy = touchLocation.y
         let touchedNode = self.nodeAtPoint(touchLocation) //touchedNode is the node being touched
-   
+        NSLog(touchedNode.name!)
         if(placeMudMode){
             trapLabel.text = "mud placed!";
             placeMud(touchx, y: touchy)
             placeMudMode  = false
         }else
         
-        if(placeTurretMode){
+        if(placeTurretMode && touchedNode.name == "dock"){
             trapLabel.text = "turret placed!";
             setupTurret(touchx, y: touchy)
             placeTurretMode = false
@@ -304,11 +312,21 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                
              
                 trapLabel.text = "press T to place mud";
+                enumerateChildNodesWithName("flash") { node, stop in
+                    
+                    node.removeFromParent()
+                }
+                flashText("info: place mud on floor", x: self.size.width*0.2, y: 10, z: 6, waitDur: 3)
             }
             if(trap == 2){
                
                 if(numTurrets < turretLimit){
                      trapLabel.text = "press T to place turret";
+                    enumerateChildNodesWithName("flash") { node, stop in
+                    
+                            node.removeFromParent()
+                        }
+                    flashText("info: place turret on dock upper left corner", x: self.size.width*0.2, y: 10, z: 6, waitDur: 3)
                     
                     
                 }else{
@@ -323,6 +341,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
           
             if(trap > trapCap){
+                enumerateChildNodesWithName("flash") { node, stop in
+                    
+                    node.removeFromParent()
+                }
                 placeMudMode = false
                 trapLabel.text = "rock fall";
                 trap = 0
@@ -397,8 +419,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 swingingSpikeBall()
             }else if(trap == 2){
                 if(numTurrets < turretLimit){
-                     trapLabel.text = "touch to place";
+                    trapLabel.text = "touch to place";
                     placeTurretMode = true
+                    
                     
                 }else{
                     trapLabel.text = "turret Limit:" + String(turretLimit);
@@ -407,6 +430,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             }else if(trap == 3){
                 trapLabel.text = "touch to place";
                 placeMudMode = true
+               
                 
             }
         } else{
@@ -661,6 +685,31 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
     
     }
+    func flashText(text: String, x: CGFloat,y: CGFloat, z: CGFloat, waitDur: Double){
+        let tempL = SKLabelNode(fontNamed: "COPPERPLATE")
+        tempL.fontColor = SKColor .whiteColor()
+        tempL.text = text;
+        tempL.name = "flash"
+        tempL.position.x = x
+        tempL.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+        tempL.position.y = y
+        tempL.zPosition = z
+        tempL.fontSize = 14
+        self.addChild(tempL)
+        let fadein = SKAction.fadeInWithDuration(0.1)
+        let fadeout = SKAction.fadeOutWithDuration(0.4)
+        let wait = SKAction.waitForDuration(waitDur)
+        let flash = SKAction.sequence([fadein,wait,fadeout])
+     
+        
+        tempL.runAction(flash,withKey:"flash")
+        self.runAction(SKAction.waitForDuration(8),completion:{
+            tempL.removeFromParent()
+        })
+       
+      
+        
+    }
     
 
     func gameOver(){
@@ -674,6 +723,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func didBeginContact(contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
+     
         var secondBody: SKPhysicsBody
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
@@ -890,12 +940,25 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         if ((firstBody.categoryBitMask & CollisionCategories.PlayerBullet != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.floor != 0)) {
                 //  NSLog("Bullet hit floor")
-                let waitToEnableFire = SKAction.waitForDuration(0.1)
-                runAction(waitToEnableFire,completion:{
-                    firstBody.node?.removeFromParent()
-                    //sparkEmmiter.removeFromParent()
-                    // secondBody.node?.removeFromParent()
-                })
+                
+                let contactPoint = contact.contactPoint
+             
+                
+                if(secondBody.node?.name == "arrow"){
+                    
+                    let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
+                    self.physicsWorld.addJoint(myJoint)
+                  
+                    
+                    
+                }else{
+                    let waitToEnableFire = SKAction.waitForDuration(0.1)
+                    runAction(waitToEnableFire,completion:{
+                        firstBody.node?.removeFromParent()
+                        //sparkEmmiter.removeFromParent()
+                        // secondBody.node?.removeFromParent()
+                    })
+                }
         }
         
         if ((firstBody.categoryBitMask & CollisionCategories.Invader != 0) &&
