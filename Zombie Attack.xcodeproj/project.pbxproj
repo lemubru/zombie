@@ -138,6 +138,7 @@
 		147E29FD1B41FCBF0043C662 /* dirt.sks in Resources */ = {isa = PBXBuildFile; fileRef = 147E29FC1B41FCBF0043C662 /* dirt.sks */; };
 		147E29FF1B4205430043C662 /* smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = 147E29FE1B4205430043C662 /* smoke.sks */; };
 		147E2A011B42117A0043C662 /* arrow1.png in Resources */ = {isa = PBXBuildFile; fileRef = 147E2A001B42117A0043C662 /* arrow1.png */; };
+		147E2A031B4212C60043C662 /* ArrowHitTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 147E2A021B4212C60043C662 /* ArrowHitTexture.png */; };
 		1481238E1B30AF3E0056992C /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481238A1B30AF3E0056992C /* Timer.swift */; };
 		1481238F1B30AF3E0056992C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481238B1B30AF3E0056992C /* Globals.swift */; };
 		148123901B30AF3E0056992C /* TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481238C1B30AF3E0056992C /* TargetAction.swift */; };
@@ -165,7 +166,6 @@
 		148123BC1B30CFB30056992C /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 148123BB1B30CFB30056992C /* arrow.png */; };
 		148123BE1B30D7040056992C /* arrowfire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 148123BD1B30D7040056992C /* arrowfire.mp3 */; };
 		148123C01B30E6C70056992C /* halfarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 148123BF1B30E6C70056992C /* halfarrow.png */; };
-		148123C31B30EEBE0056992C /* ArrowHitTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 148123C11B30EEBE0056992C /* ArrowHitTexture.png */; };
 		148123C41B30EEBE0056992C /* ArrowTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 148123C21B30EEBE0056992C /* ArrowTexture.png */; };
 		148123C81B31DCE60056992C /* ScenePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148123C71B31DCE60056992C /* ScenePiece.swift */; };
 		1485583B1B2F0AA300EBD93A /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 148558391B2F0AA300EBD93A /* spark.png */; };
@@ -333,6 +333,7 @@
 		147E29FC1B41FCBF0043C662 /* dirt.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = dirt.sks; sourceTree = "<group>"; };
 		147E29FE1B4205430043C662 /* smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = smoke.sks; sourceTree = "<group>"; };
 		147E2A001B42117A0043C662 /* arrow1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow1.png; sourceTree = "<group>"; };
+		147E2A021B4212C60043C662 /* ArrowHitTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowHitTexture.png; sourceTree = "<group>"; };
 		1481238A1B30AF3E0056992C /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		1481238B1B30AF3E0056992C /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		1481238C1B30AF3E0056992C /* TargetAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetAction.swift; sourceTree = "<group>"; };
@@ -360,7 +361,6 @@
 		148123BB1B30CFB30056992C /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		148123BD1B30D7040056992C /* arrowfire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = arrowfire.mp3; sourceTree = "<group>"; };
 		148123BF1B30E6C70056992C /* halfarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = halfarrow.png; sourceTree = "<group>"; };
-		148123C11B30EEBE0056992C /* ArrowHitTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowHitTexture.png; sourceTree = "<group>"; };
 		148123C21B30EEBE0056992C /* ArrowTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowTexture.png; sourceTree = "<group>"; };
 		148123C71B31DCE60056992C /* ScenePiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScenePiece.swift; sourceTree = "<group>"; };
 		148558391B2F0AA300EBD93A /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -678,8 +678,8 @@
 				147E2A001B42117A0043C662 /* arrow1.png */,
 				148123BB1B30CFB30056992C /* arrow.png */,
 				148123BF1B30E6C70056992C /* halfarrow.png */,
-				148123C11B30EEBE0056992C /* ArrowHitTexture.png */,
 				148123C21B30EEBE0056992C /* ArrowTexture.png */,
+				147E2A021B4212C60043C662 /* ArrowHitTexture.png */,
 				745B965B1A8C057A006D014D /* laser.png */,
 				144731351B32D66700A34790 /* flamersound.mp3 */,
 				148123B91B30C12E0056992C /* punch.wav */,
@@ -805,7 +805,6 @@
 				148123A91B30B7700056992C /* mummy4.png in Resources */,
 				144731501B36412D00A34790 /* beep.mp3 in Resources */,
 				148123AB1B30B7700056992C /* mummy6.png in Resources */,
-				148123C31B30EEBE0056992C /* ArrowHitTexture.png in Resources */,
 				141997CD1B2F98CC0087792A /* soldierrun5.png in Resources */,
 				144731461B362AAA00A34790 /* rock1.png in Resources */,
 				141997D01B2F98CC0087792A /* soldierrun8.png in Resources */,
@@ -823,6 +822,7 @@
 				144731A41B376ADE00A34790 /* heavy9.png in Resources */,
 				1447318A1B36F9EF00A34790 /* flamedeath18.png in Resources */,
 				1485583F1B2F1AC400EBD93A /* MyParticleSystem.scnp in Resources */,
+				147E2A031B4212C60043C662 /* ArrowHitTexture.png in Resources */,
 				144731271B32039900A34790 /* sawblade.png in Resources */,
 				1447319C1B376ADE00A34790 /* heavy1.png in Resources */,
 				145006A71B3B3BE400E191C8 /* zombie5.png in Resources */,

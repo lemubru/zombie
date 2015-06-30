@@ -76,7 +76,12 @@ class Player: SKSpriteNode {
             bullet.position.x = self.position.x
             bullet.position.y = self.position.y
             bullet.setScale(bulletScale)
-            bullet.zRotation = angle
+            if(bullet.name == "bullet"){
+                 bullet.zRotation = angle - 90 * DegreesToRadians
+            }else{
+                  bullet.zRotation = angle
+            }
+          
             
       
             self.zRotation = angle - 90 * DegreesToRadians

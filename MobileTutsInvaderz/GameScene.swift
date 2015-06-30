@@ -133,6 +133,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         player.physicsBody?.categoryBitMask = CollisionCategories.Player
         player.physicsBody?.contactTestBitMask = CollisionCategories.EnemyBullet
         player.physicsBody?.collisionBitMask =  CollisionCategories.EnemyBullet
+        player.setScale(1.5)
         addChild(player)
     }
     
@@ -318,7 +319,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     
                     node.removeFromParent()
                 }
-                flashText("info: place mud on floor", x: self.size.width*0.2, y: 10, z: 6, waitDur: 3)
+                flashText("info: place mud on floor", x: self.size.width*0.2, y: 10, z: 22, waitDur: 3)
             }
             if(trap == 2){
                
@@ -328,7 +329,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     
                             node.removeFromParent()
                         }
-                    flashText("info: place turret on dock upper left corner", x: self.size.width*0.2, y: 10, z: 6, waitDur: 3)
+                    flashText("info: place turret on dock upper left corner", x: self.size.width*0.2, y: 10, z: 22, waitDur: 3)
                     
                     
                 }else{
@@ -437,7 +438,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             }
         } else{
             var bulletName = "bullet"
-            var bulletTexture = "ball"
+            var bulletTexture = "bullet"
             var bulletScale = CGFloat(0.4)
             var speedMultiplier = CGFloat(0.002)
             var bulletSound = "gunshot.mp3"
@@ -454,7 +455,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             }
             if(weapon == 2){
                 bulletName = "arrow"
-                bulletTexture = "ArrowTexture"
+                bulletTexture = "arrow1"
                 var bulletScale = 0.2
                 speedMultiplier = CGFloat(0.003)
                 bulletSound = "arrowfire.mp3"
@@ -532,7 +533,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             self.fireMachineGun("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 0.2)
         }
         if(autoCrossBow){
-            self.fireMachineGun("arrowfire.mp3", scale: 0.3, bulletTexture: "ArrowTexture", bulletName: "arrow", speedMulti: 0.003, multiShot: false, canFireWait: 0.2)
+            self.fireMachineGun("arrowfire.mp3", scale: 0.3, bulletTexture: "arrow1", bulletName: "arrow", speedMulti: 0.003, multiShot: false, canFireWait: 0.2)
         }
         if(autoShottie){
          
@@ -639,13 +640,23 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
 
     func moveInvaders(){
+        
+        enumerateChildNodesWithName("heavy") { node, stop in
+            let invader = node as! Invader
+            if(invader.getLock()){
+                self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "playerbullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
+            }
+        }
+        
+        
+        
         enumerateChildNodesWithName("invader") { node, stop in
             let invader = node as! Invader
             if(invader.getLock()){
                 self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "playerbullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
             }
             if(invader.isGunner()){
-           // invader.fireBullet(self, touchX: self.player.position.x, touchY: self.player.position.y + CGFloat(self.randRange(0, upper: 80)), bulletTexture: "ball", bulletScale: 0.5, speedMultiplier: CGFloat(0.002), bulletSound: "gunshot.mp3", canFireWait: 2, multiShot: false, bulletName: "invaderbullet")
+            invader.fireBullet(self, touchX: self.player.position.x, touchY: self.player.position.y + CGFloat(self.randRange(0, upper: 80)), bulletTexture: "ball", bulletScale: 0.5, speedMultiplier: CGFloat(0.002), bulletSound: "gunshot.mp3", canFireWait: 2, multiShot: false, bulletName: "invaderbullet")
             }
             if(self.movingL){
                 self.player.position.x--
