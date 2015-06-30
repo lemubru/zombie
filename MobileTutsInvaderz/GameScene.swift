@@ -152,14 +152,25 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
       //  mud.position.y = y
       //  mud.AddPhysics(self, dynamic: false)
       //  mud.zPosition = 3
+        let node = SKSpriteNode(imageNamed: "field0")
+        node.position.x = x
+        node.position.y = y
+        node.zPosition = 12
+        self.addChild(node)
+        var playerTextures:[SKTexture] = []
+        for i in 0...11 {
+            playerTextures.append(SKTexture(imageNamed: "field\(i)"))
+        }
+        let playerAnimation = SKAction.repeatActionForever( SKAction.animateWithTextures(playerTextures, timePerFrame: 0.1))
+        node.runAction(playerAnimation)
         
         let fieldNode = SKFieldNode.radialGravityField()
         fieldNode.enabled = true;
-        fieldNode.position.x = x
-        fieldNode.position.y = y
-        self.addChild(fieldNode)
+        node.addChild(fieldNode)
         fieldNode.strength =  4
         fieldNode.falloff = 1
+        
+        self.waitAndRemove(node, wait: 10)
         
     }
     
@@ -314,7 +325,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let touchedNode = self.nodeAtPoint(touchLocation) //touchedNode is the node being touched
         //NSLog(touchedNode.name!)
         if(placeMudMode){
-            trapLabel.text = "mud placed!";
+            trapLabel.text = "Gfield placed!";
             placeMud(touchx, y: touchy)
             placeMudMode  = false
         }else
@@ -337,12 +348,12 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 placeTurretMode = false
                
              
-                trapLabel.text = "press T to place mud";
+                trapLabel.text = "press T to place gravity field";
                 enumerateChildNodesWithName("flash") { node, stop in
                     
                     node.removeFromParent()
                 }
-                flashText("info: place mud on floor", x: self.size.width*0.2, y: 10, z: 22, waitDur: 3)
+                flashText("info: radial gravity field affecting only enemy bullets", x: self.size.width*0.2, y: 10, z: 22, waitDur: 3)
             }
             if(trap == 2){
                
@@ -661,6 +672,14 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
     }
     
+    func waitAndRemove(node: SKNode, wait: Double){
+        
+        let waitToEnableFire = SKAction.waitForDuration(wait)
+        runAction(waitToEnableFire,completion:{
+            node.removeFromParent()
+        })
+    }
+    
 
     
 
@@ -806,11 +825,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             (secondBody.categoryBitMask & CollisionCategories.PlayerBullet != 0)){
                 //secondBody.node?.removeFromParent()
                   if(secondBody.node?.name == "arrow"){
-                let waitToRemoveBullet = SKAction.waitForDuration(2)
-                runAction(waitToRemoveBullet,completion:{
-                    //self.physicsWorld.removeAllJoints()
-                    secondBody.node?.removeFromParent()
-                })
+                    
+                    self.waitAndRemove(secondBody.node!, wait: 2)
+         
                   }else if(secondBody.node?.name == "nade")
                     {
                         

@@ -29,6 +29,7 @@ class PlayerBullet: Bullet {
         self.physicsBody?.contactTestBitMask = CollisionCategories.floor | CollisionCategories.Invader | CollisionCategories.EnemyBullet
         self.physicsBody?.collisionBitMask = CollisionCategories.floor  | CollisionCategories.Invader | CollisionCategories.EnemyBullet
         self.name = bulletName
+        self.physicsBody?.fieldBitMask = 0
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
