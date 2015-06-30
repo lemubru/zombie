@@ -12,12 +12,14 @@ import SpriteKit
 class Player: SKSpriteNode {
     private var canFire = true
     
+     var playerhit = UInt32()
+    
     init(name: String) {
         let texture = SKTexture(imageNamed: "turret")
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
 
         //animate()
-        
+      
         
         self.name = name
         
@@ -47,6 +49,14 @@ class Player: SKSpriteNode {
     
     func respawn(){
         
+    }
+    
+    func hit(hit: UInt32){
+        self.playerhit = hit
+    }
+    
+    func gethit() -> UInt32{
+        return self.playerhit
     }
     
     func fireBullet(scene: SKScene, touchX: CGFloat, touchY: CGFloat, bulletTexture: String,bulletScale: CGFloat, speedMultiplier: CGFloat, bulletSound: String, canFireWait: Double, multiShot: Bool, bulletName: String){

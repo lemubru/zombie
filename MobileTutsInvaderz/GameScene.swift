@@ -16,6 +16,8 @@ struct CollisionCategories{
     static let PlayerBullet: UInt32 = 0x1 << 3
     static let floor: UInt32 = 0x1 << 4
     static let ScenePiece: UInt32 = 0x1 << 5
+    static let Gfield: UInt32 = 0x1 << 6
+    static let Ally: UInt32 = 0x1 << 7
 }
 let Pi = CGFloat(M_PI)
 let DegreesToRadians = Pi / 180
@@ -143,6 +145,11 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     func setupTurret(x: CGFloat,y: CGFloat){
         let turret:Ally = Ally(scene: self,name: "turret",x: x,y: y)
         turret.zPosition = 20
+        turret.physicsBody = SKPhysicsBody(circleOfRadius: turret.size.width/2)
+        turret.physicsBody?.dynamic = false
+        player.physicsBody?.categoryBitMask = CollisionCategories.Ally
+        player.physicsBody?.contactTestBitMask = CollisionCategories.EnemyBullet
+        player.physicsBody?.collisionBitMask =  CollisionCategories.EnemyBullet
     }
     
     func placeMud(x: CGFloat,y: CGFloat){
@@ -153,6 +160,13 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
       //  mud.AddPhysics(self, dynamic: false)
       //  mud.zPosition = 3
         let node = SKSpriteNode(imageNamed: "field0")
+        node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.width*0.1)
+        node.physicsBody?.categoryBitMask = CollisionCategories.Gfield
+        node.physicsBody?.collisionBitMask = CollisionCategories.EnemyBullet
+        node.physicsBody?.contactTestBitMask = CollisionCategories.EnemyBullet
+        
+        node.physicsBody?.fieldBitMask = 0
+        node.physicsBody?.dynamic = false
         node.position.x = x
         node.position.y = y
         node.zPosition = 12
@@ -369,8 +383,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 }else{
                     trapLabel.text = "turret Limit:" + String(turretLimit);
                 }
-              
-              
+
             }
             if(trap == 1){
                 trapLabel.text = "deathswing";
@@ -477,7 +490,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         } else{
             var bulletName = "bullet"
             var bulletTexture = "bullet"
-            var bulletScale = CGFloat(0.4)
+            var bulletScale = CGFloat(0.6)
             var speedMultiplier = CGFloat(0.002)
             var bulletSound = "gunshot.mp3"
             var canFireWait = 0.1
@@ -578,7 +591,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             rotateGunToTouch()
         }
         if(machineGunMode){
-            self.fireMachineGun("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 0.2)
+            self.fireMachineGun("machinegun.wav", scale: 0.4, bulletTexture: "bullet", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 0.2)
         }
         if(autoCrossBow){
             self.fireMachineGun("arrowfire.mp3", scale: 0.3, bulletTexture: "arrow1", bulletName: "arrow", speedMulti: 0.003, multiShot: false, canFireWait: 0.2)
@@ -807,6 +820,23 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
     }
     
+    func addAndRemoveEmitter(wait: Double, x: CGFloat,y: CGFloat, fileName:String,zPos: CGFloat){
+        let node = SKEmitterNode(fileNamed: fileName)
+        
+        node.zPosition = zPos
+        self.addChild(node)
+        node.position.x = x
+        node.position.y = y
+        
+        
+        let wait = SKAction.waitForDuration(wait)
+        runAction(wait,completion:{
+            node.removeFromParent()
+        })
+        
+        
+    }
+    
 
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -851,6 +881,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     
                  
                if(firstBody.node?.name == "invader"){
+                
+                self.addAndRemoveEmitter(0.2, x: contactPoint.x - 10, y: contactPoint.y, fileName: "blood.sks",zPos:3)
                 let sparkEmmiter = SKEmitterNode(fileNamed: "blood.sks")
                 sparkEmmiter.zPosition = 14
                 sparkEmmiter.position.x = contactPoint.x - 10
@@ -943,7 +975,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 
                
                     if(invaderObj.gethit() > self.invaderLife){
-                        firstBody.categoryBitMask = CollisionCategories.Player
+                        firstBody.categoryBitMask = CollisionCategories.ScenePiece
                         let deadlabel = SKLabelNode(fontNamed: "COPPERPLATE")
                         deadlabel.fontColor = SKColor .yellowColor()
                         deadlabel.text = "+5";
@@ -1084,18 +1116,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
               //  NSLog("Bullet hit floor")
                 
                 let contactPoint = contact.contactPoint
-                let sparkEmmiter = SKEmitterNode(fileNamed: "dirt.sks")
-                
-                sparkEmmiter.zPosition = 3
-                self.addChild(sparkEmmiter)
-                sparkEmmiter.position.x = contactPoint.x
-                sparkEmmiter.position.y = contactPoint.y
-                
-                
-                let wait = SKAction.waitForDuration(1)
-                runAction(wait,completion:{
-                    sparkEmmiter.removeFromParent()
-                })
+             
                 
                 let waitToEnableFire = SKAction.waitForDuration(0.3)
                 runAction(waitToEnableFire,completion:{
@@ -1116,21 +1137,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 //  NSLog("Bullet hit floor")
                 
                 let contactPoint = contact.contactPoint
-                let sparkEmmiter = SKEmitterNode(fileNamed: "dirt.sks")
-              
-                sparkEmmiter.zPosition = 3
-                self.addChild(sparkEmmiter)
-                sparkEmmiter.position.x = contactPoint.x
-                sparkEmmiter.position.y = contactPoint.y+7
-                
-                
-                let waitToEnableFire = SKAction.waitForDuration(0.2)
-                runAction(waitToEnableFire,completion:{
-                    sparkEmmiter.removeFromParent()
-                })
+                self.addAndRemoveEmitter(0.2, x: contactPoint.x, y: contactPoint.y, fileName: "dirt.sks",zPos: 3)
                 
                 if(firstBody.node?.name == "arrow"){
-                    firstBody.categoryBitMask = CollisionCategories.Player
+                    firstBody.categoryBitMask = CollisionCategories.ScenePiece
                      firstBody.contactTestBitMask = CollisionCategories.Invader
                     let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
                     self.physicsWorld.addJoint(myJoint)
@@ -1145,18 +1155,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     runAction(waitToEnableFire,completion:{
                         firstBody.node?.removeFromParent()
                    
-                    let sparkEmmiter = SKEmitterNode(fileNamed: "explo.sks")
-                    
-                    sparkEmmiter.zPosition = 3
-                    self.addChild(sparkEmmiter)
-                    sparkEmmiter.position.x = contactPoint.x
-                    sparkEmmiter.position.y = contactPoint.y+7
-                    
-                    
-                    let wait = SKAction.waitForDuration(1)
-                    self.runAction(wait,completion:{
-                        sparkEmmiter.removeFromParent()
-                    })
+                        self.addAndRemoveEmitter(1, x: contactPoint.x, y: contactPoint.y + 7, fileName: "explo.sks", zPos: 3)
+     
                 })
                         
                     }else{
@@ -1167,6 +1167,37 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 }
         }
         
+        if ((firstBody.categoryBitMask & CollisionCategories.EnemyBullet != 0) &&
+            (secondBody.categoryBitMask & CollisionCategories.Gfield != 0)) {
+                firstBody.node?.removeFromParent()
+        }
+        
+        if ((firstBody.categoryBitMask & CollisionCategories.Player != 0) &&
+            (secondBody.categoryBitMask & CollisionCategories.EnemyBullet != 0)) {
+           
+                self.hits++
+                
+                if(hits == 1){
+                   // self.hits = 0
+                let player = firstBody.node as! Player
+                
+                let bullet = secondBody.node as! EnemyBullet
+                bullet.removeFromParent()
+              //  NSLog(bullet.name!)
+             //   NSLog(player.name!)
+                NSLog(String(player.gethit()))
+                NSLog("hits on player")
+                player.hit(player.gethit()+1)
+                
+                 if(player.gethit() > 10){
+                    NSLog("PLayer dead")
+                    
+                }
+                }
+        }
+        
+ 
+
         if ((firstBody.categoryBitMask & CollisionCategories.Invader != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.ScenePiece != 0)) {
                 if(secondBody.node?.name == "flamenode"){
@@ -1222,12 +1253,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 if(secondBody.node?.name == "saw"){
                     runAction(SKAction.playSoundFileNamed("slice.mp3", waitForCompletion: false))
                     let contactPoint = contact.contactPoint
-                    let sparkEmmiter = SKEmitterNode(fileNamed: "heavyblood.sks")
-                    sparkEmmiter.zPosition = 14
-                    //  NSLog(String(stringInterpolationSegment: firstBody.node?.children))
-                    self.addChild(sparkEmmiter)
-                    sparkEmmiter.position.x = contactPoint.x
-                    sparkEmmiter.position.y = contactPoint.y
+                    
+                    self.addAndRemoveEmitter(0.3, x: contactPoint.x, y: contactPoint.y, fileName: "heavyblood.sks", zPos: 14)
+                    
+              
                     
                     //animate
                     var playerTextures:[SKTexture] = []
@@ -1241,11 +1270,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     })
                   
                     
-                    let waitToEnableFire = SKAction.waitForDuration(0.3)
-                    runAction(waitToEnableFire,completion:{
-                        sparkEmmiter.removeFromParent()
-                        // secondBody.node?.removeFromParent()
-                    })
+                 
                    // self.physicsWorld.removeJoint(joint:)
                 }
                 //NSLog("Invader and Player Collision Contact")

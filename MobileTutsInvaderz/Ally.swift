@@ -11,8 +11,9 @@ import SpriteKit
 
 class Ally: SKSpriteNode {
     
-     let turretRad = ScenePiece(pieceName: "turretRad", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
     
+     let turretRad = ScenePiece(pieceName: "turretRad", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
+     var playerhit = UInt32()
     private var canFire = true
     
     init(scene: SKScene, name: String, x: CGFloat,y: CGFloat) {
@@ -33,11 +34,11 @@ class Ally: SKSpriteNode {
         
         if(self.name == "turret"){
             
-            turretRad.hidden = true
-            turretRad.position.x = x
-            turretRad.position.y = y
-            turretRad.AddPhysics(scene, dynamic: false)
-            turretRad.zPosition = 3
+           turretRad.hidden = true
+           turretRad.position.x = x
+           turretRad.position.y = y
+           turretRad.AddPhysics(scene, dynamic: false)
+           turretRad.zPosition = 3
         }
       
         
@@ -68,6 +69,14 @@ class Ally: SKSpriteNode {
     
     func kill(){
         
+    }
+    
+    func hit(hit: UInt32){
+        self.playerhit = hit
+    }
+    
+    func gethit() -> UInt32{
+        return self.playerhit
     }
     
     func respawn(){
