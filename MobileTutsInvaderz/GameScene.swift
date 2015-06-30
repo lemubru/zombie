@@ -283,7 +283,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let touch = touches.first as! UITouch
         touching = true
         var turretLimit = 4
-        var weaponCap  = 7 //meaning +1 weapons - it starts at 1
+        var weaponCap  = 8 //meaning +1 weapons - it starts at 0
         var trapCap = 3 //meaning +1 traps
         let touchLocation = touch.locationInNode(self)
         touchx = touchLocation.x
@@ -361,7 +361,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             weapon++
             if(weapon > weaponCap)
             {
-                autoShottie = false
+                //autoShottie = false
                 weaponLabel.text = "pistol"
                 weapon = 0
             }
@@ -412,6 +412,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 weaponLabel.text = "auto-shotgun"
                 autoCrossBow = false
                 autoShottie = true
+            }
+            if(weapon == 8){
+                weaponLabel.text = "nader"
+                autoShottie = false
             }
            // NSLog("buttonpressed"+String(weapon))
         }else if(touchedNode.name == "trapbtn"){
@@ -469,6 +473,16 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 bulletSound = "shotgunsound.mp3"
                 canFireWait = 2
                 multiShot = true
+            }
+            
+            if(weapon == 8){
+                multiShot = false
+                bulletName = "nade"
+                bulletTexture = "ball"
+                var bulletScale = 1
+                speedMultiplier = CGFloat(0.001)
+                bulletSound = "gunshot.mp3"
+                canFireWait = 0.8
             }
             if(!flamerOn && !machineGunMode && !autoCrossBow && !autoShottie){
                 player.fireBullet(self, touchX:touchLocation.x, touchY:touchLocation.y, bulletTexture: bulletTexture, bulletScale: bulletScale, speedMultiplier: speedMultiplier, bulletSound: bulletSound, canFireWait: canFireWait, multiShot: multiShot, bulletName: bulletName)
@@ -669,6 +683,13 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 self.points++
                self.gameOver()
             }
+            
+            
+            
+
+            
+            
+            
            
             }
         // self.removeBullets()
@@ -755,7 +776,13 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     //self.physicsWorld.removeAllJoints()
                     secondBody.node?.removeFromParent()
                 })
-                  }else{
+                  }else if(secondBody.node?.name == "nade")
+                    {
+                        
+                 
+                        
+                        
+                    }else{
                     let waitToRemoveBullet = SKAction.waitForDuration(0.02)
                     runAction(waitToRemoveBullet,completion:{
                         //self.physicsWorld.removeAllJoints()
@@ -789,9 +816,6 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
    
                     let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
                     self.physicsWorld.addJoint(myJoint)
-                    if(contactPoint.y > invaderObj.position.y){
-                        
-                    }
                     bullet.texture = SKTexture(imageNamed: "ArrowHitTexture")
                    
                 }
@@ -818,6 +842,52 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     })
                     
                 }
+                
+                if(secondBody.node?.name == "nade"){
+                    let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
+                    self.physicsWorld.addJoint(myJoint)
+                    let waitToEnableFire = SKAction.waitForDuration(2)
+                    runAction(waitToEnableFire,completion:{
+                       
+                        self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
+                        let sparkEmmiter = SKEmitterNode(fileNamed: "explo.sks")
+                        let blood = SKEmitterNode(fileNamed: "heavyblood.sks")
+                        invaderObj.hit(invaderObj.gethit()+7)
+                        sparkEmmiter.zPosition = 3
+                        blood.zPosition = 3
+                        firstBody.node?.addChild(sparkEmmiter)
+                        firstBody.node?.addChild(blood)
+                     
+                        
+                        let waitforblood = SKAction.waitForDuration(0.3)
+                        self.runAction(waitforblood,completion:{
+                            blood.removeFromParent()
+                            // secondBody.node?.removeFromParent()
+                        })
+                        
+                        secondBody.node?.removeFromParent()
+                        let wait = SKAction.waitForDuration(1)
+                        self.runAction(wait,completion:{
+                            sparkEmmiter.removeFromParent()
+                            //blood.removeFromParent()
+                        })
+                        
+                        let setHidden = SKAction.runBlock(){
+                            firstBody.node?.hidden = true
+                        }
+                        let setVisible = SKAction.runBlock(){
+                            firstBody.node?.hidden = false
+                        }
+                        let waitAbit = SKAction.waitForDuration(0.08)
+                        let seq = SKAction.sequence([setHidden,waitAbit,setVisible,waitAbit,setHidden,waitAbit,setVisible,waitAbit])
+                        firstBody.node?.runAction(seq,completion:{
+                            firstBody.node?.removeFromParent()
+                            // self.playerDead = true
+                        })
+                    })
+                    
+                }else{
+                
                 
                
                     if(invaderObj.gethit() > self.invaderLife){
@@ -865,6 +935,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             // self.playerDead = true
                         })
                     }
+                
+                
+                }
+                
                     }
                     if(firstBody.node?.name == "heavy"){
                           runAction(SKAction.playSoundFileNamed("punch.wav", waitForCompletion: false))
@@ -1012,7 +1086,28 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     runAction(waitToEnableFire,completion:{
                         firstBody.node?.removeFromParent()
                     })
-                }else{
+                }else if(firstBody.node?.name == "nade"){
+                    let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
+                    self.physicsWorld.addJoint(myJoint)
+                    let waitToEnableFire = SKAction.waitForDuration(2)
+                    runAction(waitToEnableFire,completion:{
+                        firstBody.node?.removeFromParent()
+                   
+                    let sparkEmmiter = SKEmitterNode(fileNamed: "explo.sks")
+                    
+                    sparkEmmiter.zPosition = 3
+                    self.addChild(sparkEmmiter)
+                    sparkEmmiter.position.x = contactPoint.x
+                    sparkEmmiter.position.y = contactPoint.y+7
+                    
+                    
+                    let wait = SKAction.waitForDuration(1)
+                    self.runAction(wait,completion:{
+                        sparkEmmiter.removeFromParent()
+                    })
+                })
+                        
+                    }else{
                     let waitToEnableFire = SKAction.waitForDuration(0.01)
                     runAction(waitToEnableFire,completion:{
                         firstBody.node?.removeFromParent()
