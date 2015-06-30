@@ -84,6 +84,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     override func didMoveToView(view: SKView) {
+        let sound = SKAction.playSoundFileNamed("Revelations.mp3", waitForCompletion: true)
+        self.runAction(SKAction.repeatActionForever(sound))
         backgroundColor = SKColor.darkGrayColor()
         self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1000, height: 10), center: CGPoint(x:self.size.width/2,y:40))
         self.physicsBody?.dynamic = false
@@ -110,7 +112,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     func loadBG(){
-        let background = SKSpriteNode(imageNamed: "night")
+   
+        let background = SKSpriteNode(imageNamed: "BG2.jpg")
         background.name = "BG"
         background.anchorPoint = CGPointMake(0, 1)
         background.position = CGPointMake(0, size.height)
@@ -143,12 +146,21 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     func placeMud(x: CGFloat,y: CGFloat){
-        let mud = ScenePiece(pieceName: "mud", textTureName: "floor", dynamic: false, scale: 0.1,x : 2,y: 2)
-        mud.hidden = true
-        mud.position.x = x
-        mud.position.y = y
-        mud.AddPhysics(self, dynamic: false)
-        mud.zPosition = 3
+       // let mud = ScenePiece(pieceName: "mud", textTureName: "floor", dynamic: false, scale: 0.1,x : 2,y: 2)
+     //   mud.hidden = true
+      //  mud.position.x = x
+      //  mud.position.y = y
+      //  mud.AddPhysics(self, dynamic: false)
+      //  mud.zPosition = 3
+        
+        let fieldNode = SKFieldNode.radialGravityField()
+        fieldNode.enabled = true;
+        fieldNode.position.x = x
+        fieldNode.position.y = y
+        self.addChild(fieldNode)
+        fieldNode.strength =  4
+        fieldNode.falloff = 1
+        
     }
     
     func setupEnemy(){
@@ -189,17 +201,28 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             self.setupEnemy()
         }
         let spawnHeavy = SKAction.runBlock(){
-            self.setupHeavyEnemy()
+            
+            var random = self.randRange(0, upper: 1)
+            if(random == 1){
+                 self.setupEnemy()
+            }else{
+                 self.setupHeavyEnemy()
+                
+            }
+           
         }
         let spawnAndWait = SKAction.sequence([spawnNormal,wait1])
         let spawnAndWaitHeavy = SKAction.sequence([spawnHeavy,wait2])
+        
         self.runAction(SKAction.repeatActionForever(spawnAndWait), withKey:"spawnandwait")
-        
-       
-        
        self.runAction(longwait,completion:{
          self.removeActionForKey("spawnandwait")
-        self.runAction(SKAction.repeatActionForever(spawnAndWaitHeavy), withKey:"spawnandwaitheavy")
+
+            self.runAction(SKAction.repeatActionForever(spawnAndWaitHeavy), withKey:"spawnandwaitheavy")
+        
+        
+        //self.runAction(SKAction.repeatActionForever(spawnAndWaitHeavy), withKey:"spawnandwaitheavy")
+        
         self.runAction(longwait,completion:{
             self.removeActionForKey("spawnandwaitheavy")
             
@@ -670,7 +693,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "playerbullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
             }
             if(invader.isGunner()){
-            invader.fireBullet(self, touchX: self.player.position.x, touchY: self.player.position.y + CGFloat(self.randRange(0, upper: 80)), bulletTexture: "ball", bulletScale: 0.5, speedMultiplier: CGFloat(0.002), bulletSound: "gunshot.mp3", canFireWait: 2, multiShot: false, bulletName: "invaderbullet")
+            invader.fireBullet(self, touchX: self.player.position.x, touchY: self.player.position.y + CGFloat(self.randRange(0, upper: 80)), bulletTexture: "ball", bulletScale: 1, speedMultiplier: CGFloat(0.001), bulletSound: "gunshot.mp3", canFireWait: 2, multiShot: false, bulletName: "invaderbullet")
             }
             if(self.movingL){
                 self.player.position.x--
@@ -701,7 +724,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     override func didSimulatePhysics() {
         enumerateChildNodesWithName("invaderbullet") { node, stop in
             let bullet = node as! EnemyBullet
-            if(bullet.position.y > self.size.height - 100 || bullet.position.y < 0 + 30 || bullet.position.x > self.size.width + 100){
+            if(bullet.position.y > self.size.height - 10 || bullet.position.y < 0 + 30 || bullet.position.x > self.size.width + 100){
                 bullet.removeFromParent()
             }
             
@@ -716,6 +739,18 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             }
             
         }
+        
+        enumerateChildNodesWithName("heavy") { node, stop in
+            let invader = node as! Invader
+            if(invader.position.x < 5){
+                //self.setupEnemy()
+                self.playerDead = false
+                invader.removeFromParent()
+                // self.gameOver()
+            }
+            
+        }
+
         
     
     }

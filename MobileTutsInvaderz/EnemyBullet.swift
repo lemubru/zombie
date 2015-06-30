@@ -27,8 +27,8 @@ class EnemyBullet: Bullet {
         self.physicsBody?.linearDamping = 0.0;
         self.physicsBody?.angularDamping = 0.0;
         self.physicsBody?.categoryBitMask = CollisionCategories.EnemyBullet
-        self.physicsBody?.contactTestBitMask = CollisionCategories.floor | CollisionCategories.Player
-        self.physicsBody?.collisionBitMask = CollisionCategories.floor  | CollisionCategories.Player
+        self.physicsBody?.contactTestBitMask = CollisionCategories.floor | CollisionCategories.Player | CollisionCategories.PlayerBullet
+        self.physicsBody?.collisionBitMask = CollisionCategories.floor  | CollisionCategories.Player | CollisionCategories.PlayerBullet
         self.name = bulletName
     }
     required init?(coder aDecoder: NSCoder) {

@@ -46,6 +46,7 @@ class Invader: SKSpriteNode {
         self.physicsBody?.categoryBitMask = CollisionCategories.Invader
         self.physicsBody?.contactTestBitMask = CollisionCategories.floor | CollisionCategories.PlayerBullet | CollisionCategories.ScenePiece | CollisionCategories.Player
         self.physicsBody?.collisionBitMask = CollisionCategories.floor | CollisionCategories.PlayerBullet  | CollisionCategories.Player
+        self.physicsBody?.fieldBitMask = 0
     }
     func isGunner() -> Bool{
         return gunner
@@ -98,8 +99,8 @@ class Invader: SKSpriteNode {
             let DegreesToRadians = Pi / 180
             let RadiansToDegrees = 180 / Pi
             let angle = atan2(opposite,adjacent)
-            let newY = sin(angle)*2000
-            let newX = cos(angle)*2000
+            let newY = sin(angle)*1000
+            let newX = cos(angle)*1000
             let newY1 = sin(angle - spread * DegreesToRadians)*2000
             let newX1 = cos(angle - spread * DegreesToRadians)*2000
             let newY2 = sin(angle + spread * DegreesToRadians)*2000
@@ -109,6 +110,7 @@ class Invader: SKSpriteNode {
             bullet.position.y = self.position.y
             bullet.setScale(bulletScale)
             bullet.zRotation = angle
+          
             
             
             //self.zRotation = angle - 90 * DegreesToRadians
