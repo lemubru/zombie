@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "504"
-            endingLineNumber = "504"
+            startingLineNumber = "513"
+            endingLineNumber = "513"
             landmarkName = "touchesBegan(_:withEvent:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457403806.412223"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "876"
-            endingLineNumber = "876"
+            startingLineNumber = "885"
+            endingLineNumber = "885"
             landmarkName = "didBeginContact(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481095.562029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
             landmarkName = "GameScene"
             landmarkType = "3">
             <Locations>
@@ -105,11 +105,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "308"
-            endingLineNumber = "308"
+            startingLineNumber = "317"
+            endingLineNumber = "317"
             landmarkName = "loadHud()"
             landmarkType = "5">
          </BreakpointContent>
@@ -121,11 +121,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457403806.412223"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1244"
-            endingLineNumber = "1244"
+            startingLineNumber = "1253"
+            endingLineNumber = "1253"
             landmarkName = "didBeginContact(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -137,11 +137,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481095.562029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
             landmarkName = "setupEnemy()"
             landmarkType = "5">
          </BreakpointContent>
@@ -153,11 +153,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "559"
-            endingLineNumber = "559"
+            startingLineNumber = "568"
+            endingLineNumber = "568"
             landmarkName = "touchesMoved(_:withEvent:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -169,11 +169,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481095.562029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
             landmarkName = "setupHeavyEnemy()"
             landmarkType = "5">
          </BreakpointContent>
@@ -185,11 +185,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481095.562029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "setupEnemy()"
             landmarkType = "5">
          </BreakpointContent>
@@ -201,11 +201,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481095.562029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
             landmarkName = "setupPlayer()"
             landmarkType = "5">
          </BreakpointContent>
@@ -217,11 +217,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "735"
-            endingLineNumber = "735"
+            startingLineNumber = "744"
+            endingLineNumber = "744"
             landmarkName = "moveInvaders()"
             landmarkType = "5">
          </BreakpointContent>
@@ -233,11 +233,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "724"
-            endingLineNumber = "724"
+            startingLineNumber = "733"
+            endingLineNumber = "733"
             landmarkName = "moveInvaders()"
             landmarkType = "5">
          </BreakpointContent>
@@ -281,11 +281,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "577"
-            endingLineNumber = "577"
+            startingLineNumber = "586"
+            endingLineNumber = "586"
             landmarkName = "touchesEnded(_:withEvent:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -313,11 +313,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "659"
-            endingLineNumber = "659"
+            startingLineNumber = "668"
+            endingLineNumber = "668"
             landmarkName = "spikeFall()"
             landmarkType = "5">
          </BreakpointContent>
@@ -329,11 +329,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "657"
-            endingLineNumber = "657"
+            startingLineNumber = "666"
+            endingLineNumber = "666"
             landmarkName = "spikeFall()"
             landmarkType = "5">
          </BreakpointContent>
@@ -345,11 +345,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "620"
-            endingLineNumber = "620"
+            startingLineNumber = "629"
+            endingLineNumber = "629"
             landmarkName = "fireTurret(_:scale:bulletTexture:bulletName:speedMulti:multiShot:canFireWait:enemyx:enemyy:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -361,11 +361,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457403806.412223"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1225"
-            endingLineNumber = "1225"
+            startingLineNumber = "1234"
+            endingLineNumber = "1234"
             landmarkName = "didBeginContact(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -377,11 +377,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481095.562029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "placeMud(_:y:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -425,11 +425,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481095.562029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "init(size:points:ef:level:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -441,11 +441,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481095.562029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "startSchedulers()"
             landmarkType = "5">
          </BreakpointContent>
@@ -457,11 +457,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "756"
-            endingLineNumber = "756"
+            startingLineNumber = "765"
+            endingLineNumber = "765"
             landmarkName = "didSimulatePhysics()"
             landmarkType = "5">
          </BreakpointContent>
@@ -473,11 +473,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "757"
-            endingLineNumber = "757"
+            startingLineNumber = "766"
+            endingLineNumber = "766"
             landmarkName = "didSimulatePhysics()"
             landmarkType = "5">
          </BreakpointContent>
@@ -489,11 +489,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457403806.412223"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "813"
-            endingLineNumber = "813"
+            startingLineNumber = "822"
+            endingLineNumber = "822"
             landmarkName = "flashText(_:x:y:z:waitDur:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -505,11 +505,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457403806.412223"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "827"
-            endingLineNumber = "827"
+            startingLineNumber = "836"
+            endingLineNumber = "836"
             landmarkName = "flashText(_:x:y:z:waitDur:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -521,11 +521,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457403806.412223"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1212"
-            endingLineNumber = "1212"
+            startingLineNumber = "1221"
+            endingLineNumber = "1221"
             landmarkName = "didBeginContact(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -537,11 +537,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MobileTutsInvaderz/GameScene.swift"
-            timestampString = "457389958.976482"
+            timestampString = "457481920.604976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "584"
-            endingLineNumber = "584"
+            startingLineNumber = "593"
+            endingLineNumber = "593"
             landmarkName = "update(_:)"
             landmarkType = "5">
          </BreakpointContent>

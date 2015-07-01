@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-
+import AVFoundation
 var invaderNum = 1
 struct CollisionCategories{
     static let Invader : UInt32 = 0x1 << 0
@@ -23,6 +23,10 @@ let Pi = CGFloat(M_PI)
 let DegreesToRadians = Pi / 180
 let RadiansToDegrees = 180 / Pi
 class GameScene: SKScene ,SKPhysicsContactDelegate{
+    
+    var coinSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("Dissonance", ofType: "mp3")!)
+    var audioPlayer = AVAudioPlayer()
+    
     let rowsOfInvaders = 4 //final variable
     var invaderSpeed = 0.2
     var movingRight = false
@@ -86,8 +90,12 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     override func didMoveToView(view: SKView) {
-        let sound = SKAction.playSoundFileNamed("Revelations.mp3", waitForCompletion: true)
-        self.runAction(SKAction.repeatActionForever(sound))
+        
+        audioPlayer = AVAudioPlayer(contentsOfURL: coinSound, error: nil)
+        audioPlayer.prepareToPlay()
+        audioPlayer.play()
+  
+        
         backgroundColor = SKColor.darkGrayColor()
         self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1000, height: 10), center: CGPoint(x:self.size.width/2,y:40))
         self.physicsBody?.dynamic = false
@@ -250,6 +258,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
         self.runAction(longwait,completion:{
             self.removeActionForKey("spawnandwaitheavy")
+            self.physicsWorld.removeAllJoints()
             
             // self.playerDead = true
         })

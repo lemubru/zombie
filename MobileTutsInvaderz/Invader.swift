@@ -55,12 +55,14 @@ class Invader: SKSpriteNode {
     
     internal func animate(animprefix: String?){
         
-        
-        
-        let soldieratlas = SKTextureAtlas(named: "soldierrun")
-        
+        var soldieratlas = SKTextureAtlas(named: "soldierrun")
+        if(self.name == "heavy"){
+              soldieratlas = SKTextureAtlas(named: "heavy")
+        }
         var playerTextures:[SKTexture] = []
-        for i in 0...8 {
+        
+        let numImages = soldieratlas.textureNames.count-1
+        for i in 0...numImages {
             let texture = animprefix!+"\(i)"
             playerTextures.append(soldieratlas.textureNamed(texture))
         }
