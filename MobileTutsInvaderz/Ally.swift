@@ -106,11 +106,17 @@ class Ally: SKSpriteNode {
             let newX1 = cos(angle - spread * DegreesToRadians)*2000
             let newY2 = sin(angle + spread * DegreesToRadians)*2000
             let newX2 = cos(angle + spread * DegreesToRadians)*2000
-            
+            bullet.name = bulletName
             bullet.position.x = self.position.x
             bullet.position.y = self.position.y
+            bullet.zPosition = 12
             bullet.setScale(bulletScale)
-            bullet.zRotation = angle
+      
+            if(bullet.name == "bullet"){
+                bullet.zRotation = angle - 90 * DegreesToRadians
+            }else{
+                bullet.zRotation = angle
+            }
             
             
             self.zRotation = angle - 90 * DegreesToRadians

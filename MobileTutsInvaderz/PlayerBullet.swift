@@ -17,10 +17,15 @@ class PlayerBullet: Bullet {
         hasHit = false
         super.init(imageName: imageName, bulletSound: bulletSound,scene:scene, bulletName: bulletName)
         self.zPosition = CGFloat(5)
-        self.physicsBody = SKPhysicsBody(texture: self.texture, size: self.size)
+        if(bulletName == "arrow"){
+            self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width*0.1, center: CGPoint(x:self.size.width*0.2,y:0))
+        }else{
+            self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width*0.35)
+        }
+        
         self.physicsBody?.dynamic = true
         self.physicsBody?.usesPreciseCollisionDetection = false
-        self.physicsBody?.restitution = 0.5;
+        self.physicsBody?.restitution = 0.1;
      //   self.physicsBody?.mass = 0
         self.physicsBody?.friction = 0.0;
         self.physicsBody?.linearDamping = 0.0;

@@ -147,9 +147,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         turret.zPosition = 20
         turret.physicsBody = SKPhysicsBody(circleOfRadius: turret.size.width/2)
         turret.physicsBody?.dynamic = false
-        player.physicsBody?.categoryBitMask = CollisionCategories.Ally
-        player.physicsBody?.contactTestBitMask = CollisionCategories.EnemyBullet
-        player.physicsBody?.collisionBitMask =  CollisionCategories.EnemyBullet
+        turret.physicsBody?.categoryBitMask = CollisionCategories.Ally
+        turret.physicsBody?.contactTestBitMask = CollisionCategories.EnemyBullet
+        turret.physicsBody?.collisionBitMask =  CollisionCategories.EnemyBullet
     }
     
     func placeMud(x: CGFloat,y: CGFloat){
@@ -261,7 +261,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     func loadHud(){
         levelLabel.text = "level: " + String(level)
-        levelLabel.position.x = self.size.width*0.6
+        levelLabel.position.x = self.size.width*0.7
         levelLabel.position.y = self.size.height*0.9
         levelLabel.zPosition = 2
         levelLabel.fontSize = 17
@@ -286,7 +286,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         pointsLabel.position = CGPoint(x: 7,y: 5)
         pointsLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
         pointsLabel.fontSize = 30
-        pointsLabel.zPosition = 3
+        pointsLabel.zPosition = 24
         self.addChild(pointsLabel)
         self.addChild(trapLabel)
         self.addChild(weaponLabel)
@@ -507,7 +507,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             if(weapon == 2){
                 bulletName = "arrow"
                 bulletTexture = "arrow1"
-                var bulletScale = 0.2
+                var bulletScale = 0.1
                 speedMultiplier = CGFloat(0.003)
                 bulletSound = "arrowfire.mp3"
                 canFireWait = 0.4
@@ -515,7 +515,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             if(weapon == 4){
                 //shotgun
                 bulletTexture = "ball"
-                var bulletScale = 0.05
+                var bulletScale = 0.3
                 speedMultiplier = CGFloat(0.001)
                 bulletSound = "shotgunsound.mp3"
                 canFireWait = 2
@@ -591,14 +591,14 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             rotateGunToTouch()
         }
         if(machineGunMode){
-            self.fireMachineGun("machinegun.wav", scale: 0.4, bulletTexture: "bullet", bulletName: "ball", speedMulti: 0.001, multiShot: false,canFireWait: 0.2)
+            self.fireMachineGun("machinegun.wav", scale: 0.4, bulletTexture: "bullet", bulletName: "bullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.2)
         }
         if(autoCrossBow){
             self.fireMachineGun("arrowfire.mp3", scale: 0.3, bulletTexture: "arrow1", bulletName: "arrow", speedMulti: 0.003, multiShot: false, canFireWait: 0.2)
         }
         if(autoShottie){
          
-            self.fireMachineGun("shotgunsound.mp3", scale: 0.2, bulletTexture: "ball", bulletName: "ball", speedMulti: 0.001, multiShot: true, canFireWait: 0.7)
+            self.fireMachineGun("shotgunsound.mp3", scale: 0.2, bulletTexture: "ball", bulletName: "bullet", speedMulti: 0.001, multiShot: true, canFireWait: 0.7)
 
         }
     }
@@ -713,7 +713,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         enumerateChildNodesWithName("heavy") { node, stop in
             let invader = node as! Invader
             if(invader.getLock()){
-                self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "playerbullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
+                self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "bullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
             }
         }
         
@@ -722,7 +722,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         enumerateChildNodesWithName("invader") { node, stop in
             let invader = node as! Invader
             if(invader.getLock()){
-                self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "playerbullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
+                self.fireTurret("machinegun.wav", scale: 0.7, bulletTexture: "bullet", bulletName: "bullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
             }
             if(invader.isGunner()){
             invader.fireBullet(self, touchX: self.player.position.x, touchY: self.player.position.y + CGFloat(self.randRange(0, upper: 80)), bulletTexture: "ball", bulletScale: 1, speedMultiplier: CGFloat(0.001), bulletSound: "gunshot.mp3", canFireWait: 2, multiShot: false, bulletName: "invaderbullet")
@@ -757,6 +757,30 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         enumerateChildNodesWithName("invaderbullet") { node, stop in
             let bullet = node as! EnemyBullet
             if(bullet.position.y > self.size.height - 10 || bullet.position.y < 0 + 30 || bullet.position.x > self.size.width + 100){
+                bullet.removeFromParent()
+            }
+            
+        }
+        
+        enumerateChildNodesWithName("bullet") { node, stop in
+            let bullet = node as! PlayerBullet
+            if(bullet.position.y > self.size.height - 10 || bullet.position.y < 0 + 30 || bullet.position.x > self.size.width - 10){
+                bullet.removeFromParent()
+            }
+            
+        }
+        
+        enumerateChildNodesWithName("arrow") { node, stop in
+            let bullet = node as! PlayerBullet
+            if(bullet.position.y > self.size.height - 10 || bullet.position.y < 0 + 30 || bullet.position.x > self.size.width - 10){
+                bullet.removeFromParent()
+            }
+            
+        }
+        
+        enumerateChildNodesWithName("nade") { node, stop in
+            let bullet = node as! PlayerBullet
+            if(bullet.position.y > self.size.height - 10 || bullet.position.y < 0 + 30 || bullet.position.x > self.size.width - 10){
                 bullet.removeFromParent()
             }
             
