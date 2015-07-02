@@ -41,7 +41,7 @@ class StartGameScene: SKScene {
         self.removeAllActions()//touchedNode is the node being touched
         if(touchedNode.name == "startgame"){
            
-            let gameOverScene = GameScene(size: size, points: 0, ef: 3.0, level: 1) //make next scene
+            let gameOverScene = GameScene(size: size, points: 0, ef: 3.0, level: 1, numEnemy: 6, weaponCap : 0) //make next scene
             gameOverScene.scaleMode = scaleMode
             let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
             view?.presentScene(gameOverScene,transition: transitionType) //move to the next scene

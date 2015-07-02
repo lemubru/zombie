@@ -67,23 +67,9 @@
 		1447318A1B36F9EF00A34790 /* flamedeath18.png in Resources */ = {isa = PBXBuildFile; fileRef = 144731761B36F9EF00A34790 /* flamedeath18.png */; };
 		144731AB1B3771C800A34790 /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 144731AA1B3771C800A34790 /* spark.sks */; };
 		145006841B38B89D00E191C8 /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145006831B38B89D00E191C8 /* GameOver.swift */; };
-		145006A21B3B3BE400E191C8 /* zombie0.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006921B3B3BE400E191C8 /* zombie0.png */; };
-		145006A31B3B3BE400E191C8 /* zombie1.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006931B3B3BE400E191C8 /* zombie1.png */; };
-		145006A41B3B3BE400E191C8 /* zombie2.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006941B3B3BE400E191C8 /* zombie2.png */; };
-		145006A51B3B3BE400E191C8 /* zombie3.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006951B3B3BE400E191C8 /* zombie3.png */; };
-		145006A61B3B3BE400E191C8 /* zombie4.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006961B3B3BE400E191C8 /* zombie4.png */; };
-		145006A71B3B3BE400E191C8 /* zombie5.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006971B3B3BE400E191C8 /* zombie5.png */; };
-		145006A81B3B3BE400E191C8 /* zombie6.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006981B3B3BE400E191C8 /* zombie6.png */; };
-		145006A91B3B3BE400E191C8 /* zombie7.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006991B3B3BE400E191C8 /* zombie7.png */; };
-		145006AA1B3B3BE400E191C8 /* zombie8.png in Resources */ = {isa = PBXBuildFile; fileRef = 1450069A1B3B3BE400E191C8 /* zombie8.png */; };
-		145006AB1B3B3BE400E191C8 /* zombie9.png in Resources */ = {isa = PBXBuildFile; fileRef = 1450069B1B3B3BE400E191C8 /* zombie9.png */; };
-		145006AC1B3B3BE400E191C8 /* zombie10.png in Resources */ = {isa = PBXBuildFile; fileRef = 1450069C1B3B3BE400E191C8 /* zombie10.png */; };
-		145006AD1B3B3BE400E191C8 /* zombie11.png in Resources */ = {isa = PBXBuildFile; fileRef = 1450069D1B3B3BE400E191C8 /* zombie11.png */; };
-		145006AE1B3B3BE400E191C8 /* zombie12.png in Resources */ = {isa = PBXBuildFile; fileRef = 1450069E1B3B3BE400E191C8 /* zombie12.png */; };
-		145006AF1B3B3BE400E191C8 /* zombie13.png in Resources */ = {isa = PBXBuildFile; fileRef = 1450069F1B3B3BE400E191C8 /* zombie13.png */; };
-		145006B01B3B3BE400E191C8 /* zombie14.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006A01B3B3BE400E191C8 /* zombie14.png */; };
-		145006B11B3B3BE400E191C8 /* zombie15.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006A11B3B3BE400E191C8 /* zombie15.png */; };
 		145431411B459741004E7336 /* ocean.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 145431401B459741004E7336 /* ocean.mp3 */; };
+		145431431B45C8AD004E7336 /* zombie.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 145431421B45C8AD004E7336 /* zombie.atlas */; };
+		145431451B45CCE9004E7336 /* cblood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 145431441B45CCE9004E7336 /* cblood.sks */; };
 		147D28A11B2C790900BD025A /* Invader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A01B2C790900BD025A /* Invader.swift */; };
 		147D28A31B2C7EA000BD025A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A21B2C7EA000BD025A /* Player.swift */; };
 		147D28A51B2C829100BD025A /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A41B2C829100BD025A /* Bullet.swift */; };
@@ -233,23 +219,9 @@
 		144731761B36F9EF00A34790 /* flamedeath18.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flamedeath18.png; sourceTree = "<group>"; };
 		144731AA1B3771C800A34790 /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spark.sks; sourceTree = "<group>"; };
 		145006831B38B89D00E191C8 /* GameOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
-		145006921B3B3BE400E191C8 /* zombie0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie0.png; sourceTree = "<group>"; };
-		145006931B3B3BE400E191C8 /* zombie1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie1.png; sourceTree = "<group>"; };
-		145006941B3B3BE400E191C8 /* zombie2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie2.png; sourceTree = "<group>"; };
-		145006951B3B3BE400E191C8 /* zombie3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie3.png; sourceTree = "<group>"; };
-		145006961B3B3BE400E191C8 /* zombie4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie4.png; sourceTree = "<group>"; };
-		145006971B3B3BE400E191C8 /* zombie5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie5.png; sourceTree = "<group>"; };
-		145006981B3B3BE400E191C8 /* zombie6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie6.png; sourceTree = "<group>"; };
-		145006991B3B3BE400E191C8 /* zombie7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie7.png; sourceTree = "<group>"; };
-		1450069A1B3B3BE400E191C8 /* zombie8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie8.png; sourceTree = "<group>"; };
-		1450069B1B3B3BE400E191C8 /* zombie9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie9.png; sourceTree = "<group>"; };
-		1450069C1B3B3BE400E191C8 /* zombie10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie10.png; sourceTree = "<group>"; };
-		1450069D1B3B3BE400E191C8 /* zombie11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie11.png; sourceTree = "<group>"; };
-		1450069E1B3B3BE400E191C8 /* zombie12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie12.png; sourceTree = "<group>"; };
-		1450069F1B3B3BE400E191C8 /* zombie13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie13.png; sourceTree = "<group>"; };
-		145006A01B3B3BE400E191C8 /* zombie14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie14.png; sourceTree = "<group>"; };
-		145006A11B3B3BE400E191C8 /* zombie15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie15.png; sourceTree = "<group>"; };
 		145431401B459741004E7336 /* ocean.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ocean.mp3; sourceTree = "<group>"; };
+		145431421B45C8AD004E7336 /* zombie.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = zombie.atlas; sourceTree = "<group>"; };
+		145431441B45CCE9004E7336 /* cblood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = cblood.sks; sourceTree = "<group>"; };
 		147D28A01B2C790900BD025A /* Invader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Invader.swift; sourceTree = "<group>"; };
 		147D28A21B2C7EA000BD025A /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		147D28A41B2C829100BD025A /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
@@ -419,29 +391,6 @@
 			name = death2;
 			sourceTree = "<group>";
 		};
-		145006911B3B3BD300E191C8 /* zombierun */ = {
-			isa = PBXGroup;
-			children = (
-				145006921B3B3BE400E191C8 /* zombie0.png */,
-				145006931B3B3BE400E191C8 /* zombie1.png */,
-				145006941B3B3BE400E191C8 /* zombie2.png */,
-				145006951B3B3BE400E191C8 /* zombie3.png */,
-				145006961B3B3BE400E191C8 /* zombie4.png */,
-				145006971B3B3BE400E191C8 /* zombie5.png */,
-				145006981B3B3BE400E191C8 /* zombie6.png */,
-				145006991B3B3BE400E191C8 /* zombie7.png */,
-				1450069A1B3B3BE400E191C8 /* zombie8.png */,
-				1450069B1B3B3BE400E191C8 /* zombie9.png */,
-				1450069C1B3B3BE400E191C8 /* zombie10.png */,
-				1450069D1B3B3BE400E191C8 /* zombie11.png */,
-				1450069E1B3B3BE400E191C8 /* zombie12.png */,
-				1450069F1B3B3BE400E191C8 /* zombie13.png */,
-				145006A01B3B3BE400E191C8 /* zombie14.png */,
-				145006A11B3B3BE400E191C8 /* zombie15.png */,
-			);
-			name = zombierun;
-			sourceTree = "<group>";
-		};
 		148123891B30AF300056992C /* Timer */ = {
 			isa = PBXGroup;
 			children = (
@@ -526,6 +475,7 @@
 			children = (
 				147E29FC1B41FCBF0043C662 /* dirt.sks */,
 				147E2A041B421AEB0043C662 /* explo.sks */,
+				145431441B45CCE9004E7336 /* cblood.sks */,
 				1485583C1B2F12A200EBD93A /* blood.sks */,
 				144731331B32453C00A34790 /* flamer.sks */,
 				144731AA1B3771C800A34790 /* spark.sks */,
@@ -559,7 +509,6 @@
 			children = (
 				14BE41161B4497E700528C70 /* sounds */,
 				14BE40FF1B44979700528C70 /* music */,
-				145006911B3B3BD300E191C8 /* zombierun */,
 				144731531B36E4A700A34790 /* death2 */,
 				148123921B30B7590056992C /* mummy */,
 				148123891B30AF300056992C /* Timer */,
@@ -567,6 +516,7 @@
 				14BE40F51B448E0A00528C70 /* images.atlas */,
 				14BE40FB1B4491DD00528C70 /* soldierrun.atlas */,
 				14BE413A1B44990F00528C70 /* heavy.atlas */,
+				145431421B45C8AD004E7336 /* zombie.atlas */,
 				745B96281A8BDC36006D014D /* AppDelegate.swift */,
 				147D28A81B2C880000BD025A /* PlayerBullet.swift */,
 				147D28A01B2C790900BD025A /* Invader.swift */,
@@ -700,6 +650,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				145431451B45CCE9004E7336 /* cblood.sks in Resources */,
 				148123B11B30B7700056992C /* mummy12.png in Resources */,
 				14BE41351B4497F400528C70 /* shotgunreload.mp3 in Resources */,
 				148123A91B30B7700056992C /* mummy4.png in Resources */,
@@ -711,13 +662,10 @@
 				14BE41121B4497A300528C70 /* Hello.mp3 in Resources */,
 				148123AC1B30B7700056992C /* mummy7.png in Resources */,
 				14BE41371B4497F400528C70 /* slice.mp3 in Resources */,
-				145006A51B3B3BE400E191C8 /* zombie3.png in Resources */,
-				145006A21B3B3BE400E191C8 /* zombie0.png in Resources */,
 				1447318A1B36F9EF00A34790 /* flamedeath18.png in Resources */,
 				1485583F1B2F1AC400EBD93A /* MyParticleSystem.scnp in Resources */,
 				14BE410E1B4497A300528C70 /* BGM.mp3 in Resources */,
 				140476391B43212100447255 /* field10.png in Resources */,
-				145006A71B3B3BE400E191C8 /* zombie5.png in Resources */,
 				14BE412E1B4497F400528C70 /* gunshot.mp3 in Resources */,
 				140476351B43212100447255 /* field6.png in Resources */,
 				141997E51B2F98E30087792A /* deadsoldier4.png in Resources */,
@@ -736,20 +684,15 @@
 				144731831B36F9EF00A34790 /* flamedeath11.png in Resources */,
 				140476331B43212100447255 /* field4.png in Resources */,
 				148123B51B30B7700056992C /* mummy16.png in Resources */,
-				145006A41B3B3BE400E191C8 /* zombie2.png in Resources */,
-				145006A91B3B3BE400E191C8 /* zombie7.png in Resources */,
 				148123B01B30B7700056992C /* mummy11.png in Resources */,
 				140476321B43212100447255 /* field3.png in Resources */,
 				141997E21B2F98E30087792A /* deadsoldier1.png in Resources */,
 				144731881B36F9EF00A34790 /* flamedeath16.png in Resources */,
-				145006A31B3B3BE400E191C8 /* zombie1.png in Resources */,
 				144731871B36F9EF00A34790 /* flamedeath15.png in Resources */,
 				1404762F1B43212100447255 /* field0.png in Resources */,
 				148123AA1B30B7700056992C /* mummy5.png in Resources */,
-				145006AF1B3B3BE400E191C8 /* zombie13.png in Resources */,
 				140476301B43212100447255 /* field1.png in Resources */,
 				14BE410C1B4497A300528C70 /* BGG.aiff in Resources */,
-				145006B11B3B3BE400E191C8 /* zombie15.png in Resources */,
 				14BE40FC1B4491DD00528C70 /* soldierrun.atlas in Resources */,
 				1485583B1B2F0AA300EBD93A /* spark.png in Resources */,
 				141997E81B2F98E30087792A /* deadsoldier7.png in Resources */,
@@ -772,10 +715,8 @@
 				148123B41B30B7700056992C /* mummy15.png in Resources */,
 				144731811B36F9EF00A34790 /* flamedeath9.png in Resources */,
 				144731781B36F9EF00A34790 /* flamedeath0.png in Resources */,
-				145006AE1B3B3BE400E191C8 /* zombie12.png in Resources */,
 				14BE412F1B4497F400528C70 /* hit.mp3 in Resources */,
 				1447317C1B36F9EF00A34790 /* flamedeath4.png in Resources */,
-				145006A61B3B3BE400E191C8 /* zombie4.png in Resources */,
 				1404763A1B43212100447255 /* field11.png in Resources */,
 				14BE410F1B4497A300528C70 /* BGmusic.mp3 in Resources */,
 				141997EF1B2F98E30087792A /* deadsoldier14.png in Resources */,
@@ -783,7 +724,6 @@
 				1447315D1B36E4B500A34790 /* expdeath1.png in Resources */,
 				14BE41111B4497A300528C70 /* Dissonance.mp3 in Resources */,
 				148123B61B30B7700056992C /* mummy17.png in Resources */,
-				145006A81B3B3BE400E191C8 /* zombie6.png in Resources */,
 				144731601B36E4B500A34790 /* expdeath4.png in Resources */,
 				144731791B36F9EF00A34790 /* flamedeath1.png in Resources */,
 				144731341B32453C00A34790 /* flamer.sks in Resources */,
@@ -793,12 +733,9 @@
 				140476381B43212100447255 /* field9.png in Resources */,
 				141997E91B2F98E30087792A /* deadsoldier8.png in Resources */,
 				14BE413B1B44990F00528C70 /* heavy.atlas in Resources */,
-				145006AB1B3B3BE400E191C8 /* zombie9.png in Resources */,
 				144731851B36F9EF00A34790 /* flamedeath13.png in Resources */,
-				145006AC1B3B3BE400E191C8 /* zombie10.png in Resources */,
 				14BE41301B4497F400528C70 /* machinegun.wav in Resources */,
 				1485583D1B2F12A200EBD93A /* blood.sks in Resources */,
-				145006AA1B3B3BE400E191C8 /* zombie8.png in Resources */,
 				147E29FD1B41FCBF0043C662 /* dirt.sks in Resources */,
 				14BE40F61B448E0A00528C70 /* images.atlas in Resources */,
 				14BE41151B4497A300528C70 /* Too Late to Cry.mp3 in Resources */,
@@ -806,7 +743,6 @@
 				148123AD1B30B7700056992C /* mummy8.png in Resources */,
 				1447317B1B36F9EF00A34790 /* flamedeath3.png in Resources */,
 				140476371B43212100447255 /* field8.png in Resources */,
-				145006B01B3B3BE400E191C8 /* zombie14.png in Resources */,
 				14BE41101B4497A300528C70 /* Copy the Copyists.mp3 in Resources */,
 				141997E71B2F98E30087792A /* deadsoldier6.png in Resources */,
 				148123A71B30B7700056992C /* mummy2.png in Resources */,
@@ -822,6 +758,7 @@
 				1447315F1B36E4B500A34790 /* expdeath3.png in Resources */,
 				1447317D1B36F9EF00A34790 /* flamedeath5.png in Resources */,
 				14BE412C1B4497F400528C70 /* flamergoing.wav in Resources */,
+				145431431B45C8AD004E7336 /* zombie.atlas in Resources */,
 				14BE412B1B4497F400528C70 /* cry.mp3 in Resources */,
 				14BE41311B4497F400528C70 /* mm.wav in Resources */,
 				14BE41141B4497A300528C70 /* Revelations.mp3 in Resources */,
@@ -831,7 +768,6 @@
 				148123AF1B30B7700056992C /* mummy10.png in Resources */,
 				144731821B36F9EF00A34790 /* flamedeath10.png in Resources */,
 				141997E31B2F98E30087792A /* deadsoldier2.png in Resources */,
-				145006AD1B3B3BE400E191C8 /* zombie11.png in Resources */,
 				14BE41131B4497A300528C70 /* intro.mid in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

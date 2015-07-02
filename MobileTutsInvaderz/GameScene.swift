@@ -74,17 +74,24 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var movingL = false
     let mainatlas = SKTextureAtlas(named: "images")
     let soldieratlas = SKTextureAtlas(named: "soldierrun")
+    var numEnemyInWave = 7
+    var weaponCap = 0
     //Flying enemy
     var musicoff = false
     //shooting enemy
     //
     
-    init(size: CGSize, points: UInt32, ef: Double, level: UInt32){
+    init(size: CGSize, points: UInt32, ef: Double, level: UInt32, numEnemy: Int, weaponCap: Int){
         text = String(points)
         super.init(size: size)
         self.points = points
         self.EnemyFreq = ef
         self.level = level
+        self.numEnemyInWave = numEnemy
+        self.weaponCap  = weaponCap
+        if(self.weaponCap > 8){
+            self.weaponCap = 8
+        }
         
     }
 
@@ -105,7 +112,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         setupPlayer()
         loadHud()
         soldieratlas.preloadWithCompletionHandler { () -> Void in
-            self.startSchedulers()
+            self.startSchedulers1()
         }
         mainatlas.preloadWithCompletionHandler { () -> Void in
             
@@ -151,6 +158,75 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         rain.position.y = self.size.height
         rain.zPosition = 2
        // self.addChild(rain)
+    }
+    
+    func loadHud(){
+        levelLabel.text = "level: " + String(level)
+        levelLabel.position.x = self.size.width*0.7
+        levelLabel.position.y = self.size.height*0.9
+        levelLabel.zPosition = 2
+        levelLabel.fontSize = 17
+        
+        
+        
+        weaponLabel.text = "pistol";
+        weaponLabel.position.x = self.size.width*0.99
+        weaponLabel.position.y = self.size.height - 55
+        weaponLabel.zPosition = 2
+        weaponLabel.fontSize = 17
+        weaponLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
+        
+        trapLabel.text = "rock fall";
+        trapLabel.position.x = self.size.width*0.59
+        trapLabel.position.y = self.size.height - 55
+        trapLabel.zPosition = 2
+        trapLabel.fontSize = 17
+        trapLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
+        
+        pointsLabel.text = String(points)
+        pointsLabel.position = CGPoint(x: 7,y: 5)
+        pointsLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+        pointsLabel.fontSize = 30
+        pointsLabel.zPosition = 24
+        self.addChild(pointsLabel)
+        self.addChild(trapLabel)
+        self.addChild(weaponLabel)
+        self.addChild(levelLabel)
+        
+        
+        
+        let dock = ScenePiece(pieceName: "dock", textTureName: "dock.png", dynamic: false, scale: 1, x: 10, y: self.size.height - 20)
+        dock.zPosition = 18
+        self.addChild(dock)
+        
+        
+        
+        let nextWeaponButton = ScenePiece(pieceName: "nwbutton", textTureName: "nwbutton", dynamic: false, scale: 0.4,x : self.size.width - 20,y: self.size.height - 20)
+        nextWeaponButton.zPosition = 14
+        self.addChild(nextWeaponButton)
+        // nextWeaponButton.AddPhysics(self, dynamic: false)
+        let musicBtn = ScenePiece(pieceName: "musicbtn", textTureName: "musicbtn", dynamic: false, scale: 0.4,x : self.size.width - 100,y: self.size.height - 20)
+        self.addChild(musicBtn)
+        musicBtn.zPosition = 14
+        
+        
+        let trapButton = ScenePiece(pieceName: "trapbtn", textTureName: "trapbtn", dynamic: false, scale: 0.4,x : self.size.width - 300,y: self.size.height - 20)
+        self.addChild(trapButton)
+        trapButton.zPosition = 14
+        let nextTrapButton = ScenePiece(pieceName: "nexttrap", textTureName: "nxttrapbtn", dynamic: false, scale: 0.4,x : self.size.width - 250,y: self.size.height - 20)
+        nextTrapButton.zPosition = 14
+        self.addChild(nextTrapButton)
+        
+        let moveR = ScenePiece(pieceName: "moveR", textTureName: "movebtn", dynamic: false, scale: 1,x : 100,y:  20)
+        moveR.zPosition = 2
+        //self.addChild(moveR)
+        
+        
+        let moveL = ScenePiece(pieceName: "moveL", textTureName: "movebtn", dynamic: false, scale: 1,x : 20,y:  20)
+        moveL.zPosition = 2
+        //self.addChild(moveL)
+        
+        
     }
     
     func setupPlayer(){
@@ -209,124 +285,100 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
     }
     
-    func startSchedulers(){
     
+    func setupZombie(){
+        let invaderFrame = SKNode()
+        let tempInvader:Invader = Invader(scene: self,scale: CGFloat(1), invaderhit: 0, animprefix:"zombie", name:"zombie", gunner: true, atlas: soldieratlas)
+        tempInvader.zPosition = 9
+        tempInvader.position.x = self.size.width
+        tempInvader.position.y = self.size.height/2-74
+        tempInvader.physicsBody?.velocity = CGVectorMake(-30, 0)
+        tempInvader.physicsBody?.mass = 10000
+        tempInvader.physicsBody?.affectedByGravity = false
+        
+    }
+    
+    func startSchedulers(){
+        
         let wait1 = SKAction.waitForDuration(2, withRange: 1)
         let wait2 = SKAction.waitForDuration(3, withRange: 1)
-         let longwait = SKAction.waitForDuration(30)
+        let longwait = SKAction.waitForDuration(30)
         let spawnNormal = SKAction.runBlock(){
             self.setupEnemy()
         }
+        let spawnZombie = SKAction.runBlock(){
+            self.setupZombie()
+        }
         let spawnHeavy = SKAction.runBlock(){
-            
             var random = self.randRange(0, upper: 1)
             if(random == 1){
-                 self.setupEnemy()
+                self.setupEnemy()
             }else{
-                 self.setupHeavyEnemy()
-                
+                self.setupHeavyEnemy()
             }
-           
         }
         let spawnAndWait = SKAction.sequence([spawnNormal,wait1])
         let spawnAndWaitHeavy = SKAction.sequence([spawnHeavy,wait2])
+        let spawnAndWaitZombie = SKAction.sequence([spawnZombie,wait2])
         
         self.runAction(SKAction.repeatActionForever(spawnAndWait), withKey:"spawnandwait")
-       self.runAction(longwait,completion:{
-         self.removeActionForKey("spawnandwait")
-
-            self.runAction(SKAction.repeatActionForever(spawnAndWaitHeavy), withKey:"spawnandwaitheavy")
-        
-        
-        //self.runAction(SKAction.repeatActionForever(spawnAndWaitHeavy), withKey:"spawnandwaitheavy")
-        
         self.runAction(longwait,completion:{
-            self.removeActionForKey("spawnandwaitheavy")
-            self.physicsWorld.removeAllJoints()
             
+            self.removeActionForKey("spawnandwait")
+            self.runAction(SKAction.repeatActionForever(spawnAndWaitHeavy), withKey:"spawnandwaitheavy")
+            self.runAction(longwait,completion:{
+                
+                self.removeActionForKey("spawnandwaitheavy")
+                self.physicsWorld.removeAllJoints()
+                self.runAction(SKAction.repeatActionForever(spawnAndWaitZombie), withKey:"spawnandwaitzombie")
+                
+            })
             // self.playerDead = true
         })
-            // self.playerDead = true
+        
+    }
+    
+    func startSchedulers1(){
+        var iter = 0
+        var numEnemy = self.numEnemyInWave
+        let wait1 = SKAction.waitForDuration(2, withRange: 1)
+        let wait2 = SKAction.waitForDuration(4, withRange: 1)
+        let longwait = SKAction.waitForDuration(20)
+        let medwait = SKAction.waitForDuration(3)
+  
+        let spawnNormal = SKAction.runBlock(){
+                self.setupEnemy()
+        }
+        
+        let spawnHeavy = SKAction.runBlock(){
+                self.setupHeavyEnemy()
+        }
+        
+        let spawnZombie = SKAction.runBlock(){
+                self.setupZombie()
+        }
+        
+        let spawnAndWait = SKAction.repeatAction(SKAction.sequence([spawnNormal,wait1]), count: numEnemy)
+        let spawnAndWaitHeavy = SKAction.repeatAction(SKAction.sequence([spawnHeavy,wait2]), count: numEnemy)
+        let spawnAndWaitZombie = SKAction.repeatAction(SKAction.sequence([spawnZombie,wait2]), count: numEnemy)
+        
+        let actionArr = [spawnAndWait,medwait, spawnAndWaitHeavy,medwait, spawnAndWaitZombie, longwait]
+        
+        self.runAction(SKAction.repeatAction(SKAction.sequence(actionArr), count: 1), completion:{
+            self.gameOver(true)
+           
         })
-     
-       
+   
+    }
+    
 
-    }
-    func loadHud(){
-        levelLabel.text = "level: " + String(level)
-        levelLabel.position.x = self.size.width*0.7
-        levelLabel.position.y = self.size.height*0.9
-        levelLabel.zPosition = 2
-        levelLabel.fontSize = 17
-        
-        
-        
-        weaponLabel.text = "pistol";
-        weaponLabel.position.x = self.size.width*0.99
-        weaponLabel.position.y = self.size.height - 55
-        weaponLabel.zPosition = 2
-        weaponLabel.fontSize = 17
-        weaponLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
-        
-        trapLabel.text = "rock fall";
-        trapLabel.position.x = self.size.width*0.59
-        trapLabel.position.y = self.size.height - 55
-        trapLabel.zPosition = 2
-        trapLabel.fontSize = 17
-        trapLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
-        
-        pointsLabel.text = String(points)
-        pointsLabel.position = CGPoint(x: 7,y: 5)
-        pointsLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
-        pointsLabel.fontSize = 30
-        pointsLabel.zPosition = 24
-        self.addChild(pointsLabel)
-        self.addChild(trapLabel)
-        self.addChild(weaponLabel)
-        self.addChild(levelLabel)
-        
-        
-        
-        let dock = ScenePiece(pieceName: "dock", textTureName: "dock.png", dynamic: false, scale: 1, x: 10, y: self.size.height - 20)
-        dock.zPosition = 18
-        self.addChild(dock)
-        
-     
-        
-        let nextWeaponButton = ScenePiece(pieceName: "nwbutton", textTureName: "nwbutton", dynamic: false, scale: 0.4,x : self.size.width - 20,y: self.size.height - 20)
-        nextWeaponButton.zPosition = 14
-        self.addChild(nextWeaponButton)
-        // nextWeaponButton.AddPhysics(self, dynamic: false)
-        let musicBtn = ScenePiece(pieceName: "musicbtn", textTureName: "musicbtn", dynamic: false, scale: 0.4,x : self.size.width - 100,y: self.size.height - 20)
-        self.addChild(musicBtn)
-        musicBtn.zPosition = 14
-        
-        
-        let trapButton = ScenePiece(pieceName: "trapbtn", textTureName: "trapbtn", dynamic: false, scale: 0.4,x : self.size.width - 300,y: self.size.height - 20)
-        self.addChild(trapButton)
-        trapButton.zPosition = 14
-        let nextTrapButton = ScenePiece(pieceName: "nexttrap", textTureName: "nxttrapbtn", dynamic: false, scale: 0.4,x : self.size.width - 250,y: self.size.height - 20)
-        nextTrapButton.zPosition = 14
-        self.addChild(nextTrapButton)
-        
-        let moveR = ScenePiece(pieceName: "moveR", textTureName: "movebtn", dynamic: false, scale: 1,x : 100,y:  20)
-        moveR.zPosition = 2
-        //self.addChild(moveR)
-        
-        
-        let moveL = ScenePiece(pieceName: "moveL", textTureName: "movebtn", dynamic: false, scale: 1,x : 20,y:  20)
-        moveL.zPosition = 2
-        //self.addChild(moveL)
-        
-        
-    }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
 
         let touch = touches.first as! UITouch
         touching = true
         var turretLimit = 4
-        var weaponCap  = 8 //meaning +1 weapons - it starts at 0
+        var weaponCap  = self.weaponCap //meaning +1 weapons - all weapons  = 8
         var trapCap = 3 //meaning +1 traps
         let touchLocation = touch.locationInNode(self)
         touchx = touchLocation.x
@@ -518,11 +570,12 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             }
             if(weapon == 4){
                 //shotgun
+                bulletName = "shell"
                 bulletTexture = "ball"
-                var bulletScale = 0.7
-                speedMultiplier = CGFloat(0.001)
+                var bulletScale = 1
+                speedMultiplier = CGFloat(0.0007)
                 bulletSound = "shotgunsound.mp3"
-                canFireWait = 2
+                canFireWait = 1
                 multiShot = true
             }
             
@@ -742,9 +795,6 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 self.fireTurret("machinegun.wav", scale: 0.4, bulletTexture: "ball", bulletName: "bullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
             }
         }
-        
-        
-        
         enumerateChildNodesWithName("invader") { node, stop in
             let invader = node as! Invader
             if(invader.getLock()){
@@ -753,14 +803,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             if(invader.isGunner()){
                 invader.fireBullet(self, touchX: self.player.position.x, touchY: self.player.position.y + CGFloat(self.randRange(0, upper: 80)), bulletTexture: "ball", bulletScale: 1, speedMultiplier: CGFloat(0.001), bulletSound: "gunshot.mp3", canFireWait: 2, multiShot: false, bulletName: "invaderbullet", atlas: self.mainatlas)
             }
-            if(self.points % 50 == 0 && self.points != 0){
-                self.points++
-               self.gameOver()
-            }
-
-            }
-  
         }
+        
+    }
     
    
     
@@ -844,10 +889,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
 
-    func gameOver(){
+    func gameOver(win: Bool){
         self.removeFromParent()
         self.removeAllActions()
-        let scene = GameOver(size: self.size, points: self.points,ef: EnemyFreq, level: self.level)
+        let scene = GameOver(size: self.size, points: self.points,ef: EnemyFreq, level: self.level, ne:self.numEnemyInWave, win: win, weaponCap: self.weaponCap)
         let transitionType = SKTransition.flipHorizontalWithDuration(1.0)
         self.view?.presentScene(scene, transition: transitionType)
         
@@ -935,7 +980,13 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     if(firstBody.node?.name == "invader"){
                         self.addAndRemoveEmitter(0.2, x: contactPoint.x - 10, y: contactPoint.y, fileName: "blood.sks",zPos:3)
                         runAction(SKAction.playSoundFileNamed("hit.mp3", waitForCompletion: false))
-                        invaderObj.hit(invaderObj.gethit()+2)
+                        NSLog(secondBody.node!.name!)
+                        
+                        if(secondBody.node?.name == "shell"){
+                              invaderObj.hit(invaderObj.gethit()+3)
+                        }else{
+                            invaderObj.hit(invaderObj.gethit()+2)
+                        }
                         if(secondBody.node?.name == "arrow"){
                             let bullet = secondBody.node as! PlayerBullet
                             let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
@@ -976,7 +1027,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         }
                         
                         
-                            if(invaderObj.gethit() > self.invaderLife){
+                            if(invaderObj.gethit() >= self.invaderLife){
                                 firstBody.categoryBitMask = CollisionCategories.ScenePiece
                                 self.flashText("+5", x: invaderObj.position.x, y: invaderObj.position.y + invaderObj.size.height*0.25, z: 10, waitDur: 0.3, color: SKColor.yellowColor())
                                 self.flashAndremoveNode(invaderObj)
@@ -1000,7 +1051,25 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             self.points = self.points + 10
                             self.flashAndremoveNode(invaderObj)
                         }
-                    }
+                    }//end heavy
+                    
+                    
+                    if(firstBody.node?.name == "zombie"){
+                        runAction(SKAction.playSoundFileNamed("punch.wav", waitForCompletion: false))
+                        self.addAndRemoveEmitter(0.3, x: contactPoint.x, y: contactPoint.y, fileName: "blood.sks",zPos:3)
+                        let invaderObj = firstBody.node as! Invader
+                        invaderObj.hit(invaderObj.gethit()+1)
+                        if(invaderObj.gethit() == 3){
+                            let smoke = SKEmitterNode(fileNamed: "cblood")
+                            smoke.zPosition = 3
+                            firstBody.node?.addChild(smoke)
+                        }
+                        if(invaderObj.gethit() == 6){
+                            self.flashText("+10", x: invaderObj.position.x, y: invaderObj.position.y + invaderObj.size.height*0.25, z: 10, waitDur: 0.3, color: SKColor.yellowColor())
+                            self.points = self.points + 10
+                            self.flashAndremoveNode(invaderObj)
+                        }
+                    }//end zombie
                     
                 }
         }
@@ -1085,6 +1154,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     player.hit(player.gethit()+1)
                     
                     if(player.gethit() > 10){
+                          self.gameOver(false)
                         NSLog("PLayer dead")
                         
                     }

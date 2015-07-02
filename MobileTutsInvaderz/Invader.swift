@@ -61,6 +61,8 @@ class Invader: SKSpriteNode {
         var soldieratlas = atlas
         if(self.name == "heavy"){
               soldieratlas = SKTextureAtlas(named: "heavy")
+        }else if(self.name == "zombie"){
+              soldieratlas = SKTextureAtlas(named: "zombie")
         }
         
         var playerTextures:[SKTexture] = []
