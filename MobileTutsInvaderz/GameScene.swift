@@ -75,6 +75,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     let mainatlas = SKTextureAtlas(named: "images")
     let soldieratlas = SKTextureAtlas(named: "soldierrun")
     //Flying enemy
+    var musicoff = false
     //shooting enemy
     //
     
@@ -92,7 +93,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     override func didMoveToView(view: SKView) {
-        audioPlayer = AVAudioPlayer(contentsOfURL: coinSound, error: nil)
+        audioPlayer = AVAudioPlayer(contentsOfURL: ocean, error: nil)
         audioPlayer.prepareToPlay()
         audioPlayer.play()
         
@@ -296,6 +297,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         nextWeaponButton.zPosition = 14
         self.addChild(nextWeaponButton)
         // nextWeaponButton.AddPhysics(self, dynamic: false)
+        let musicBtn = ScenePiece(pieceName: "musicbtn", textTureName: "musicbtn", dynamic: false, scale: 0.4,x : self.size.width - 100,y: self.size.height - 20)
+        self.addChild(musicBtn)
+        musicBtn.zPosition = 14
+        
         
         let trapButton = ScenePiece(pieceName: "trapbtn", textTureName: "trapbtn", dynamic: false, scale: 0.4,x : self.size.width - 300,y: self.size.height - 20)
         self.addChild(trapButton)
@@ -477,7 +482,16 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                
                 
             }
-        } else{
+        } else if(touchedNode.name == "musicbtn"){
+            if(musicoff){
+                musicoff = false
+                audioPlayer.play()
+            }else{
+                musicoff = true
+                audioPlayer.stop()
+            }
+            
+        }else{
             var bulletName = "bullet"
             var bulletTexture = "bullet"
             var bulletScale = CGFloat(0.6)
@@ -654,7 +668,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         fieldNode.strength =  4
         fieldNode.falloff = 1
         
-        self.waitAndRemove(node, wait: 10)
+        self.waitAndRemove(node, wait: 30)
         
     }
     
@@ -710,15 +724,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         flameEmmiter.zRotation = angle - 90 * DegreesToRadians
         
     }
-    
 
-    
-
-    
-
-    
-
-    
     func randRange (lower: UInt32 , upper: UInt32) -> UInt32 {
         return lower + arc4random_uniform(upper - lower + 1)
     }
@@ -745,11 +751,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 self.fireTurret("machinegun.wav", scale: 0.7, bulletTexture: "bullet", bulletName: "bullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.4, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
             }
             if(invader.isGunner()){
-                //invader.fireBullet(self, touchX: self.player.position.x, touchY: self.player.position.y + CGFloat(self.randRange(0, upper: 80)), bulletTexture: "ball", bulletScale: 1, speedMultiplier: CGFloat(0.001), bulletSound: "gunshot.mp3", canFireWait: 2, multiShot: false, bulletName: "invaderbullet", atlas: self.mainatlas)
+                invader.fireBullet(self, touchX: self.player.position.x, touchY: self.player.position.y + CGFloat(self.randRange(0, upper: 80)), bulletTexture: "ball", bulletScale: 1, speedMultiplier: CGFloat(0.001), bulletSound: "gunshot.mp3", canFireWait: 2, multiShot: false, bulletName: "invaderbullet", atlas: self.mainatlas)
             }
-            
-          
-
             if(self.points % 50 == 0 && self.points != 0){
                 self.points++
                self.gameOver()
@@ -1021,7 +1024,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             (secondBody.categoryBitMask & CollisionCategories.floor != 0)) {
 
                 let contactPoint = contact.contactPoint
-                self.addAndRemoveEmitter(0.2, x: contactPoint.x, y: contactPoint.y + 5, fileName: "dirt.sks",zPos: 3)
+                self.addAndRemoveEmitter(0.2, x: contactPoint.x, y: contactPoint.y + 10, fileName: "dirt.sks",zPos: 3)
                 
                 if(firstBody.node?.name == "arrow"){
                     firstBody.categoryBitMask = CollisionCategories.ScenePiece
@@ -1040,21 +1043,28 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     self.physicsWorld.addJoint(myJoint)
                     let waitToEnableFire = SKAction.waitForDuration(2)
                     runAction(waitToEnableFire,completion:{
+                        self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
                         self.physicsWorld.removeJoint(myJoint)
                         firstBody.node?.removeAllActions()
                         firstBody.node?.removeFromParent()
-                        self.addAndRemoveEmitter(1, x: contactPoint.x, y: contactPoint.y + 7, fileName: "explo.sks", zPos: 3)
+                        self.addAndRemoveEmitter(1, x: contactPoint.x, y: contactPoint.y + 10, fileName: "explo.sks", zPos: 3)
                         
                     })
                 }else{
                     //self.waitAndRemove(, wait: 0.05)
-                    self.removeNode(firstBody.node!)
+                    self.waitAndRemove(firstBody.node!, wait: 0.01)
+                   
                 }
         }
         
         if ((firstBody.categoryBitMask & CollisionCategories.EnemyBullet != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.Gfield != 0)) {
                 firstBody.node?.removeFromParent()
+        }
+        
+        if ((firstBody.categoryBitMask & CollisionCategories.EnemyBullet != 0) &&
+            (secondBody.categoryBitMask & CollisionCategories.PlayerBullet != 0)) {
+                self.waitAndRemove(firstBody.node!, wait: 0.1)
         }
         
         if ((firstBody.categoryBitMask & CollisionCategories.Player != 0) &&

@@ -24,7 +24,7 @@ class PlayerBullet: Bullet {
         }
         
         self.physicsBody?.dynamic = true
-        self.physicsBody?.usesPreciseCollisionDetection = false
+        self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.restitution = 0.1;
      //   self.physicsBody?.mass = 0
         self.physicsBody?.friction = 0.0;
