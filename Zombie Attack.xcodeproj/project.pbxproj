@@ -83,6 +83,7 @@
 		145006AF1B3B3BE400E191C8 /* zombie13.png in Resources */ = {isa = PBXBuildFile; fileRef = 1450069F1B3B3BE400E191C8 /* zombie13.png */; };
 		145006B01B3B3BE400E191C8 /* zombie14.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006A01B3B3BE400E191C8 /* zombie14.png */; };
 		145006B11B3B3BE400E191C8 /* zombie15.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006A11B3B3BE400E191C8 /* zombie15.png */; };
+		145431411B459741004E7336 /* ocean.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 145431401B459741004E7336 /* ocean.mp3 */; };
 		147D28A11B2C790900BD025A /* Invader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A01B2C790900BD025A /* Invader.swift */; };
 		147D28A31B2C7EA000BD025A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A21B2C7EA000BD025A /* Player.swift */; };
 		147D28A51B2C829100BD025A /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A41B2C829100BD025A /* Bullet.swift */; };
@@ -248,6 +249,7 @@
 		1450069F1B3B3BE400E191C8 /* zombie13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie13.png; sourceTree = "<group>"; };
 		145006A01B3B3BE400E191C8 /* zombie14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie14.png; sourceTree = "<group>"; };
 		145006A11B3B3BE400E191C8 /* zombie15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie15.png; sourceTree = "<group>"; };
+		145431401B459741004E7336 /* ocean.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ocean.mp3; sourceTree = "<group>"; };
 		147D28A01B2C790900BD025A /* Invader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Invader.swift; sourceTree = "<group>"; };
 		147D28A21B2C7EA000BD025A /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		147D28A41B2C829100BD025A /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 		14BE40FF1B44979700528C70 /* music */ = {
 			isa = PBXGroup;
 			children = (
+				145431401B459741004E7336 /* ocean.mp3 */,
 				14BE41001B4497A300528C70 /* BG.mp3 */,
 				14BE41011B4497A300528C70 /* BGG.aiff */,
 				14BE41021B4497A300528C70 /* BGG.wav */,
@@ -813,6 +816,7 @@
 				745B96321A8BDC36006D014D /* Main.storyboard in Resources */,
 				144731631B36E4B500A34790 /* expdeath7.png in Resources */,
 				148123B21B30B7700056992C /* mummy13.png in Resources */,
+				145431411B459741004E7336 /* ocean.mp3 in Resources */,
 				141997EE1B2F98E30087792A /* deadsoldier13.png in Resources */,
 				14BE41291B4497F400528C70 /* autolaser.mp3 in Resources */,
 				1447315F1B36E4B500A34790 /* expdeath3.png in Resources */,
@@ -988,7 +992,7 @@
 		745B96471A8BDC36006D014D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MobileTutsInvaderz/Info.plist;
@@ -1003,7 +1007,7 @@
 		745B96481A8BDC36006D014D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MobileTutsInvaderz/Info.plist;
