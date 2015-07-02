@@ -59,7 +59,7 @@ class Player: SKSpriteNode {
         return self.playerhit
     }
     
-    func fireBullet(scene: SKScene, touchX: CGFloat, touchY: CGFloat, bulletTexture: String,bulletScale: CGFloat, speedMultiplier: CGFloat, bulletSound: String, canFireWait: Double, multiShot: Bool, bulletName: String){
+    func fireBullet(scene: SKScene, touchX: CGFloat, touchY: CGFloat, bulletTexture: String,bulletScale: CGFloat, speedMultiplier: CGFloat, bulletSound: String, canFireWait: Double, multiShot: Bool, bulletName: String, atlas: SKTextureAtlas){
         if(!canFire){
             return
         }else{
@@ -67,7 +67,7 @@ class Player: SKSpriteNode {
             let projectileSpeedMultiplier = speedMultiplier
             //"ArrowTexture"
             canFire = false
-            let bullet = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName)
+            let bullet = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
            
             let opposite = touchY -  self.position.y
             let adjacent = touchX - self.position.x
@@ -102,13 +102,13 @@ class Player: SKSpriteNode {
                 newY*projectileSpeedMultiplier))
             
             if(multiShot){
-                let bullet1 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName)
+                let bullet1 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
                     bullet1.position.x = self.position.x
                     bullet1.position.y = self.position.y
                     bullet1.setScale(bulletScale)
                     bullet1.zRotation = angle - spread * DegreesToRadians
                     bullet1.physicsBody?.applyImpulse(CGVectorMake(newX1*projectileSpeedMultiplier, newY1*projectileSpeedMultiplier))
-                let bullet2 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName)
+                let bullet2 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
                     bullet2.position.x = self.position.x
                     bullet2.position.y = self.position.y
                     bullet2.setScale(bulletScale)

@@ -14,7 +14,7 @@ class StartGameScene: SKScene {
         background.position = CGPointMake(0, size.height)
         background.zPosition = 1
         background.size = CGSize(width: self.view!.bounds.size.width, height:self.view!.bounds.size.height)
-        addChild(background)
+        //addChild(background)
         
         audioPlayer = AVAudioPlayer(contentsOfURL: coinSound, error: nil)
         audioPlayer.prepareToPlay()

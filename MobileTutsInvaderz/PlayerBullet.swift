@@ -13,9 +13,9 @@ class PlayerBullet: Bullet {
     
     var hasHit = false
 
-    override init(imageName: String, bulletSound:String?,scene: SKScene, bulletName: String?){
+    override init(imageName: String, bulletSound:String?,scene: SKScene, bulletName: String?, atlas: SKTextureAtlas){
         hasHit = false
-        super.init(imageName: imageName, bulletSound: bulletSound,scene:scene, bulletName: bulletName)
+        super.init(imageName: imageName, bulletSound: bulletSound,scene:scene, bulletName: bulletName, atlas: atlas)
         self.zPosition = CGFloat(5)
         if(bulletName == "arrow"){
             self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width*0.1, center: CGPoint(x:self.size.width*0.2,y:0))

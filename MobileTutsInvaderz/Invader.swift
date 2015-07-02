@@ -17,9 +17,12 @@ class Invader: SKSpriteNode {
     var invaderhit = UInt32()
     var lockedOn = false
     var gunner = false
+
     
-    init(scene: SKScene, scale: CGFloat, invaderhit: UInt32, animprefix:String?, name:String?,gunner: Bool) {
-        let texture = SKTexture(imageNamed: "soldierrun0")
+    init(scene: SKScene, scale: CGFloat, invaderhit: UInt32, animprefix:String?, name:String?,gunner: Bool,atlas: SKTextureAtlas) {
+       
+        let texture = atlas.textureNamed("soldierrun0")
+        
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
         self.setScale(scale)
         scene.addChild(self)
@@ -28,12 +31,12 @@ class Invader: SKSpriteNode {
         self.gunner = gunner
         var hits = 0
         self.invaderhit = invaderhit
-        animate(animprefix)
+        animate(animprefix, atlas: atlas)
         if(name == "heavy"){
             self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width*0.35, center: CGPoint(x: self.position.x , y: self.position.y-10))
         }else{
             self.physicsBody =
-                SKPhysicsBody(rectangleOfSize: CGSize(width: self.size.width*0.2, height: self.size.height*0.7), center: CGPoint(x:self.position.x,y:self.position.y-10))
+                SKPhysicsBody(rectangleOfSize: CGSize(width: self.size.width*0.2, height: self.size.height*0.8), center: CGPoint(x:self.position.x,y:self.position.y-10))
         }
         
         self.physicsBody?.dynamic = true
@@ -53,12 +56,13 @@ class Invader: SKSpriteNode {
     }
     
     
-    internal func animate(animprefix: String?){
+    internal func animate(animprefix: String?, atlas: SKTextureAtlas){
         
-        var soldieratlas = SKTextureAtlas(named: "soldierrun")
+        var soldieratlas = atlas
         if(self.name == "heavy"){
               soldieratlas = SKTextureAtlas(named: "heavy")
         }
+        
         var playerTextures:[SKTexture] = []
         
         let numImages = soldieratlas.textureNames.count-1
@@ -93,7 +97,7 @@ class Invader: SKSpriteNode {
         super.init(coder: aDecoder)
     }
     
-    func fireBullet(scene: SKScene, touchX: CGFloat, touchY: CGFloat, bulletTexture: String,bulletScale: CGFloat, speedMultiplier: CGFloat, bulletSound: String, canFireWait: Double, multiShot: Bool, bulletName: String){
+    func fireBullet(scene: SKScene, touchX: CGFloat, touchY: CGFloat, bulletTexture: String,bulletScale: CGFloat, speedMultiplier: CGFloat, bulletSound: String, canFireWait: Double, multiShot: Bool, bulletName: String, atlas: SKTextureAtlas){
         if(!canFire){
             return
         }else{
@@ -101,7 +105,7 @@ class Invader: SKSpriteNode {
             let projectileSpeedMultiplier = speedMultiplier
             //"ArrowTexture"
             canFire = false
-            let bullet = EnemyBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName)
+            let bullet = EnemyBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
             
             let opposite = touchY -  self.position.y
             let adjacent = touchX - self.position.x
@@ -132,13 +136,13 @@ class Invader: SKSpriteNode {
                 newY*projectileSpeedMultiplier))
             
             if(multiShot){
-                let bullet1 = EnemyBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName)
+                let bullet1 = EnemyBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
                 bullet1.position.x = self.position.x
                 bullet1.position.y = self.position.y
                 bullet1.setScale(bulletScale)
                 bullet1.zRotation = angle - spread * DegreesToRadians
                 bullet1.physicsBody?.applyImpulse(CGVectorMake(newX1*projectileSpeedMultiplier, newY1*projectileSpeedMultiplier))
-                let bullet2 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName)
+                let bullet2 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
                 bullet2.position.x = self.position.x
                 bullet2.position.y = self.position.y
                 bullet2.setScale(bulletScale)

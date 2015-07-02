@@ -11,9 +11,9 @@ import SpriteKit
 class Bullet: SKSpriteNode {
     
     
-    init(imageName: String, bulletSound: String?, scene: SKScene, bulletName: String?) {
+    init(imageName: String, bulletSound: String?, scene: SKScene, bulletName: String?, atlas: SKTextureAtlas) {
         
-        let texture = SKTexture(imageNamed: imageName)
+        let texture = atlas.textureNamed(imageName)
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
         scene.addChild(self)
         self.zPosition = 20

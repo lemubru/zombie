@@ -65,7 +65,6 @@
 		144731881B36F9EF00A34790 /* flamedeath16.png in Resources */ = {isa = PBXBuildFile; fileRef = 144731741B36F9EF00A34790 /* flamedeath16.png */; };
 		144731891B36F9EF00A34790 /* flamedeath17.png in Resources */ = {isa = PBXBuildFile; fileRef = 144731751B36F9EF00A34790 /* flamedeath17.png */; };
 		1447318A1B36F9EF00A34790 /* flamedeath18.png in Resources */ = {isa = PBXBuildFile; fileRef = 144731761B36F9EF00A34790 /* flamedeath18.png */; };
-		1447318B1B36F9EF00A34790 /* flamedeath19.png in Resources */ = {isa = PBXBuildFile; fileRef = 144731771B36F9EF00A34790 /* flamedeath19.png */; };
 		144731AB1B3771C800A34790 /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 144731AA1B3771C800A34790 /* spark.sks */; };
 		145006841B38B89D00E191C8 /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145006831B38B89D00E191C8 /* GameOver.swift */; };
 		145006A21B3B3BE400E191C8 /* zombie0.png in Resources */ = {isa = PBXBuildFile; fileRef = 145006921B3B3BE400E191C8 /* zombie0.png */; };
@@ -231,7 +230,6 @@
 		144731741B36F9EF00A34790 /* flamedeath16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flamedeath16.png; sourceTree = "<group>"; };
 		144731751B36F9EF00A34790 /* flamedeath17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flamedeath17.png; sourceTree = "<group>"; };
 		144731761B36F9EF00A34790 /* flamedeath18.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flamedeath18.png; sourceTree = "<group>"; };
-		144731771B36F9EF00A34790 /* flamedeath19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flamedeath19.png; sourceTree = "<group>"; };
 		144731AA1B3771C800A34790 /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spark.sks; sourceTree = "<group>"; };
 		145006831B38B89D00E191C8 /* GameOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
 		145006921B3B3BE400E191C8 /* zombie0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zombie0.png; sourceTree = "<group>"; };
@@ -407,7 +405,6 @@
 				144731741B36F9EF00A34790 /* flamedeath16.png */,
 				144731751B36F9EF00A34790 /* flamedeath17.png */,
 				144731761B36F9EF00A34790 /* flamedeath18.png */,
-				144731771B36F9EF00A34790 /* flamedeath19.png */,
 				144731541B36E4B500A34790 /* expdeath0.png */,
 				144731551B36E4B500A34790 /* expdeath1.png */,
 				144731561B36E4B500A34790 /* expdeath2.png */,
@@ -709,7 +706,6 @@
 				144731621B36E4B500A34790 /* expdeath6.png in Resources */,
 				148123A81B30B7700056992C /* mummy3.png in Resources */,
 				14BE41121B4497A300528C70 /* Hello.mp3 in Resources */,
-				1447318B1B36F9EF00A34790 /* flamedeath19.png in Resources */,
 				148123AC1B30B7700056992C /* mummy7.png in Resources */,
 				14BE41371B4497F400528C70 /* slice.mp3 in Resources */,
 				145006A51B3B3BE400E191C8 /* zombie3.png in Resources */,
