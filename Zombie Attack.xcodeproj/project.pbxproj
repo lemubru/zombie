@@ -119,11 +119,10 @@
 		14BE41121B4497A300528C70 /* Hello.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE41071B4497A300528C70 /* Hello.mp3 */; };
 		14BE41131B4497A300528C70 /* intro.mid in Resources */ = {isa = PBXBuildFile; fileRef = 14BE41081B4497A300528C70 /* intro.mid */; };
 		14BE41141B4497A300528C70 /* Revelations.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE41091B4497A300528C70 /* Revelations.mp3 */; };
-		14BE41151B4497A300528C70 /* Too Late to Cry.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE410A1B4497A300528C70 /* Too Late to Cry.mp3 */; };
+		14BE41151B4497A300528C70 /* GO.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE410A1B4497A300528C70 /* GO.mp3 */; };
 		14BE41281B4497F400528C70 /* arrowfire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE41171B4497F400528C70 /* arrowfire.mp3 */; };
 		14BE41291B4497F400528C70 /* autolaser.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE41181B4497F400528C70 /* autolaser.mp3 */; };
 		14BE412A1B4497F400528C70 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE41191B4497F400528C70 /* beep.mp3 */; };
-		14BE412B1B4497F400528C70 /* cry.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE411A1B4497F400528C70 /* cry.mp3 */; };
 		14BE412C1B4497F400528C70 /* flamergoing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 14BE411B1B4497F400528C70 /* flamergoing.wav */; };
 		14BE412D1B4497F400528C70 /* flamersound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE411C1B4497F400528C70 /* flamersound.mp3 */; };
 		14BE412E1B4497F400528C70 /* gunshot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE411D1B4497F400528C70 /* gunshot.mp3 */; };
@@ -271,11 +270,10 @@
 		14BE41071B4497A300528C70 /* Hello.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Hello.mp3; path = music/Hello.mp3; sourceTree = "<group>"; };
 		14BE41081B4497A300528C70 /* intro.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; name = intro.mid; path = music/intro.mid; sourceTree = "<group>"; };
 		14BE41091B4497A300528C70 /* Revelations.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Revelations.mp3; path = music/Revelations.mp3; sourceTree = "<group>"; };
-		14BE410A1B4497A300528C70 /* Too Late to Cry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Too Late to Cry.mp3"; path = "music/Too Late to Cry.mp3"; sourceTree = "<group>"; };
+		14BE410A1B4497A300528C70 /* GO.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = GO.mp3; path = music/GO.mp3; sourceTree = "<group>"; };
 		14BE41171B4497F400528C70 /* arrowfire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = arrowfire.mp3; path = sounds/arrowfire.mp3; sourceTree = "<group>"; };
 		14BE41181B4497F400528C70 /* autolaser.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = autolaser.mp3; path = sounds/autolaser.mp3; sourceTree = "<group>"; };
 		14BE41191B4497F400528C70 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = beep.mp3; path = sounds/beep.mp3; sourceTree = "<group>"; };
-		14BE411A1B4497F400528C70 /* cry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = cry.mp3; path = sounds/cry.mp3; sourceTree = "<group>"; };
 		14BE411B1B4497F400528C70 /* flamergoing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = flamergoing.wav; path = sounds/flamergoing.wav; sourceTree = "<group>"; };
 		14BE411C1B4497F400528C70 /* flamersound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = flamersound.mp3; path = sounds/flamersound.mp3; sourceTree = "<group>"; };
 		14BE411D1B4497F400528C70 /* gunshot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = gunshot.mp3; path = sounds/gunshot.mp3; sourceTree = "<group>"; };
@@ -441,7 +439,7 @@
 				14BE41071B4497A300528C70 /* Hello.mp3 */,
 				14BE41081B4497A300528C70 /* intro.mid */,
 				14BE41091B4497A300528C70 /* Revelations.mp3 */,
-				14BE410A1B4497A300528C70 /* Too Late to Cry.mp3 */,
+				14BE410A1B4497A300528C70 /* GO.mp3 */,
 			);
 			name = music;
 			sourceTree = "<group>";
@@ -452,7 +450,6 @@
 				14BE41171B4497F400528C70 /* arrowfire.mp3 */,
 				14BE41181B4497F400528C70 /* autolaser.mp3 */,
 				14BE41191B4497F400528C70 /* beep.mp3 */,
-				14BE411A1B4497F400528C70 /* cry.mp3 */,
 				14BE411B1B4497F400528C70 /* flamergoing.wav */,
 				14BE411C1B4497F400528C70 /* flamersound.mp3 */,
 				14BE411D1B4497F400528C70 /* gunshot.mp3 */,
@@ -738,7 +735,7 @@
 				1485583D1B2F12A200EBD93A /* blood.sks in Resources */,
 				147E29FD1B41FCBF0043C662 /* dirt.sks in Resources */,
 				14BE40F61B448E0A00528C70 /* images.atlas in Resources */,
-				14BE41151B4497A300528C70 /* Too Late to Cry.mp3 in Resources */,
+				14BE41151B4497A300528C70 /* GO.mp3 in Resources */,
 				140476341B43212100447255 /* field5.png in Resources */,
 				148123AD1B30B7700056992C /* mummy8.png in Resources */,
 				1447317B1B36F9EF00A34790 /* flamedeath3.png in Resources */,
@@ -759,7 +756,6 @@
 				1447317D1B36F9EF00A34790 /* flamedeath5.png in Resources */,
 				14BE412C1B4497F400528C70 /* flamergoing.wav in Resources */,
 				145431431B45C8AD004E7336 /* zombie.atlas in Resources */,
-				14BE412B1B4497F400528C70 /* cry.mp3 in Resources */,
 				14BE41311B4497F400528C70 /* mm.wav in Resources */,
 				14BE41141B4497A300528C70 /* Revelations.mp3 in Resources */,
 				14BE412D1B4497F400528C70 /* flamersound.mp3 in Resources */,

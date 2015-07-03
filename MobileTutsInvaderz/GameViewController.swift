@@ -6,7 +6,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
    
-        let scene = GameScene(size: view.bounds.size, points: 0, ef: 3.0, level: 1, numEnemy: 1, weaponCap: 0)
+        let scene = GameScene(size: view.bounds.size, points: 300, ef: 3.0, level: 1, numEnemy: 5, weaponCap: 1)
         let skView = view as! SKView
         skView.showsFPS = true
         skView.showsPhysics = true

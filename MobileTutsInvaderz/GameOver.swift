@@ -31,6 +31,7 @@ class GameOver: SKScene {
         self.level = level + 1
         self.ne = ne + 1
         self.win = win
+        self.weaponCap = weaponCap
         if(self.level == 2){
             self.weaponCap = weaponCap
         }else{
@@ -46,44 +47,63 @@ class GameOver: SKScene {
     }
     
     override func didMoveToView(view: SKView) {
-        
+        let btnL = SKLabelNode(fontNamed: "COPPERPLATE")
+        let gameLabel = SKLabelNode(fontNamed: "COPPERPLATE")
+        let unlocks = SKLabelNode(fontNamed: "COPPERPLATE")
         audioPlayer = AVAudioPlayer(contentsOfURL: Disson, error: nil)
         audioPlayer.prepareToPlay()
         audioPlayer.play()
         
-        let btnL = SKLabelNode(fontNamed: "COPPERPLATE")
-        let gameLabel = SKLabelNode(fontNamed: "COPPERPLATE")
-        let unlocks = SKLabelNode(fontNamed: "COPPERPLATE")
-        if(self.win){
-             gameLabel.text = "Level Complete"
-             btnL.text = "Continue"
-        }else{
-            gameLabel.text = "Game Over"
-             btnL.text = "Restart"
+        if(win){
+            gameLabel.text = "Level Complete! +50 points"
+             self.points = self.points + 50
+            btnL.text = "Continue"
+            if(weaponCap == 1){
+                unlocks.text = "unlocked fast pistol"
+            }
+            
+            if(weaponCap == 2){
+                unlocks.text = "unlocked bow"
+            }
+            
+            if(weaponCap == 3){
+                unlocks.text = "unlocked flamer"
+            }
+            
+            if(weaponCap == 4){
+                unlocks.text = "unlocked shotgun"
+            }
+            
+            if(weaponCap == 5){
+                unlocks.text = "unlocked machinegun"
+            }
+            
+            if(weaponCap == 6){
+                unlocks.text = "unlocked auto-crossbow"
+            }
+            
+        }else{ //loss
+        self.points = 0
+        gameLabel.text = "Game Over"
+        btnL.text = "Restart"
+        self.ne--
+        self.level--
+       
+        self.weaponCap = self.weaponCap--
+        if(self.weaponCap < 0){
+            self.weaponCap = 0
         }
-        if(weaponCap == 1){
-            unlocks.text = "unlocked fast pistol"
+        if(self.level < 1){
+            self.level = 1
+        }
+        if(self.ne < 1){
+            self.ne = 1
+        }
         }
         
-        if(weaponCap == 2){
-            unlocks.text = "unlocked bow"
-        }
-        
-        if(weaponCap == 3){
-            unlocks.text = "unlocked flamer"
-        }
-        
-        if(weaponCap == 4){
-            unlocks.text = "unlocked shotgun"
-        }
-        
-        if(weaponCap == 5){
-            unlocks.text = "unlocked machinegun"
-        }
-        
-        if(weaponCap == 6){
-            unlocks.text = "unlocked auto-crossbow"
-        }
+
+        unlocks.fontColor = SKColor.yellowColor()
+   
         backgroundColor = SKColor.blackColor() //add background
         unlocks.fontSize = 20
         unlocks.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.4)
@@ -120,8 +140,9 @@ class GameOver: SKScene {
             audioPlayer.stop()
             var gameOverScene = GameScene(size: size, points:self.points, ef:EnemyFreq, level:level, numEnemy: self.ne, weaponCap: self.weaponCap)
             if(self.win){
-               gameOverScene = GameScene(size: size, points:self.points, ef:EnemyFreq, level:level, numEnemy: self.ne, weaponCap: self.weaponCap)            }else{
-                self.ne--
+               gameOverScene = GameScene(size: size, points:self.points, ef:EnemyFreq, level:level, numEnemy: self.ne, weaponCap: self.weaponCap)
+            }else{//loss
+           
                 gameOverScene = GameScene(size: size, points:self.points, ef:EnemyFreq, level:level, numEnemy : self.ne, weaponCap: self.weaponCap)
             }
              //make next scene
