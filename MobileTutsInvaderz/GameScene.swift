@@ -113,7 +113,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         setupPlayer()
         loadHud()
         soldieratlas.preloadWithCompletionHandler { () -> Void in
-           // self.startSchedulers1()
+            self.startSchedulers1()
         }
         mainatlas.preloadWithCompletionHandler { () -> Void in
             
@@ -373,7 +373,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let spawnAndWaitZombie = SKAction.repeatAction(SKAction.sequence([spawnZombie,wait2]), count: numEnemy)
         let spawnAndWaitRandom = SKAction.repeatAction(SKAction.sequence([spawnRandom,wait2]), count: numEnemy)
         
-        let actionArr = [medwait,spawnAndWait,medwait, spawnAndWaitRandom ,medwait, spawnAndWaitZombie, longwait]
+        let actionArr = [medwait,spawnAndWait,medwait, spawnAndWaitRandom ,medwait, spawnAndWaitRandom, longwait]
         
         self.runAction(SKAction.repeatAction(SKAction.sequence(actionArr), count: 1), completion:{
             self.gameOver(true)
@@ -471,7 +471,21 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             weapon++
             if(weapon > weaponCap)
             {
-                //autoShottie = false
+                if(flamerOn){
+                    removeActionForKey("flamer")
+                    flameEmmiter.removeFromParent()
+                    flameNode.removeFromParent()
+                    flamerOn = false 
+                }
+                if(machineGunMode){
+                    machineGunMode = false
+                }
+                if(autoCrossBow){
+                    autoCrossBow = false
+                }
+                if(autoShottie){
+                    autoShottie = false
+                }
                 weaponLabel.text = "pistol"
                 weapon = 0
             }
@@ -565,13 +579,13 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             }else if(trap == 2){
                 if(numTurrets < turretLimit){
                     if(self.points >= 100){
-                         trapLabel.fontColor = SKColor.whiteColor()
+                        
                         self.points = self.points - 100
                         trapLabel.text = "touch to place";
                         self.flashText("-100 points", x: touchedNode.position.x, y: touchedNode.position.y - 50, z: 10, waitDur: 2, color: SKColor.yellowColor())
                         placeTurretMode = true
                     }else{
-                        trapLabel.fontColor = SKColor.redColor()
+                     
                         self.flashText("no funds!", x: touchedNode.position.x, y: touchedNode.position.y - 50, z: 10, waitDur: 2, color: SKColor.redColor())
                     }
                   
@@ -582,10 +596,16 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 }
                 
             }else if(trap == 3){
-                trapLabel.text = "touch to place";
-                placeMudMode = true
-               
-                
+                if(self.points >= 20){
+                   
+                    self.points = self.points - 20
+                    trapLabel.text = "touch to place";
+                    self.flashText("-20 points", x: touchedNode.position.x, y: touchedNode.position.y - 50, z: 10, waitDur: 2, color: SKColor.yellowColor())
+                     placeMudMode = true
+                }else{
+                   
+                    self.flashText("no funds!", x: touchedNode.position.x, y: touchedNode.position.y - 50, z: 10, waitDur: 2, color: SKColor.redColor())
+                }
             }
         } else if(touchedNode.name == "musicbtn"){
             if(musicoff){
@@ -702,6 +722,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             trapLabel.fontColor = SKColor.greenColor()
         }else if(self.points >= 30 && trap == 0){
             trapLabel.fontColor = SKColor.greenColor()
+        }else if(self.points >= 20 && trap == 3){
+            trapLabel.fontColor = SKColor.greenColor()
         }else{
               trapLabel.fontColor = SKColor.redColor()
         }
@@ -791,7 +813,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         fieldNode.strength =  4
         fieldNode.falloff = 1
         
-        self.waitAndRemove(node, wait: 30)
+        self.waitAndRemove(node, wait: 10)
         
     }
     
@@ -1039,6 +1061,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     
     func flashAndremoveNode(node: SKNode){
+        node.removeAllChildren()
         let setHidden = SKAction.runBlock(){
             node.hidden = true
         }
@@ -1048,7 +1071,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let waitAbit = SKAction.waitForDuration(0.07)
         let seq = SKAction.sequence([setHidden,waitAbit,setVisible,waitAbit,setHidden,waitAbit,setVisible,waitAbit])
         node.runAction(seq,completion:{
-            self.removeNode(node)
+            node.removeAllActions()
+            node.removeFromParent()
             // self.playerDead = true
         })
     }
@@ -1090,6 +1114,13 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         }else{
                             invaderObj.hit(invaderObj.gethit()+2)
                         }
+                        
+                        if(invaderObj.gethit() == 4){
+                            let smoke = SKEmitterNode(fileNamed: "cblood")
+                            smoke.zPosition = 3
+                            firstBody.node?.addChild(smoke)
+                        }
+
                         if(secondBody.node?.name == "arrow"){
                             let bullet = secondBody.node as! PlayerBullet
                             let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
@@ -1280,8 +1311,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             (secondBody.categoryBitMask & CollisionCategories.Ally != 0)) {
                 NSLog("dfdfdAAAAfdfddd")
                 let turret = secondBody.node as! Ally
-                turret.removeFromParent()
+                self.flashAndremoveNode(turret)
                 turret.removeTurRad()
+                self.waitAndRemove(firstBody.node!, wait: 0.02)
                
                 
         }
