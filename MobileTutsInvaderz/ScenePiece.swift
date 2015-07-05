@@ -28,7 +28,7 @@ class ScenePiece: SKSpriteNode {
             
             self.physicsBody =
                 SKPhysicsBody(circleOfRadius: self.size.width/2)
-        }else if(self.name == "turretRad"){
+        }else if(self.name == "turretRad" || self.name == "bombnode"){
             self.physicsBody =
                 SKPhysicsBody(circleOfRadius: self.size.width)
         }else{

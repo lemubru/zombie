@@ -18,7 +18,8 @@ class PlayerBullet: Bullet {
         super.init(imageName: imageName, bulletSound: bulletSound,scene:scene, bulletName: bulletName, atlas: atlas)
         self.zPosition = CGFloat(5)
         if(bulletName == "arrow"){
-            self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width*0.1, center: CGPoint(x:self.size.width*0.2,y:0))
+            //self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width*0.1, center: CGPoint(x:self.size.width*0.2,y:0))
+            self.physicsBody = SKPhysicsBody(texture: self.texture, size: self.size)
         }else{
             self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width*0.35)
         }
