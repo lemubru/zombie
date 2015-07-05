@@ -1222,7 +1222,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             let waitToEnableFire = SKAction.waitForDuration(2)
                             runAction(waitToEnableFire,completion:{
                                 self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
-                                let sparkEmmiter = SKEmitterNode(fileNamed: "explo.sks")
+                                let sparkEmmiter = SKEmitterNode(fileNamed: "bomb.sks")
                                
                                 
                                 
@@ -1244,14 +1244,13 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                                 bomb.name = "bombnode"
                                 self.waitAndRemove(bomb, wait: 2)
                             
-                                
+                        
                                 firstBody.node?.addChild(bomb)
-                                let waitforblood = SKAction.waitForDuration(0.4)
+                                self.waitAndRemove(sparkEmmiter, wait: 0.45)
+                                self.waitAndRemove(blood, wait: 0.2)
+                                let waitforblood = SKAction.waitForDuration(0.1)
                                 self.runAction(waitforblood,completion:{
                                     invaderObj.hit(invaderObj.gethit()+40)
-                                    blood.removeFromParent()
-                                    sparkEmmiter.removeFromParent()
-                                    // secondBody.node?.removeFromParent()
                                 })
                                 //self.flashAndremoveNode(firstBody.node!)
                             })
@@ -1282,7 +1281,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             self.points = self.points + 2
                             self.flashAndremoveNode(invaderObj)
                             self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
-                            self.addAndRemoveEmitter(0.5, x: invaderObj.position.x, y: invaderObj.position.y, fileName: "explo.sks", zPos: 20)
+                            self.addAndRemoveEmitter(0.5, x: invaderObj.position.x, y: invaderObj.position.y, fileName: "bomb.sks", zPos: 20)
                             let waitToEnableFire = SKAction.waitForDuration(0.3)
                             runAction(waitToEnableFire,completion:{
                                 self.setupEnemyAt(invaderObj.position.x, y: invaderObj.position.y-10, speed: -50, scale: 1)
@@ -1353,7 +1352,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         self.physicsWorld.removeJoint(myJoint)
                         firstBody.node?.removeAllActions()
                         firstBody.node?.removeFromParent()
-                        self.addAndRemoveEmitter(1, x: contactPoint.x, y: contactPoint.y + 10, fileName: "explo.sks", zPos: 3)
+                        self.addAndRemoveEmitter(1, x: contactPoint.x, y: contactPoint.y + 10, fileName: "bomb.sks", zPos: 3)
                     })
                 }else{
                     self.waitAndRemove(firstBody.node!, wait: 0.01)

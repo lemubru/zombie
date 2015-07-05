@@ -70,6 +70,7 @@
 		145431411B459741004E7336 /* ocean.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 145431401B459741004E7336 /* ocean.mp3 */; };
 		145431431B45C8AD004E7336 /* zombie.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 145431421B45C8AD004E7336 /* zombie.atlas */; };
 		145431451B45CCE9004E7336 /* cblood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 145431441B45CCE9004E7336 /* cblood.sks */; };
+		1456231A1B49B9F100F51B6C /* bomb.sks in Resources */ = {isa = PBXBuildFile; fileRef = 145623191B49B9F100F51B6C /* bomb.sks */; };
 		147D28A11B2C790900BD025A /* Invader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A01B2C790900BD025A /* Invader.swift */; };
 		147D28A31B2C7EA000BD025A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A21B2C7EA000BD025A /* Player.swift */; };
 		147D28A51B2C829100BD025A /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A41B2C829100BD025A /* Bullet.swift */; };
@@ -221,6 +222,7 @@
 		145431401B459741004E7336 /* ocean.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ocean.mp3; sourceTree = "<group>"; };
 		145431421B45C8AD004E7336 /* zombie.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = zombie.atlas; sourceTree = "<group>"; };
 		145431441B45CCE9004E7336 /* cblood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = cblood.sks; sourceTree = "<group>"; };
+		145623191B49B9F100F51B6C /* bomb.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = bomb.sks; sourceTree = "<group>"; };
 		147D28A01B2C790900BD025A /* Invader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Invader.swift; sourceTree = "<group>"; };
 		147D28A21B2C7EA000BD025A /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		147D28A41B2C829100BD025A /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
@@ -472,6 +474,7 @@
 			children = (
 				147E29FC1B41FCBF0043C662 /* dirt.sks */,
 				147E2A041B421AEB0043C662 /* explo.sks */,
+				145623191B49B9F100F51B6C /* bomb.sks */,
 				145431441B45CCE9004E7336 /* cblood.sks */,
 				1485583C1B2F12A200EBD93A /* blood.sks */,
 				144731331B32453C00A34790 /* flamer.sks */,
@@ -706,6 +709,7 @@
 				144731891B36F9EF00A34790 /* flamedeath17.png in Resources */,
 				148123AE1B30B7700056992C /* mummy9.png in Resources */,
 				14BE410B1B4497A300528C70 /* BG.mp3 in Resources */,
+				1456231A1B49B9F100F51B6C /* bomb.sks in Resources */,
 				141997EC1B2F98E30087792A /* deadsoldier11.png in Resources */,
 				144731611B36E4B500A34790 /* expdeath5.png in Resources */,
 				14BE41281B4497F400528C70 /* arrowfire.mp3 in Resources */,
