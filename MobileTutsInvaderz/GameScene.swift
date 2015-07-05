@@ -261,7 +261,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         NSLog(String(random))
         var gunner = false
         if(random == 0){
-            gunner = true
+          //  gunner = true
         }
         let tempInvader:Invader = Invader(scene: self,scale: CGFloat(1.3), invaderhit: 0, animprefix:"soldierrun", name:"invader", gunner: gunner, atlas: soldieratlas)
         tempInvader.zPosition = 6
@@ -388,7 +388,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let spawnAndWaitZombie = SKAction.repeatAction(SKAction.sequence([spawnZombie,wait2]), count: numEnemy)
         let spawnAndWaitRandom = SKAction.repeatAction(SKAction.sequence([spawnRandom,wait2]), count: numEnemy)
         
-        let actionArr = [medwait,spawnAndWaitRandom,medwait, spawnAndWaitRandom ,medwait, spawnAndWaitRandom, longwait]
+        let actionArr = [medwait,spawnAndWait,medwait, spawnAndWait ,medwait, spawnAndWaitRandom, longwait]
         
         self.runAction(SKAction.repeatAction(SKAction.sequence(actionArr), count: 1), completion:{
             self.gameOver(true)
@@ -1223,14 +1223,30 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             runAction(waitToEnableFire,completion:{
                                 self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
                                 let sparkEmmiter = SKEmitterNode(fileNamed: "explo.sks")
+                               
+                                
+                                
                                 let blood = SKEmitterNode(fileNamed: "heavyblood.sks")
                                 sparkEmmiter.zPosition = 3
                                 blood.zPosition = 3
                                 firstBody.node?.addChild(sparkEmmiter)
                                 firstBody.node?.addChild(blood)
                                 secondBody.node?.removeFromParent()
-                                firstBody.node?.addChild(self.BombNode())
-                                let waitforblood = SKAction.waitForDuration(0.3)
+                                let bomb = SKNode()
+                                bomb.physicsBody = SKPhysicsBody(circleOfRadius: 60)
+                                bomb.physicsBody?.velocity = firstBody.velocity
+                                bomb.physicsBody?.dynamic = true
+                                bomb.physicsBody?.pinned = true
+                                bomb.physicsBody?.mass  = 0
+                                bomb.physicsBody?.categoryBitMask = CollisionCategories.ScenePiece
+                                bomb.physicsBody?.contactTestBitMask = CollisionCategories.Invader
+                                 bomb.physicsBody?.collisionBitMask = 0
+                                bomb.name = "bombnode"
+                                self.waitAndRemove(bomb, wait: 2)
+                            
+                                
+                                firstBody.node?.addChild(bomb)
+                                let waitforblood = SKAction.waitForDuration(0.4)
                                 self.runAction(waitforblood,completion:{
                                     invaderObj.hit(invaderObj.gethit()+40)
                                     blood.removeFromParent()
@@ -1412,7 +1428,13 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 
                 if(secondBody.node?.name == "bombnode"){
                     let invaderObj = firstBody.node as! Invader
-                    invaderObj.setLocked()
+                    let blood = SKEmitterNode(fileNamed: "heavyblood.sks")
+               
+                    blood.zPosition = 3
+                
+                    invaderObj.addChild(blood)
+                    self.flashAndremoveNode(invaderObj)
+                   
                 }
                 
                 if(secondBody.node?.name == "mud"){
