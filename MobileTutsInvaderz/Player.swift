@@ -85,6 +85,9 @@ class Player: SKSpriteNode {
          
             bullet.position.x = self.position.x
             bullet.position.y = self.position.y
+            if(bullet.name == "mbullet"){
+                bullet.physicsBody?.affectedByGravity = false
+            }
             bullet.setScale(bulletScale)
             if(bullet.name == "bullet"){
                  bullet.zRotation = angle - 90 * DegreesToRadians

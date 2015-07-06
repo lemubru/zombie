@@ -32,7 +32,7 @@ class GameOver: SKScene {
         self.ne = ne + 1
         self.win = win
         self.weaponCap = weaponCap
-        if(self.level == 2){
+        if(self.level == 3){
             self.weaponCap = weaponCap
         }else{
             self.weaponCap = weaponCap + 1

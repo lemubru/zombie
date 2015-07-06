@@ -18,6 +18,7 @@ struct CollisionCategories{
     static let ScenePiece: UInt32 = 0x1 << 5
     static let Gfield: UInt32 = 0x1 << 6
     static let Ally: UInt32 = 0x1 << 7
+    static let Spikes: UInt32 = 0x1 << 8
 }
 let Pi = CGFloat(M_PI)
 let DegreesToRadians = Pi / 180
@@ -59,10 +60,12 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var shotgunround  = 0
     var placeTurretMode = false
     var placeMudMode = false
+    var placeSpikeMode = false
     var numTurrets = 0
     let invaderLife = UInt32(6)
     var EnemyFreq = Double(3)
     var rocksFell = 0
+    var buttonScale = CGFloat(0.5)
     
     
     let weaponLabel = SKLabelNode(fontNamed: "COPPERPLATE")
@@ -196,7 +199,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         self.addChild(dock)
         
         
-        let nextWeaponButton = ScenePiece(pieceName: "nwbutton", textTureName: "nwbutton", dynamic: false, scale: 0.4,x : self.size.width - 20,y: self.size.height - 20)
+        let nextWeaponButton = ScenePiece(pieceName: "nwbutton", textTureName: "nwbutton", dynamic: false, scale: self.buttonScale,x : self.size.width - 25,y: self.size.height - 20)
         nextWeaponButton.zPosition = 14
         self.addChild(nextWeaponButton)
         // nextWeaponButton.AddPhysics(self, dynamic: false)
@@ -204,10 +207,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         //self.addChild(musicBtn)
         musicBtn.zPosition = 14
         
-        let trapButton = ScenePiece(pieceName: "trapbtn", textTureName: "trapbtn", dynamic: false, scale: 0.4,x : self.size.width - 200,y: self.size.height - 20)
+        let trapButton = ScenePiece(pieceName: "trapbtn", textTureName: "trapbtn", dynamic: false, scale: self.buttonScale,x : self.size.width - 200,y: self.size.height - 20)
         self.addChild(trapButton)
         trapButton.zPosition = 14
-        let nextTrapButton = ScenePiece(pieceName: "nexttrap", textTureName: "nxttrapbtn", dynamic: false, scale: 0.4,x : self.size.width - 100,y: self.size.height - 20)
+        let nextTrapButton = ScenePiece(pieceName: "nexttrap", textTureName: "nxttrapbtn", dynamic: false, scale: self.buttonScale,x : self.size.width - 100,y: self.size.height - 20)
         nextTrapButton.zPosition = 14
         self.addChild(nextTrapButton)
         
@@ -261,7 +264,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         NSLog(String(random))
         var gunner = false
         if(random == 0){
-          //  gunner = true
+           //gunner = true
         }
         let tempInvader:Invader = Invader(scene: self,scale: CGFloat(1.3), invaderhit: 0, animprefix:"soldierrun", name:"invader", gunner: gunner, atlas: soldieratlas)
         tempInvader.zPosition = 6
@@ -360,7 +363,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let wait1 = SKAction.waitForDuration(2, withRange: 1)
         let wait2 = SKAction.waitForDuration(4, withRange: 1)
         let longwait = SKAction.waitForDuration(15)
-        let medwait = SKAction.waitForDuration(3)
+        let medwait = SKAction.waitForDuration(9)
         
         let spawnNormal = SKAction.runBlock(){
             self.setupEnemy()
@@ -405,15 +408,21 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         touching = true
         var turretLimit = 4
         var weaponCap  = self.weaponCap //meaning +1 weapons - all weapons  = 8
-        var trapCap = 3 //meaning +1 traps
+        var trapCap = 4 //meaning +1 traps
         let touchLocation = touch.locationInNode(self)
         touchx = touchLocation.x
         touchy = touchLocation.y
         let touchedNode = self.nodeAtPoint(touchLocation) //touchedNode is the node being touched
         //NSLog(touchedNode.name!)
-        if(placeMudMode){
+        if(placeSpikeMode && touchedNode.name == "grass"){
+            trapLabel.text = "spikes placed!";
+            placeSpikeTrap(touchx, y: touchedNode.position.y+10)
+            placeSpikeMode  =  false
+        }
+       else if(placeMudMode){
             trapLabel.text = "Gfield placed!";
             placeMud(touchx, y: touchy)
+            
             placeMudMode  = false
         }else
             
@@ -466,6 +475,18 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         
                         trapLabel.text = "deathswing";
                     }
+                    if(trap == 4){
+                         placeMudMode = false
+                        trapLabel.text = "press T to place spike trap";
+                        
+                        
+                      
+                        enumerateChildNodesWithName("flash") { node, stop in
+                            
+                            node.removeFromParent()
+                        }
+                        flashText("info: place spike trap on the ground", x: self.size.width*0.3, y: 10, z: 22, waitDur: 3, color: SKColor.whiteColor())
+                    }
                     
                     
                     if(trap > trapCap){
@@ -481,6 +502,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         arrow.setScale(0.2)
                         self.indicateNode(arrow, waitf: 0.2)
                         placeMudMode = false
+                        placeSpikeMode = false
                         trapLabel.text = "rock fall";
                         trap = 0
                         
@@ -490,6 +512,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 else if(touchedNode.name == "nwbutton"){
                     runAction(SKAction.playSoundFileNamed("beep.mp3", waitForCompletion: false))
                     //let flameNode = PlayerBullet(imageName: "floor", bulletSound: nil, scene: self, bulletName: "floornode")
+                    touching = false
                     weapon++
                     if(weapon > weaponCap)
                     {
@@ -626,7 +649,20 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             
                             self.flashText("no funds!", x: touchedNode.position.x, y: touchedNode.position.y - 50, z: 10, waitDur: 2, color: SKColor.redColor())
                         }
+                    }else if(trap == 4){
+                        if(self.points >= 40){
+                            
+                            self.points = self.points - 40
+                            trapLabel.text = "touch to place";
+                            self.flashText("-40 points", x: touchedNode.position.x, y: touchedNode.position.y - 50, z: 10, waitDur: 2, color: SKColor.yellowColor())
+                            placeSpikeMode = true
+                        }else{
+                            
+                            self.flashText("no funds!", x: touchedNode.position.x, y: touchedNode.position.y - 50, z: 10, waitDur: 2, color: SKColor.redColor())
+                        }
                     }
+                    
+                    
                 } else if(touchedNode.name == "musicbtn"){
                     if(musicoff){
                         musicoff = false
@@ -642,7 +678,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     var bulletScale = CGFloat(0.6)
                     var speedMultiplier = CGFloat(0.002)
                     var bulletSound = "gunshot.mp3"
-                    var canFireWait = 0.1
+                    var canFireWait = 0.2
                     var multiShot = false
                     if(weapon == 0){
                         multiShot = false
@@ -651,12 +687,12 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         var bulletScale = 0.4
                         speedMultiplier = CGFloat(0.001)
                         bulletSound = "gunshot.mp3"
-                        canFireWait = 0.8
+                        canFireWait = 0.6
                     }
                     if(weapon == 2){
                         bulletName = "arrow"
                         bulletTexture = "ArrowTexture"
-                        bulletScale = 0.5
+                        bulletScale = 0.4
                         speedMultiplier = CGFloat(0.004)
                         bulletSound = "arrowfire.mp3"
                         canFireWait = 0.4
@@ -676,8 +712,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         multiShot = false
                         bulletName = "nade"
                         bulletTexture = "ball"
-                        var bulletScale = 1
-                        speedMultiplier = CGFloat(0.001)
+                        bulletScale = 1
+                        speedMultiplier = CGFloat(0.0005)
                         bulletSound = "gunshot.mp3"
                         canFireWait = 0.8
                     }
@@ -706,23 +742,18 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+       
         let touch = touches.first as! UITouch
         touching = true
         var weaponCap  = 4
         let touchLocation = touch.locationInNode(self)
+        let touchedNode = self.nodeAtPoint(touchLocation)
+        if(touchedNode.name == "nwbutton"){
+             touching = false
+        }
         touchx = touchLocation.x
         touchy = touchLocation.y
-        
-        let touchedNode = self.nodeAtPoint(touchLocation)
-        
-        if(touchedNode.name == "moveR"){
-            //  movingR = true
-            // movingL = false
-        }else if(touchedNode.name == "moveL"){
-            // movingR = false
-            // movingL = true
-        }
-        
+  
     }
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         touching = false
@@ -740,7 +771,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             trapLabel.fontColor = SKColor.greenColor()
         }else if(self.points >= 20 && trap == 3){
             trapLabel.fontColor = SKColor.greenColor()
-        }else{
+        }else if(self.points >= 40 && trap == 4){
+            trapLabel.fontColor = SKColor.greenColor()
+        } else{
             trapLabel.fontColor = SKColor.redColor()
         }
         if(self.points < 0){
@@ -753,10 +786,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             rotateGunToTouch()
         }
         if(machineGunMode){
-            self.fireMachineGun("machinegun.wav", scale: 0.4, bulletTexture: "bullet", bulletName: "bullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.2)
+            self.fireMachineGun("machinegun.wav", scale: 0.4, bulletTexture: "bullet", bulletName: "mbullet", speedMulti: 0.001, multiShot: false,canFireWait: 0.2)
         }
         if(autoCrossBow){
-            self.fireMachineGun("arrowfire.mp3", scale: 0.3, bulletTexture: "arrow1", bulletName: "arrow", speedMulti: 0.003, multiShot: false, canFireWait: 0.2)
+            self.fireMachineGun("arrowfire.mp3", scale: 0.4, bulletTexture: "ArrowTexture", bulletName: "arrow", speedMulti: 0.003, multiShot: false, canFireWait: 0.2)
         }
         if(autoShottie){
             
@@ -819,11 +852,38 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let fieldNode = SKFieldNode.radialGravityField()
         fieldNode.enabled = true;
         vortex.enabled = true
-        //node.addChild(fieldNode)
-        node.addChild(vortex)
+        node.addChild(fieldNode)
+        //node.addChild(vortex)
         fieldNode.strength =  4
         fieldNode.falloff = 1
         self.waitAndRemove(node, wait: 10)
+        
+    }
+    
+    func placeSpikeTrap(x: CGFloat,y: CGFloat){
+        let node = SKSpriteNode(imageNamed: "spikes1")
+        node.physicsBody = SKPhysicsBody(texture: node.texture, size: node.size)
+        node.physicsBody?.categoryBitMask = CollisionCategories.Spikes
+        node.physicsBody?.contactTestBitMask = CollisionCategories.Invader
+        node.physicsBody?.collisionBitMask = 0
+        node.physicsBody?.contactTestBitMask = 0
+        node.setScale(0.23)
+        node.name = "spikes"
+        
+        node.physicsBody?.fieldBitMask = 0
+        node.physicsBody?.dynamic = true
+        node.physicsBody?.affectedByGravity = false
+        node.position.x = x
+        node.position.y = y
+        node.zPosition = 22
+        self.addChild(node)
+        let sound = SKAction.playSoundFileNamed("spikesound.mp3", waitForCompletion: false)
+        let erect = SKAction.moveTo(CGPoint(x:x, y: y + 20), duration: 0.1)
+        let retract = SKAction.moveTo(CGPoint(x:x, y: y), duration: 0.1)
+        let wait = SKAction.waitForDuration(1)
+        let pullSpike = SKAction.sequence([sound,erect,wait,retract, wait])
+        node.runAction(SKAction.repeatAction(pullSpike, count: 12))
+        self.waitAndRemove(node, wait: 30)
         
     }
     
@@ -951,6 +1011,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     self.points = self.points - 60
                 }else if(self.points < 60){
                     self.points = 0
+                    self.gameOver(false)
                 }
                 self.flashText("breach! -60 points", x: 10, y: self.size.height*0.25, z: 10, waitDur: 3, color: SKColor.redColor())
                 self.removeNode(invader)
@@ -1212,7 +1273,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         
                         if(contactPoint.y > invaderObj.position.y){
                             self.points = self.points + 1
-                            self.flashTextSc("headshot! +1", x: invaderObj.position.x, y: invaderObj.position.y + invaderObj.size.height*0.5, z: 10, waitDur: 0.2, color: SKColor.greenColor(),scale: 9)
+                            self.flashTextSc("headshot! +1", x: invaderObj.position.x-5, y: invaderObj.position.y + invaderObj.size.height*0.5, z: 10, waitDur: 0.2, color: SKColor.greenColor(),scale: 9)
                         }
                         
                         if(secondBody.node?.name == "nade"){
@@ -1222,7 +1283,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             let waitToEnableFire = SKAction.waitForDuration(2)
                             runAction(waitToEnableFire,completion:{
                                 self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
-                                let sparkEmmiter = SKEmitterNode(fileNamed: "bomb.sks")
+                                let sparkEmmiter = SKEmitterNode(fileNamed: "exp.sks")
                                
                                 
                                 
@@ -1243,13 +1304,15 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                                  bomb.physicsBody?.collisionBitMask = 0
                                 bomb.name = "bombnode"
                                 self.waitAndRemove(bomb, wait: 2)
-                            
+                                self.flashText("+5", x: invaderObj.position.x-5, y: invaderObj.position.y + invaderObj.size.height*0.25, z: 10, waitDur: 0.3, color: SKColor.yellowColor())
                         
                                 firstBody.node?.addChild(bomb)
-                                self.waitAndRemove(sparkEmmiter, wait: 0.45)
+                                self.waitAndRemove(sparkEmmiter, wait: 0.5)
                                 self.waitAndRemove(blood, wait: 0.2)
-                                let waitforblood = SKAction.waitForDuration(0.1)
+                                let waitforblood = SKAction.waitForDuration(0.3)
+                            
                                 self.runAction(waitforblood,completion:{
+
                                     invaderObj.hit(invaderObj.gethit()+40)
                                 })
                                 //self.flashAndremoveNode(firstBody.node!)
@@ -1281,7 +1344,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             self.points = self.points + 2
                             self.flashAndremoveNode(invaderObj)
                             self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
-                            self.addAndRemoveEmitter(0.5, x: invaderObj.position.x, y: invaderObj.position.y, fileName: "bomb.sks", zPos: 20)
+                            self.addAndRemoveEmitter(0.5, x: invaderObj.position.x, y: invaderObj.position.y, fileName: "exp.sks", zPos: 20)
                             let waitToEnableFire = SKAction.waitForDuration(0.3)
                             runAction(waitToEnableFire,completion:{
                                 self.setupEnemyAt(invaderObj.position.x, y: invaderObj.position.y-10, speed: -50, scale: 1)
@@ -1312,14 +1375,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 }
         }
         
-        if ((firstBody.categoryBitMask & CollisionCategories.floor != 0) &&
-            (secondBody.categoryBitMask & CollisionCategories.ScenePiece != 0)) {
-                let contactPoint = contact.contactPoint
-                let waitToEnableFire = SKAction.waitForDuration(0.3)
-                runAction(waitToEnableFire,completion:{
-                    secondBody.node?.removeFromParent()
-                })
-        }
+
         
         if ((firstBody.categoryBitMask & CollisionCategories.Player != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.Invader != 0)) {
@@ -1350,9 +1406,23 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     runAction(waitToEnableFire,completion:{
                         self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
                         self.physicsWorld.removeJoint(myJoint)
+                        let bomb = SKNode()
+                        bomb.physicsBody = SKPhysicsBody(circleOfRadius: 60)
+                        bomb.physicsBody?.velocity = firstBody.velocity
+                        bomb.physicsBody?.dynamic = true
+                        bomb.physicsBody?.pinned = true
+                        bomb.physicsBody?.mass  = 0
+                        bomb.physicsBody?.categoryBitMask = CollisionCategories.ScenePiece
+                        bomb.physicsBody?.contactTestBitMask = CollisionCategories.Invader
+                        bomb.physicsBody?.collisionBitMask = 0
+                        bomb.name = "bombnode"
+                        self.waitAndRemove(bomb, wait: 2)
+                        self.addChild(bomb)
+                        bomb.position.x = contactPoint.x
+                        bomb.position.y = contactPoint.y
                         firstBody.node?.removeAllActions()
                         firstBody.node?.removeFromParent()
-                        self.addAndRemoveEmitter(1, x: contactPoint.x, y: contactPoint.y + 10, fileName: "bomb.sks", zPos: 3)
+                        self.addAndRemoveEmitter(1.5, x: contactPoint.x, y: contactPoint.y + 10, fileName: "exp.sks", zPos: 3)
                     })
                 }else{
                     self.waitAndRemove(firstBody.node!, wait: 0.01)
@@ -1406,7 +1476,33 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         }
         
         if ((firstBody.categoryBitMask & CollisionCategories.Invader != 0) &&
+            (secondBody.categoryBitMask & CollisionCategories.Spikes != 0)) {
+                let contactPoint = contact.contactPoint
+                if(secondBody.node?.name == "spikes"){
+                    let invaderObj = firstBody.node as! Invader
+                    if(firstBody.node?.name == "invader"){
+                        runAction(SKAction.playSoundFileNamed("hit.mp3", waitForCompletion: false))
+                        invaderObj.hit(invaderObj.gethit()+1)
+                        self.addAndRemoveEmitter(0.3, x: contactPoint.x, y: contactPoint.y, fileName: "blood.sks", zPos: 24)
+                        if(invaderObj.gethit() >= self.invaderLife){
+                            self.points = self.points + 5
+                            firstBody.categoryBitMask = CollisionCategories.ScenePiece
+                            self.flashText("+5", x: invaderObj.position.x, y: invaderObj.position.y + invaderObj.size.height*0.25, z: 10, waitDur: 0.3, color: SKColor.yellowColor())
+                            self.flashAndremoveNode(invaderObj)
+                        }
+                    }
+                }
+                
+        }
+        
+        if ((firstBody.categoryBitMask & CollisionCategories.floor != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.ScenePiece != 0)) {
+                self.waitAndRemove(secondBody.node!, wait: 0.3)
+        }
+        
+        if ((firstBody.categoryBitMask & CollisionCategories.Invader != 0) &&
+            (secondBody.categoryBitMask & CollisionCategories.ScenePiece != 0)) {
+                let contactPoint = contact.contactPoint
                 if(secondBody.node?.name == "flamenode"){
                     let invaderObj = firstBody.node as! Invader
                     invaderObj.hit(invaderObj.gethit()+10)
@@ -1425,12 +1521,14 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     invaderObj.setLocked()
                 }
                 
+          
+                
                 if(secondBody.node?.name == "bombnode"){
                     let invaderObj = firstBody.node as! Invader
                     let blood = SKEmitterNode(fileNamed: "heavyblood.sks")
                
                     blood.zPosition = 3
-                
+                    self.flashText("+5", x: invaderObj.position.x, y: invaderObj.position.y + invaderObj.size.height*0.25, z: 10, waitDur: 0.3, color: SKColor.yellowColor())
                     invaderObj.addChild(blood)
                     self.flashAndremoveNode(invaderObj)
                    
