@@ -89,7 +89,7 @@ class GameOver: SKScene {
         self.ne--
         self.level--
        
-        self.weaponCap = self.weaponCap--
+        self.weaponCap--
         if(self.weaponCap < 0){
             self.weaponCap = 0
         }

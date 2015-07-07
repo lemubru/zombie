@@ -11,6 +11,8 @@ import SpriteKit
 
 class Player: SKSpriteNode {
     private var canFire = true
+    var shotsfired = 0
+    var clipsize = 0
     
      var playerhit = UInt32()
     
@@ -20,7 +22,8 @@ class Player: SKSpriteNode {
 
         //animate()
       
-        
+        self.shotsfired = 0
+        self.clipsize = 9
         self.name = name
         
     }
@@ -38,7 +41,19 @@ class Player: SKSpriteNode {
         self.runAction(playerAnimation)
     }
     
+    func getShotsFired() -> Int{
+        return shotsfired
+    }
     
+    func setShotsFired(shots: Int){
+        shotsfired = shots
+    }
+    func getclipSize() -> Int{
+        return clipsize
+    }
+    func setClipSize(CS:Int){
+        self.clipsize = CS
+    }
     func die (){
         
     }
@@ -59,11 +74,13 @@ class Player: SKSpriteNode {
         return self.playerhit
     }
     
-    func fireBullet(scene: SKScene, touchX: CGFloat, touchY: CGFloat, bulletTexture: String,bulletScale: CGFloat, speedMultiplier: CGFloat, bulletSound: String, canFireWait: Double, multiShot: Bool, bulletName: String, atlas: SKTextureAtlas){
+    func fireBullet(scene: SKScene, touchX: CGFloat, touchY: CGFloat, bulletTexture: String,bulletScale: CGFloat, speedMultiplier: CGFloat, bulletSound: String, canFireWait: Double, multiShot: Bool, bulletName: String, atlas: SKTextureAtlas, clipsize: Int){
+      
         if(!canFire){
             return
         }else{
-            
+            self.clipsize = clipsize
+            var canfire = canFireWait
             let projectileSpeedMultiplier = speedMultiplier
             //"ArrowTexture"
             canFire = false
@@ -90,9 +107,9 @@ class Player: SKSpriteNode {
             }
             bullet.setScale(bulletScale)
             if(bullet.name == "bullet"){
-                 bullet.zRotation = angle - 90 * DegreesToRadians
+                bullet.zRotation = angle - 90 * DegreesToRadians
             }else{
-                  bullet.zRotation = angle
+                bullet.zRotation = angle
             }
           
             
@@ -122,8 +139,22 @@ class Player: SKSpriteNode {
             let wait  = SKAction.waitForDuration(1)
             let reloadsound = SKAction.playSoundFileNamed("shotgunreload.mp3", waitForCompletion: true)
             runAction(SKAction.sequence([wait,reloadsound]))
+            }else{
+                shotsfired++
+                
+                if(shotsfired == clipsize){
+                    canfire = 2.0
+                    
+                    let wait  = SKAction.waitForDuration(1.5)
+                    let reload = SKAction.runBlock(){
+                        self.shotsfired = 0
+                    }
+                    let reloadsound = SKAction.playSoundFileNamed("reload1.mp3", waitForCompletion: true)
+                    runAction(SKAction.sequence([wait,reloadsound, reload]))
+                }
+                
             }
-            let waitToEnableFire = SKAction.waitForDuration(canFireWait)
+            let waitToEnableFire = SKAction.waitForDuration(canfire)
             runAction(waitToEnableFire,completion:{
                 self.canFire = true
             })
