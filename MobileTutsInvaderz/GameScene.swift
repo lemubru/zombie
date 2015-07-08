@@ -103,7 +103,6 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         if(self.weaponCap > 8){
             self.weaponCap = 8
         }
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -194,8 +193,6 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         weaponLabel.fontSize = 17
         weaponLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
         
-        
-        
         pointsLabel.text = String(points)
         pointsLabel.position = CGPoint(x: 7,y: 5)
         pointsLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
@@ -279,14 +276,13 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         turret.physicsBody?.collisionBitMask =  CollisionCategories.EnemyBullet
     }
     
-    
-    
+
     func setupEnemy(){
         var random = randRange(0, upper: 2)
         NSLog(String(random))
         var gunner = false
         if(random == 0){
-           //gunner = true
+           gunner = true
         }
         let tempInvader:Invader = Invader(scene: self,scale: CGFloat(1.3), invaderhit: 0, animprefix:"soldierrun", name:"invader", gunner: gunner, atlas: soldieratlas)
         tempInvader.zPosition = 6
