@@ -132,7 +132,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func createFloor(){
         
-        let grass = ScenePiece(pieceName: "grass", textTureName: "grass2.png", dynamic: false, scale: 1, x: self.size.width/2, y:20)
+        let grass = ScenePiece(pieceName: "grass", textTureName: "ground1.png", dynamic: false, scale: 1, x: self.size.width/2, y:20)
         grass.zPosition = 20
         self.addChild(grass)
         
@@ -912,13 +912,15 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func placeSpikeTrap(x: CGFloat,y: CGFloat){
         let node = SKSpriteNode(imageNamed: "spikes4")
-        node.physicsBody = SKPhysicsBody(texture: node.texture, size: node.size)
+        node.setScale(0.15)
+        self.addChild(node)
+        node.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 5, height: 30))
         //node.zRotation = node.zRotation - 180 * DegreesToRadians
         node.physicsBody?.categoryBitMask = CollisionCategories.Spikes
         node.physicsBody?.contactTestBitMask = CollisionCategories.Invader
         node.physicsBody?.collisionBitMask = 0
         node.physicsBody?.contactTestBitMask = 0
-        node.setScale(0.1)
+      
         node.name = "spikes"
         
         node.physicsBody?.fieldBitMask = 0
@@ -927,7 +929,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         node.position.x = x
         node.position.y = y
         node.zPosition = 22
-        self.addChild(node)
+     
         let sound = SKAction.playSoundFileNamed("spikesound.mp3", waitForCompletion: false)
         let erect = SKAction.moveTo(CGPoint(x:x, y: y + 20), duration: 0.1)
         let retract = SKAction.moveTo(CGPoint(x:x, y: y), duration: 0.1)
@@ -1366,7 +1368,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         
                                 firstBody.node?.addChild(bomb)
                                 self.waitAndRemove(sparkEmmiter, wait: 0.5)
-                                self.waitAndRemove(blood, wait: 0.2)
+                                self.waitAndRemove(blood, wait: 0.3)
                                 let waitforblood = SKAction.waitForDuration(0.3)
                             
                                 self.runAction(waitforblood,completion:{
@@ -1541,7 +1543,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     let invaderObj = firstBody.node as! Invader
                     if(firstBody.node?.name == "invader"){
                         runAction(SKAction.playSoundFileNamed("hit.mp3", waitForCompletion: false))
-                        invaderObj.hit(invaderObj.gethit()+1)
+                        invaderObj.hit(invaderObj.gethit()+2)
                         self.addAndRemoveEmitter(0.3, x: contactPoint.x, y: contactPoint.y, fileName: "blood.sks", zPos: 24)
                         if(invaderObj.gethit() >= self.invaderLife){
                             self.points = self.points + 5
