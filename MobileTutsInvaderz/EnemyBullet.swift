@@ -13,9 +13,9 @@ class EnemyBullet: Bullet {
     
     var hasHit = false
     
-    override init(imageName: String, bulletSound:String?,scene: SKScene, bulletName: String?, atlas: SKTextureAtlas){
+    override init(imageName: String, bulletSound:String?,scene: SKScene, bulletName: String?, atlas: SKTextureAtlas, bulletSoundAction: SKAction){
         hasHit = false
-        super.init(imageName: imageName, bulletSound: bulletSound,scene:scene, bulletName: bulletName, atlas: atlas)
+        super.init(imageName: imageName, bulletSound: bulletSound,scene:scene, bulletName: bulletName, atlas: atlas, bulletSoundAction: bulletSoundAction)
         self.zPosition = CGFloat(5)
         self.physicsBody = SKPhysicsBody(texture: self.texture, size: self.size)
         self.physicsBody?.dynamic = true

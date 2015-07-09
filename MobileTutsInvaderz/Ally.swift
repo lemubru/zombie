@@ -15,13 +15,14 @@ class Ally: SKSpriteNode {
      let turretRad = ScenePiece(pieceName: "turretRad", textTureName: "floor", dynamic: false, scale: 0.6,x : 2,y: 2)
      var playerhit = UInt32()
     private var canFire = true
+    var gunShotSound = SKAction()
     
     init(scene: SKScene, name: String, x: CGFloat,y: CGFloat) {
         let texture = SKTexture(imageNamed: "turret")
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
         
         //animate()
-        
+        self.gunShotSound = SKAction.playSoundFileNamed("gunshot.mp3", waitForCompletion: false)
         
         self.name = name
         
@@ -91,7 +92,7 @@ class Ally: SKSpriteNode {
             let projectileSpeedMultiplier = speedMultiplier
             //"ArrowTexture"
             canFire = false
-            let bullet = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
+            let bullet = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas, bulletSoundAction:self.gunShotSound)
             
             let opposite = touchY -  self.position.y
             let adjacent = touchX - self.position.x
@@ -127,13 +128,13 @@ class Ally: SKSpriteNode {
                 newY*projectileSpeedMultiplier))
             
             if(multiShot){
-                let bullet1 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
+                let bullet1 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas, bulletSoundAction:self.gunShotSound)
                 bullet1.position.x = self.position.x
                 bullet1.position.y = self.position.y
                 bullet1.setScale(bulletScale)
                 bullet1.zRotation = angle - spread * DegreesToRadians
                 bullet1.physicsBody?.applyImpulse(CGVectorMake(newX1*projectileSpeedMultiplier, newY1*projectileSpeedMultiplier))
-                let bullet2 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
+                let bullet2 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas, bulletSoundAction:self.gunShotSound)
                 bullet2.position.x = self.position.x
                 bullet2.position.y = self.position.y
                 bullet2.setScale(bulletScale)

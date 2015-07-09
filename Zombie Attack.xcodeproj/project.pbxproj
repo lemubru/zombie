@@ -77,7 +77,6 @@
 		147D28A11B2C790900BD025A /* Invader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A01B2C790900BD025A /* Invader.swift */; };
 		147D28A31B2C7EA000BD025A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A21B2C7EA000BD025A /* Player.swift */; };
 		147D28A51B2C829100BD025A /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A41B2C829100BD025A /* Bullet.swift */; };
-		147D28A91B2C880000BD025A /* PlayerBullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28A81B2C880000BD025A /* PlayerBullet.swift */; };
 		147D28AB1B2D9C5E00BD025A /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D28AA1B2D9C5E00BD025A /* Utilities.swift */; };
 		147E29FD1B41FCBF0043C662 /* dirt.sks in Resources */ = {isa = PBXBuildFile; fileRef = 147E29FC1B41FCBF0043C662 /* dirt.sks */; };
 		147E29FF1B4205430043C662 /* smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = 147E29FE1B4205430043C662 /* smoke.sks */; };
@@ -108,6 +107,9 @@
 		1485583B1B2F0AA300EBD93A /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 148558391B2F0AA300EBD93A /* spark.png */; };
 		1485583D1B2F12A200EBD93A /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1485583C1B2F12A200EBD93A /* blood.sks */; };
 		1485583F1B2F1AC400EBD93A /* MyParticleSystem.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1485583E1B2F1AC400EBD93A /* MyParticleSystem.scnp */; };
+		1499E1751B4EB9F1003CF1B2 /* gunshot2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1499E1741B4EB9F1003CF1B2 /* gunshot2.wav */; };
+		1499E1771B4F2878003CF1B2 /* PlayerBullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1499E1761B4F2878003CF1B2 /* PlayerBullet.swift */; };
+		1499E1791B4F3072003CF1B2 /* shotgun2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1499E1781B4F3072003CF1B2 /* shotgun2.mp3 */; };
 		14B88C2A1B3E0230005C3E90 /* Ally.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B88C291B3E0230005C3E90 /* Ally.swift */; };
 		14B88C2C1B3E2277005C3E90 /* EnemyBullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B88C2B1B3E2277005C3E90 /* EnemyBullet.swift */; };
 		14BE40F61B448E0A00528C70 /* images.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 14BE40F51B448E0A00528C70 /* images.atlas */; };
@@ -230,7 +232,6 @@
 		147D28A01B2C790900BD025A /* Invader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Invader.swift; sourceTree = "<group>"; };
 		147D28A21B2C7EA000BD025A /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		147D28A41B2C829100BD025A /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
-		147D28A81B2C880000BD025A /* PlayerBullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerBullet.swift; sourceTree = "<group>"; };
 		147D28AA1B2D9C5E00BD025A /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		147E29FC1B41FCBF0043C662 /* dirt.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = dirt.sks; sourceTree = "<group>"; };
 		147E29FE1B4205430043C662 /* smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = smoke.sks; sourceTree = "<group>"; };
@@ -261,6 +262,9 @@
 		148558391B2F0AA300EBD93A /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		1485583C1B2F12A200EBD93A /* blood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = blood.sks; sourceTree = "<group>"; };
 		1485583E1B2F1AC400EBD93A /* MyParticleSystem.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = MyParticleSystem.scnp; sourceTree = "<group>"; };
+		1499E1741B4EB9F1003CF1B2 /* gunshot2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gunshot2.wav; sourceTree = "<group>"; };
+		1499E1761B4F2878003CF1B2 /* PlayerBullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerBullet.swift; sourceTree = "<group>"; };
+		1499E1781B4F3072003CF1B2 /* shotgun2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shotgun2.mp3; sourceTree = "<group>"; };
 		14B88C291B3E0230005C3E90 /* Ally.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ally.swift; sourceTree = "<group>"; };
 		14B88C2B1B3E2277005C3E90 /* EnemyBullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyBullet.swift; sourceTree = "<group>"; };
 		14BE40F51B448E0A00528C70 /* images.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = images.atlas; sourceTree = "<group>"; };
@@ -460,6 +464,8 @@
 				14BE411E1B4497F400528C70 /* hit.mp3 */,
 				1456231D1B4AD78E00F51B6C /* spikesound.mp3 */,
 				14BE411F1B4497F400528C70 /* machinegun.wav */,
+				1499E1741B4EB9F1003CF1B2 /* gunshot2.wav */,
+				1499E1781B4F3072003CF1B2 /* shotgun2.mp3 */,
 				14BE41201B4497F400528C70 /* mm.wav */,
 				145623211B4C6BB400F51B6C /* reload1.mp3 */,
 				1456231F1B4C6B1000F51B6C /* reload.mp3 */,
@@ -521,7 +527,7 @@
 				14BE413A1B44990F00528C70 /* heavy.atlas */,
 				145431421B45C8AD004E7336 /* zombie.atlas */,
 				745B96281A8BDC36006D014D /* AppDelegate.swift */,
-				147D28A81B2C880000BD025A /* PlayerBullet.swift */,
+				1499E1761B4F2878003CF1B2 /* PlayerBullet.swift */,
 				147D28A01B2C790900BD025A /* Invader.swift */,
 				1447313D1B3370EF00A34790 /* Enemy.swift */,
 				148123C71B31DCE60056992C /* ScenePiece.swift */,
@@ -706,6 +712,7 @@
 				141997EB1B2F98E30087792A /* deadsoldier10.png in Resources */,
 				14BE41321B4497F400528C70 /* nade.mp3 in Resources */,
 				14BE41331B4497F400528C70 /* punch.wav in Resources */,
+				1499E1751B4EB9F1003CF1B2 /* gunshot2.wav in Resources */,
 				745B96371A8BDC36006D014D /* LaunchScreen.xib in Resources */,
 				14BE41381B4497F400528C70 /* smash.wav in Resources */,
 				144731401B339F3900A34790 /* ash.sks in Resources */,
@@ -718,6 +725,7 @@
 				141997EC1B2F98E30087792A /* deadsoldier11.png in Resources */,
 				144731611B36E4B500A34790 /* expdeath5.png in Resources */,
 				14BE41281B4497F400528C70 /* arrowfire.mp3 in Resources */,
+				1499E1791B4F3072003CF1B2 /* shotgun2.mp3 in Resources */,
 				148123B41B30B7700056992C /* mummy15.png in Resources */,
 				144731811B36F9EF00A34790 /* flamedeath9.png in Resources */,
 				144731781B36F9EF00A34790 /* flamedeath0.png in Resources */,
@@ -791,8 +799,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				14B88C2C1B3E2277005C3E90 /* EnemyBullet.swift in Sources */,
+				1499E1771B4F2878003CF1B2 /* PlayerBullet.swift in Sources */,
 				148123911B30AF3E0056992C /* Scheduler.swift in Sources */,
-				147D28A91B2C880000BD025A /* PlayerBullet.swift in Sources */,
 				745B962D1A8BDC36006D014D /* GameScene.swift in Sources */,
 				745B964D1A8BFFD4006D014D /* StartGameScene.swift in Sources */,
 				1447313E1B3370EF00A34790 /* Enemy.swift in Sources */,

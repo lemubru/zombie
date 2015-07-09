@@ -17,11 +17,13 @@ class Invader: SKSpriteNode {
     var invaderhit = UInt32()
     var lockedOn = false
     var gunner = false
+    var gunShotSound = SKAction()
 
     
     init(scene: SKScene, scale: CGFloat, invaderhit: UInt32, animprefix:String?, name:String?,gunner: Bool,atlas: SKTextureAtlas) {
        
         let texture = atlas.textureNamed("soldierrun0")
+        self.gunShotSound = SKAction.playSoundFileNamed("gunshot.mp3", waitForCompletion: false)
         
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
         self.setScale(scale)
@@ -107,7 +109,7 @@ class Invader: SKSpriteNode {
             let projectileSpeedMultiplier = speedMultiplier
             //"ArrowTexture"
             canFire = false
-            let bullet = EnemyBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
+            let bullet = EnemyBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas, bulletSoundAction: self.gunShotSound)
             
             let opposite = touchY -  self.position.y
             let adjacent = touchX - self.position.x
@@ -138,13 +140,13 @@ class Invader: SKSpriteNode {
                 newY*projectileSpeedMultiplier))
             
             if(multiShot){
-                let bullet1 = EnemyBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
+                let bullet1 = EnemyBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas, bulletSoundAction: self.gunShotSound)
                 bullet1.position.x = self.position.x
                 bullet1.position.y = self.position.y
                 bullet1.setScale(bulletScale)
                 bullet1.zRotation = angle - spread * DegreesToRadians
                 bullet1.physicsBody?.applyImpulse(CGVectorMake(newX1*projectileSpeedMultiplier, newY1*projectileSpeedMultiplier))
-                let bullet2 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
+                let bullet2 = EnemyBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas, bulletSoundAction: self.gunShotSound)
                 bullet2.position.x = self.position.x
                 bullet2.position.y = self.position.y
                 bullet2.setScale(bulletScale)

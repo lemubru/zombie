@@ -13,13 +13,21 @@ class Player: SKSpriteNode {
     private var canFire = true
     var shotsfired = 0
     var clipsize = 0
-    
-     var playerhit = UInt32()
-    
+    var reloadsound = SKAction()
+    var playerhit = UInt32()
+    var gunshotSound = SKAction()
+    var shotgunSound = SKAction()
+    var arrowSound = SKAction()
     init(name: String) {
         let texture = SKTexture(imageNamed: "turret")
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
-
+        
+        
+        
+        self.reloadsound = SKAction.playSoundFileNamed("reload1.mp3", waitForCompletion: true)
+        self.gunshotSound = SKAction.playSoundFileNamed("gunshot2.wav", waitForCompletion: true)
+        self.shotgunSound = SKAction.playSoundFileNamed("shotgun2.mp3", waitForCompletion: true)
+        self.arrowSound = SKAction.playSoundFileNamed("arrowfire.mp3", waitForCompletion: true)
         //animate()
       
         self.shotsfired = 0
@@ -82,9 +90,15 @@ class Player: SKSpriteNode {
             self.clipsize = clipsize
             var canfire = canFireWait
             let projectileSpeedMultiplier = speedMultiplier
+            var gunshotSound = self.gunshotSound
+            if(bulletName == "shell"){
+                gunshotSound = self.shotgunSound
+            }else if (bulletName == "arrow"){
+                gunshotSound = self.arrowSound
+            }
             //"ArrowTexture"
             canFire = false
-            let bullet = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
+            let bullet = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas, bulletSoundAction: gunshotSound)
            
             let opposite = touchY -  self.position.y
             let adjacent = touchX - self.position.x
@@ -122,13 +136,13 @@ class Player: SKSpriteNode {
                 newY*projectileSpeedMultiplier))
             
             if(multiShot){
-                let bullet1 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
+                let bullet1 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas, bulletSoundAction: gunshotSound)
                     bullet1.position.x = self.position.x
                     bullet1.position.y = self.position.y
                     bullet1.setScale(bulletScale)
                     bullet1.zRotation = angle - spread * DegreesToRadians
                     bullet1.physicsBody?.applyImpulse(CGVectorMake(newX1*projectileSpeedMultiplier, newY1*projectileSpeedMultiplier))
-                let bullet2 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas)
+                let bullet2 = PlayerBullet(imageName: bulletTexture,bulletSound: bulletSound,scene: scene, bulletName: bulletName, atlas: atlas, bulletSoundAction: gunshotSound)
                     bullet2.position.x = self.position.x
                     bullet2.position.y = self.position.y
                     bullet2.setScale(bulletScale)
@@ -138,7 +152,7 @@ class Player: SKSpriteNode {
             if(bulletSound == "shotgunsound.mp3"){
             let wait  = SKAction.waitForDuration(1)
             let reloadsound = SKAction.playSoundFileNamed("shotgunreload.mp3", waitForCompletion: true)
-            runAction(SKAction.sequence([wait,reloadsound]))
+            //runAction(SKAction.sequence([wait,reloadsound]))
             }else{
                 shotsfired++
                 
@@ -149,7 +163,7 @@ class Player: SKSpriteNode {
                     let reload = SKAction.runBlock(){
                         self.shotsfired = 0
                     }
-                    let reloadsound = SKAction.playSoundFileNamed("reload1.mp3", waitForCompletion: true)
+
                     runAction(SKAction.sequence([wait,reloadsound, reload]))
                 }
                 

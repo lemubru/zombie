@@ -11,14 +11,14 @@ import SpriteKit
 class Bullet: SKSpriteNode {
     
     
-    init(imageName: String, bulletSound: String?, scene: SKScene, bulletName: String?, atlas: SKTextureAtlas) {
+    init(imageName: String, bulletSound: String?, scene: SKScene, bulletName: String?, atlas: SKTextureAtlas, bulletSoundAction: SKAction) {
         
         let texture = atlas.textureNamed(imageName)
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
         scene.addChild(self)
         self.zPosition = 20
         if(bulletSound != nil){
-            runAction(SKAction.playSoundFileNamed(bulletSound!, waitForCompletion: false))
+            runAction(bulletSoundAction)
         }
     }
     

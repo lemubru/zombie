@@ -76,6 +76,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     let ammoLabel = SKLabelNode(fontNamed: "COPPERPLATE")
     var weaponIcon = SKSpriteNode(imageNamed: "pistol")
     var trapIcon = SKSpriteNode(imageNamed: "rock1")
+    
     var level = UInt32(0)
     var text = ""
     var movingR = false
@@ -85,16 +86,34 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var numEnemyInWave = 7
     var weaponCap = 0
     var costSpikeTrap = UInt32(100)
-    var costTurret = UInt32(400)
+    var costTurret = UInt32(200)
     var ammo = 0
     //Flying enemy
     var musicoff = false
+    var flamerSound = SKAction()
+      var beepSound = SKAction()
+      var flamerGoing = SKAction()
+      var nadeSound = SKAction()
+      var hitSound = SKAction()
+      var hitSoundHeavy = SKAction()
+    var smashSound = SKAction()
+     var sliceSound = SKAction()
     //shooting enemy
     //
     
     init(size: CGSize, points: UInt32, ef: Double, level: UInt32, numEnemy: Int, weaponCap: Int){
         text = String(points)
         super.init(size: size)
+       // self.flamerSound = SKAction.playSoundFileNamed("flamersound.mp3", waitForCompletion: false)
+        self.beepSound = SKAction.playSoundFileNamed("beep.mp3", waitForCompletion: false)
+       // self.flamerGoing = SKAction.playSoundFileNamed("flamergoing.wav", waitForCompletion: false)
+        self.nadeSound = SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false)
+        self.hitSound = SKAction.playSoundFileNamed("hit.mp3", waitForCompletion: false)
+        self.hitSoundHeavy = SKAction.playSoundFileNamed("punch.wav", waitForCompletion: false)
+        self.smashSound = SKAction.playSoundFileNamed("smash.wav", waitForCompletion: false)
+        self.sliceSound = SKAction.playSoundFileNamed("slice.mp3", waitForCompletion: false)
+        
+        
         self.points = points
         self.EnemyFreq = ef
         self.level = level
@@ -131,7 +150,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func createFloor(){
         
-        let grass = ScenePiece(pieceName: "grass", textTureName: "ground1.png", dynamic: false, scale: 1, x: self.size.width/2, y:20)
+        let grass = ScenePiece(pieceName: "grass", textTureName: "grass10.png", dynamic: false, scale: 1, x: self.size.width/2, y:20)
         grass.zPosition = 20
         self.addChild(grass)
         
@@ -214,6 +233,15 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let nextWeaponButton = ScenePiece(pieceName: "nwbutton", textTureName: "nwbutton", dynamic: false, scale: self.buttonScale,x : self.size.width - 25,y: self.size.height - 20)
         nextWeaponButton.zPosition = 14
         self.addChild(nextWeaponButton)
+        
+        
+   
+        weaponIcon.setScale(0.13)
+        weaponIcon.position.x = nextWeaponButton.position.x - nextWeaponButton.size.width/2 - 30
+        weaponIcon.position.y = nextWeaponButton.position.y
+        weaponIcon.zPosition = 23
+        self.addChild(weaponIcon)
+        
         // nextWeaponButton.AddPhysics(self, dynamic: false)
         let musicBtn = ScenePiece(pieceName: "musicbtn", textTureName: "musicbtn", dynamic: false, scale: 0.4,x : self.size.width - 100,y: self.size.height - 20)
         //self.addChild(musicBtn)
@@ -222,7 +250,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let trapButton = ScenePiece(pieceName: "trapbtn", textTureName: "trapbtn", dynamic: false, scale: self.buttonScale,x : self.size.width - 200,y: self.size.height - 20)
         self.addChild(trapButton)
         trapButton.zPosition = 14
-        let nextTrapButton = ScenePiece(pieceName: "nexttrap", textTureName: "nxttrapbtn", dynamic: false, scale: self.buttonScale,x : self.size.width - 100,y: self.size.height - 20)
+        let nextTrapButton = ScenePiece(pieceName: "nexttrap", textTureName: "nxttrapbtn", dynamic: false, scale: self.buttonScale,x : self.size.width - 140,y: self.size.height - 20)
         nextTrapButton.zPosition = 14
         self.addChild(nextTrapButton)
         
@@ -233,7 +261,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         trapLabel.fontSize = 17
         trapLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
         
-        weaponIcon.setScale(0.4)
+        
         trapIcon.setScale(0.4)
         trapIcon.position.x = trapButton.position.x - trapButton.size.width/2 - 20
         trapIcon.position.y = trapButton.position.y
@@ -264,8 +292,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         addChild(player)
     }
     
-    
-    
+
     func setupTurret(x: CGFloat,y: CGFloat){
         let turret:Ally = Ally(scene: self,name: "turret",x: x,y: y)
         turret.zPosition = 20
@@ -291,8 +318,26 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         tempInvader.physicsBody?.velocity = CGVectorMake(-40,0)
         tempInvader.physicsBody?.mass = 10000
         tempInvader.physicsBody?.affectedByGravity = false
-        
+        tempInvader.physicsBody?.allowsRotation = false
     }
+    
+    func setupSpeeder(){
+        var random = randRange(0, upper: 2)
+        NSLog(String(random))
+        var gunner = false
+        if(random == 0){
+            //gunner = true
+        }
+        let tempInvader:Invader = Invader(scene: self,scale: CGFloat(0.7), invaderhit: 0, animprefix:"soldierrun", name:"invader", gunner: gunner, atlas: soldieratlas)
+        tempInvader.zPosition = 6
+        tempInvader.position.x = self.size.width
+        tempInvader.position.y = self.size.height/2-94
+        tempInvader.physicsBody?.velocity = CGVectorMake(-80,0)
+        tempInvader.physicsBody?.mass = 10000
+        tempInvader.physicsBody?.affectedByGravity = false
+        tempInvader.physicsBody?.allowsRotation = false
+    }
+
     
     func setupEnemyAt(x: CGFloat, y: CGFloat, speed: CGFloat, scale: CGFloat){
         var random = randRange(0, upper: 2)
@@ -391,6 +436,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             self.setupHeavyEnemy()
         }
         
+        let spawnSpeeder = SKAction.runBlock(){
+            self.setupSpeeder()
+        }
+        
         let spawnZombie = SKAction.runBlock(){
             self.setupZombie()
         }
@@ -404,12 +453,23 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             }
         }
         
+        let spawnRandom1 = SKAction.runBlock(){
+            var random = self.randRange(0, upper: 2)
+            if(random == 1 || random == 2){
+                self.setupEnemy()
+            }else{
+                self.setupSpeeder()
+            }
+        }
+        
         let spawnAndWait = SKAction.repeatAction(SKAction.sequence([spawnNormal,wait1]), count: numEnemy)
         let spawnAndWaitHeavy = SKAction.repeatAction(SKAction.sequence([spawnHeavy,wait2]), count: numEnemy)
+        let spawnAndWaitSpeeder = SKAction.repeatAction(SKAction.sequence([spawnSpeeder,wait2]), count: numEnemy)
         let spawnAndWaitZombie = SKAction.repeatAction(SKAction.sequence([spawnZombie,wait2]), count: numEnemy)
-        let spawnAndWaitRandom = SKAction.repeatAction(SKAction.sequence([spawnRandom,wait2]), count: numEnemy)
+        let spawnAndWaitRandom = SKAction.repeatAction(SKAction.sequence([spawnRandom1,wait1]), count: numEnemy)
+         let spawnAndWaitRandom2 = SKAction.repeatAction(SKAction.sequence([spawnRandom,wait2]), count: numEnemy)
         
-        let actionArr = [medwait,spawnAndWait,medwait, spawnAndWait ,medwait, spawnAndWaitRandom, longwait]
+        let actionArr = [medwait,spawnAndWait,medwait, spawnAndWaitRandom ,medwait, spawnAndWaitRandom2, longwait]
         
         self.runAction(SKAction.repeatAction(SKAction.sequence(actionArr), count: 1), completion:{
             self.gameOver(true)
@@ -538,12 +598,15 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 }
                     
                 else if(touchedNode.name == "nwbutton"){
-                    runAction(SKAction.playSoundFileNamed("beep.mp3", waitForCompletion: false))
+                    runAction(beepSound)
                     //let flameNode = PlayerBullet(imageName: "floor", bulletSound: nil, scene: self, bulletName: "floornode")
                     touching = false
                     weapon++
                     if(weapon > weaponCap)
                     {
+                        weaponIcon.setScale(0.13)
+                        weaponIcon.texture = SKTexture(imageNamed: "pistol")
+                        
                         if(flamerOn){
                             removeActionForKey("flamer")
                             flameEmmiter.removeFromParent()
@@ -564,21 +627,26 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         weapon = 0
                     }
                     if(weapon == 1){
+                        weaponIcon.setScale(0.1)
+                        weaponIcon.texture = SKTexture(imageNamed: "fpistol")
                         player.setClipSize(9)
                         player.setShotsFired(8)
                         weaponLabel.text = "fastpistol"
                     }
                     if(weapon == 2){
+                        weaponIcon.setScale(0.12)
+                        weaponIcon.texture = SKTexture(imageNamed: "Bow")
                         player.setClipSize(16)
                         player.setShotsFired(0)
                         weaponLabel.text = "bow"
                     }
                     
                     if(!flamerOn && weapon == 3){
-                        runAction(SKAction.playSoundFileNamed("flamersound.mp3", waitForCompletion: false))
-                        
-                        let playFlameOngoing = SKAction.playSoundFileNamed("flamergoing.wav", waitForCompletion: true)
-                        self.runAction(SKAction.repeatActionForever(playFlameOngoing), withKey: "flamer")
+                        weaponIcon.setScale(0.13)
+                        weaponIcon.texture = SKTexture(imageNamed: "flamer1")
+                        self.runAction(SKAction.playSoundFileNamed("flamersound.mp3", waitForCompletion: false))
+       
+                        //runAction(SKAction.repeatActionForever(SKAction.playSoundFileNamed("flamergoing.wav", waitForCompletion: false)), withKey: "flamer")
                         flameNode.hidden = true
                         flameNode.position.x = player.position.x
                         flameNode.position.y = player.position.y
@@ -593,6 +661,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     }
                     
                     if(weapon == 4){
+                        weaponIcon.setScale(0.14)
+                        weaponIcon.texture = SKTexture(imageNamed: "shotg")
                         weaponLabel.text = "shotgun"
                         removeActionForKey("flamer")
                         flameEmmiter.removeFromParent()
@@ -602,20 +672,28 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         //shotgun
                     }
                     if(weapon == 5){
+                        weaponIcon.setScale(0.13)
+                        weaponIcon.texture = SKTexture(imageNamed: "machinegun")
                         weaponLabel.text = "machinegun"
                         machineGunMode = true
                     }
                     if(weapon == 6){
+                        weaponIcon.setScale(0.16)
+                        weaponIcon.texture = SKTexture(imageNamed: "cb1")
                         weaponLabel.text = "auto-crossbow"
                         machineGunMode = false
                         autoCrossBow = true
                     }
                     if(weapon == 7){
+                        weaponIcon.setScale(0.1)
+                        weaponIcon.texture = SKTexture(imageNamed: "ashotgun")
                         weaponLabel.text = "auto-shotgun"
                         autoCrossBow = false
                         autoShottie = true
                     }
                     if(weapon == 8){
+                        weaponIcon.setScale(0.14)
+                        weaponIcon.texture = SKTexture(imageNamed: "nader")
                         weaponLabel.text = "nader"
                         autoShottie = false
                     }
@@ -929,9 +1007,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let sound = SKAction.playSoundFileNamed("spikesound.mp3", waitForCompletion: false)
         let erect = SKAction.moveTo(CGPoint(x:x, y: y + 20), duration: 0.1)
         let retract = SKAction.moveTo(CGPoint(x:x, y: y), duration: 0.1)
-        let wait = SKAction.waitForDuration(1)
+        let wait = SKAction.waitForDuration(0.7)
         let pullSpike = SKAction.sequence([sound,erect,wait,retract, wait])
-        node.runAction(SKAction.repeatAction(pullSpike, count: 12))
+        node.runAction(SKAction.repeatAction(pullSpike, count: 20))
         self.waitAndRemove(node, wait: 30)
         
     }
@@ -958,7 +1036,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
         var scale = CGFloat(randRange(2, upper: 7))
         let floatScale = CGFloat(scale/10)
-        let rock1 = ScenePiece(pieceName: "rocks", textTureName: "rock1", dynamic: true, scale: randRangeFrac(4, upper: 8),x : CGFloat( randRange(100, upper: 150)),y: self.size.height - 40)
+        let rock1 = ScenePiece(pieceName: "rocks", textTureName: "rock1", dynamic: true, scale: randRangeFrac(4, upper: 8),x : CGFloat( randRange(60, upper: 150)),y: self.size.height - 40)
         rock1.zPosition = 10
         rock1.AddPhysics(self, dynamic: true)
         rock1.zRotation = rock1.zRotation - 180 * DegreesToRadians
@@ -1008,7 +1086,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 self.fireTurret("machinegun.wav", scale: 0.7, bulletTexture: "bullet", bulletName: "bullet", speedMulti: 0.001, multiShot: false,canFireWait: 1, enemyx: invader.position.x - CGFloat(self.randRange(0, upper: 10)), enemyy: invader.position.y + CGFloat(self.randRange(0, upper: 80)))
             }
             if(invader.isGunner()){
-                invader.fireBullet(self, touchX: self.player.position.x, touchY: self.player.position.y + CGFloat(self.randRange(0, upper: 80)), bulletTexture: "ball", bulletScale: 1, speedMultiplier: CGFloat(0.001), bulletSound: "gunshot.mp3", canFireWait: 1.5, multiShot: false, bulletName: "invaderbullet", atlas: self.mainatlas)
+                invader.fireBullet(self, touchX: self.player.position.x, touchY: self.player.position.y + CGFloat(self.randRange(0, upper: 80)), bulletTexture: "ball", bulletScale: 1, speedMultiplier: CGFloat(0.001), bulletSound: "gunshot2.wav", canFireWait: 1.5, multiShot: false, bulletName: "invaderbullet", atlas: self.mainatlas)
             }
         }
         
@@ -1174,7 +1252,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     func addAndRemoveEmitter(wait: Double, x: CGFloat,y: CGFloat, fileName:String,zPos: CGFloat){
         let node = SKEmitterNode(fileNamed: fileName)
         
-        node.zPosition = zPos
+    
+        node.zPosition = 7
         self.addChild(node)
         node.position.x = x
         node.position.y = y
@@ -1251,7 +1330,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
 
     }
     func explodeNode(node: SKNode, x: CGFloat, y: CGFloat){
-        self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
+        self.runAction(nadeSound)
         let sparkEmmiter = SKEmitterNode(fileNamed: "explo.sks")
         let blood = SKEmitterNode(fileNamed: "heavyblood.sks")
         sparkEmmiter.zPosition = 3
@@ -1306,9 +1385,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 if(hits == 1){
                     let contactPoint = contact.contactPoint
                     if(firstBody.node?.name == "invader"){
+                      
                         self.addAndRemoveEmitter(0.2, x: contactPoint.x - 10, y: contactPoint.y, fileName: "blood.sks",zPos:3)
-                        runAction(SKAction.playSoundFileNamed("hit.mp3", waitForCompletion: false))
-                        NSLog(secondBody.node!.name!)
+                        runAction(hitSound)
+                       // NSLog(secondBody.node!.name!)
                         if(secondBody.node?.name == "shell"){
                             invaderObj.hit(invaderObj.gethit()+3)
                         }else{
@@ -1338,10 +1418,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         if(secondBody.node?.name == "nade"){
                             let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
                             self.physicsWorld.addJoint(myJoint)
-                            
+                         
                             let waitToEnableFire = SKAction.waitForDuration(2)
                             runAction(waitToEnableFire,completion:{
-                                self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
+                                self.runAction(self.nadeSound)
                                 let sparkEmmiter = SKEmitterNode(fileNamed: "exp.sks")
                                 let blood = SKEmitterNode(fileNamed: "heavyblood.sks")
                                 sparkEmmiter.zPosition = 3
@@ -1349,20 +1429,22 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                                 firstBody.node?.addChild(sparkEmmiter)
                                 firstBody.node?.addChild(blood)
                                 secondBody.node?.removeFromParent()
+                                
+                                
                                 let bomb = SKNode()
+                                firstBody.node?.addChild(bomb)
                                 bomb.physicsBody = SKPhysicsBody(circleOfRadius: 60)
-                                bomb.physicsBody?.velocity = firstBody.velocity
+                               // bomb.physicsBody?.velocity = firstBody.velocity
                                 bomb.physicsBody?.dynamic = true
                                 bomb.physicsBody?.pinned = true
                                 bomb.physicsBody?.mass  = 0
+                                bomb.zPosition = 56
                                 bomb.physicsBody?.categoryBitMask = CollisionCategories.ScenePiece
                                 bomb.physicsBody?.contactTestBitMask = CollisionCategories.Invader
                                  bomb.physicsBody?.collisionBitMask = 0
                                 bomb.name = "bombnode"
+                               
                                 self.waitAndRemove(bomb, wait: 2)
-                                self.flashText("+5", x: invaderObj.position.x-5, y: invaderObj.position.y + invaderObj.size.height*0.25, z: 10, waitDur: 0.3, color: SKColor.yellowColor())
-                        
-                                firstBody.node?.addChild(bomb)
                                 self.waitAndRemove(sparkEmmiter, wait: 0.5)
                                 self.waitAndRemove(blood, wait: 0.3)
                                 let waitforblood = SKAction.waitForDuration(0.3)
@@ -1385,7 +1467,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         
                     } //end invader hit stuff
                     if(firstBody.node?.name == "heavy"){
-                        runAction(SKAction.playSoundFileNamed("punch.wav", waitForCompletion: false))
+                        runAction(hitSoundHeavy)
                         self.addAndRemoveEmitter(0.3, x: contactPoint.x, y: contactPoint.y, fileName: "spark.sks",zPos:3)
                         let invaderObj = firstBody.node as! Invader
                         invaderObj.hit(invaderObj.gethit()+1)
@@ -1399,7 +1481,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             self.flashTextSc("armour destroyed +2", x: invaderObj.position.x-10, y: invaderObj.position.y + invaderObj.size.height*0.25, z: 10, waitDur: 0.3, color: SKColor.yellowColor(), scale: 10)
                             self.points = self.points + 2
                             self.flashAndremoveNode(invaderObj)
-                            self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
+                            self.runAction(nadeSound)
                             self.addAndRemoveEmitter(0.5, x: invaderObj.position.x, y: invaderObj.position.y, fileName: "exp.sks", zPos: 20)
                             let waitToEnableFire = SKAction.waitForDuration(0.3)
                             runAction(waitToEnableFire,completion:{
@@ -1409,10 +1491,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             
                         }
                     }//end heavy
-                    
-                    
                     if(firstBody.node?.name == "zombie"){
-                        runAction(SKAction.playSoundFileNamed("punch.wav", waitForCompletion: false))
+                        runAction(hitSoundHeavy)
                         self.addAndRemoveEmitter(0.3, x: contactPoint.x, y: contactPoint.y, fileName: "blood.sks",zPos:3)
                         let invaderObj = firstBody.node as! Invader
                         invaderObj.hit(invaderObj.gethit()+1)
@@ -1427,23 +1507,21 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             self.flashAndremoveNode(invaderObj)
                         }
                     }//end zombie
-                    
                 }
         }
         
 
-        
         if ((firstBody.categoryBitMask & CollisionCategories.Player != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.Invader != 0)) {
                 firstBody.node?.removeFromParent()
-                
         }
         
         if ((firstBody.categoryBitMask & CollisionCategories.PlayerBullet != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.floor != 0)) {
                 
                 let contactPoint = contact.contactPoint
-                self.addAndRemoveEmitter(0.2, x: contactPoint.x, y: contactPoint.y + 20, fileName: "dirt.sks",zPos: 3)
+                self.addAndRemoveEmitter(0.2, x: contactPoint.x, y: contactPoint.y + 10, fileName: "dirt.sks",zPos: 3)
+                
                 if(firstBody.node?.name == "arrow"){
                     firstBody.categoryBitMask = CollisionCategories.ScenePiece
                     firstBody.contactTestBitMask = CollisionCategories.Invader
@@ -1456,28 +1534,27 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         firstBody.node?.removeFromParent()
                     })
                 }else if(firstBody.node?.name == "nade"){
-                    let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
-                    self.physicsWorld.addJoint(myJoint)
+                    
+                    
+                    self.waitAndRemove(firstBody.node!, wait: 0.01)
                     let waitToEnableFire = SKAction.waitForDuration(2)
                     runAction(waitToEnableFire,completion:{
-                        self.runAction(SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false))
-                        self.physicsWorld.removeJoint(myJoint)
+                        self.runAction(self.nadeSound)
+                        //self.physicsWorld.removeJoint(myJoint)
                         let bomb = SKNode()
+                        bomb.position.x = contactPoint.x
+                        bomb.position.y = contactPoint.y
+                        self.addChild(bomb)
                         bomb.physicsBody = SKPhysicsBody(circleOfRadius: 60)
-                        bomb.physicsBody?.velocity = firstBody.velocity
-                        bomb.physicsBody?.dynamic = true
-                        bomb.physicsBody?.pinned = true
+                        bomb.physicsBody?.dynamic = false
+                       // bomb.physicsBody?.pinned = true
                         bomb.physicsBody?.mass  = 0
                         bomb.physicsBody?.categoryBitMask = CollisionCategories.ScenePiece
                         bomb.physicsBody?.contactTestBitMask = CollisionCategories.Invader
                         bomb.physicsBody?.collisionBitMask = 0
+                        bomb.zPosition = 43
                         bomb.name = "bombnode"
-                        self.waitAndRemove(bomb, wait: 2)
-                        self.addChild(bomb)
-                        bomb.position.x = contactPoint.x
-                        bomb.position.y = contactPoint.y
-                        firstBody.node?.removeAllActions()
-                        firstBody.node?.removeFromParent()
+                        self.waitAndRemove(bomb, wait: 0.4)
                         self.addAndRemoveEmitter(1.5, x: contactPoint.x, y: contactPoint.y + 10, fileName: "exp.sks", zPos: 3)
                     })
                 }else{
@@ -1538,8 +1615,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 if(secondBody.node?.name == "spikes"){
                     let invaderObj = firstBody.node as! Invader
                     if(firstBody.node?.name == "invader"){
-                        runAction(SKAction.playSoundFileNamed("hit.mp3", waitForCompletion: false))
-                        invaderObj.hit(invaderObj.gethit()+2)
+                        runAction(hitSound)
+                        invaderObj.hit(invaderObj.gethit()+4)
                         self.addAndRemoveEmitter(0.3, x: contactPoint.x, y: contactPoint.y, fileName: "blood.sks", zPos: 24)
                         if(invaderObj.gethit() >= self.invaderLife){
                             self.points = self.points + 5
@@ -1598,7 +1675,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 }
                 
                 if(secondBody.node?.name == "rocks"){
-                    runAction(SKAction.playSoundFileNamed("smash.wav", waitForCompletion: false))
+                    runAction(smashSound)
                     //firstBody.node?.removeFromParent()
                     let contactPoint = contact.contactPoint
                     let sparkEmmiter = SKEmitterNode(fileNamed: "blood.sks")
@@ -1617,7 +1694,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 }
                 
                 if(secondBody.node?.name == "saw"){
-                    runAction(SKAction.playSoundFileNamed("slice.mp3", waitForCompletion: false))
+                    runAction(sliceSound)
                     let contactPoint = contact.contactPoint
                     self.addAndRemoveEmitter(0.3, x: contactPoint.x, y: contactPoint.y, fileName: "heavyblood.sks", zPos: 14)
                     
