@@ -98,12 +98,19 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
       var hitSoundHeavy = SKAction()
     var smashSound = SKAction()
      var sliceSound = SKAction()
+     var slicedTex:[SKTexture] = []
     //shooting enemy
     //
     
     init(size: CGSize, points: UInt32, ef: Double, level: UInt32, numEnemy: Int, weaponCap: Int){
         text = String(points)
+
         super.init(size: size)
+        
+        for i in 0...14 {
+            self.slicedTex.append(SKTexture(imageNamed: "deadsoldier\(i)"))
+        }
+        
        // self.flamerSound = SKAction.playSoundFileNamed("flamersound.mp3", waitForCompletion: false)
         self.beepSound = SKAction.playSoundFileNamed("beep.mp3", waitForCompletion: false)
        // self.flamerGoing = SKAction.playSoundFileNamed("flamergoing.wav", waitForCompletion: false)
@@ -425,8 +432,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         var numEnemy = self.numEnemyInWave
         let wait1 = SKAction.waitForDuration(2, withRange: 1)
         let wait2 = SKAction.waitForDuration(4, withRange: 1)
-        let longwait = SKAction.waitForDuration(15)
-        let medwait = SKAction.waitForDuration(9)
+        let longwait = SKAction.waitForDuration(7)
+        let medwait = SKAction.waitForDuration(4)
         
         let spawnNormal = SKAction.runBlock(){
             self.setupEnemy()
@@ -469,7 +476,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let spawnAndWaitRandom = SKAction.repeatAction(SKAction.sequence([spawnRandom1,wait1]), count: numEnemy)
          let spawnAndWaitRandom2 = SKAction.repeatAction(SKAction.sequence([spawnRandom,wait2]), count: numEnemy)
         
-        let actionArr = [medwait,spawnAndWait,medwait, spawnAndWaitRandom ,medwait, spawnAndWaitRandom2, longwait]
+        let actionArr = [medwait,spawnAndWaitRandom2,medwait, spawnAndWait ,medwait, spawnAndWaitRandom, longwait]
         
         self.runAction(SKAction.repeatAction(SKAction.sequence(actionArr), count: 1), completion:{
             self.gameOver(true)
@@ -1698,11 +1705,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                     let contactPoint = contact.contactPoint
                     self.addAndRemoveEmitter(0.3, x: contactPoint.x, y: contactPoint.y, fileName: "heavyblood.sks", zPos: 14)
                     
-                    var playerTextures:[SKTexture] = []
-                    for i in 0...14 {
-                        playerTextures.append(SKTexture(imageNamed: "deadsoldier\(i)"))
-                    }
-                    let playerAnimation = SKAction.animateWithTextures(playerTextures, timePerFrame: 0.1)
+                  
+                    let playerAnimation = SKAction.animateWithTextures(self.slicedTex, timePerFrame: 0.1)
                     firstBody.node?.runAction(playerAnimation, completion:{
                         self.removeNode(firstBody.node!)
                     })

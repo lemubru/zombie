@@ -22,8 +22,10 @@ class GameOver: SKScene {
     var level = UInt32(0)
     var ne = Int(0)
     var win = false
+    let HS = HighScoreManager()
     var weaponCap = 0
     init(size: CGSize, points: UInt32, ef: Double, level: UInt32, ne: Int, win: Bool, weaponCap:  Int){
+        
        //  text = String(points)
         super.init(size: size)
         self.points = points
@@ -39,24 +41,31 @@ class GameOver: SKScene {
         }
       
     }
-    
-
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func didMoveToView(view: SKView) {
+        
+        
+        
         let btnL = SKLabelNode(fontNamed: "COPPERPLATE")
         let gameLabel = SKLabelNode(fontNamed: "COPPERPLATE")
         let unlocks = SKLabelNode(fontNamed: "COPPERPLATE")
         audioPlayer = AVAudioPlayer(contentsOfURL: Disson, error: nil)
         audioPlayer.prepareToPlay()
         audioPlayer.play()
+        let pointsLabel = SKLabelNode(fontNamed: "COPPERPLATE")
+        pointsLabel.text = "Points:" + String(points)
+        pointsLabel.position = CGPoint(x:self.size.width/2,y:self.size.height*0.6)
+        addChild(pointsLabel)
         
         if(win){
+            
             gameLabel.text = "Level Complete! +50 points"
-             self.points = self.points + 50
+            self.points = self.points + 50
+            pointsLabel.text = "Points:" + String(points)
             btnL.text = "Continue"
             if(weaponCap == 1){
                 unlocks.text = "unlocked fast pistol"
@@ -83,22 +92,39 @@ class GameOver: SKScene {
             }
             
         }else{ //loss
-        self.points = 0
-        gameLabel.text = "Game Over"
-        btnL.text = "Restart"
-        self.ne--
-        self.level--
-       
-        self.weaponCap--
-        if(self.weaponCap < 0){
-            self.weaponCap = 0
-        }
-        if(self.level < 1){
-            self.level = 1
-        }
-        if(self.ne < 1){
-            self.ne = 1
-        }
+            self.points = 0
+            gameLabel.text = "Game Over"
+            btnL.text = "Restart"
+            self.ne--
+            self.level--
+            pointsLabel.text = "You reached level " + String(level)
+            
+            
+            
+            
+            
+            HS.addNewScore(Int(level))
+            HS.save()
+            
+            
+            if(Int(level) > HS.scores[0].getScore()){
+                HS.scores[0] =  HighScore(score: Int(level), dateOfScore: NSDate())
+                HS.save()
+                pointsLabel.text = "New highscore Level" + String(level)
+            }
+            NSLog(String(HS.scores[0].getScore()))
+            
+            
+            self.weaponCap--
+            if(self.weaponCap < 0){
+                self.weaponCap = 0
+            }
+            if(self.level < 1){
+                self.level = 1
+            }
+            if(self.ne < 1){
+                self.ne = 1
+            }
         }
         
 
@@ -113,10 +139,7 @@ class GameOver: SKScene {
         gameLabel.position = CGPoint(x:self.size.width/2,y:self.size.height*0.75)
         addChild(gameLabel)
         
-        let pointsLabel = SKLabelNode(fontNamed: "COPPERPLATE")
-        pointsLabel.text = "Points:" + String(points)
-        pointsLabel.position = CGPoint(x:self.size.width/2,y:self.size.height*0.6)
-        addChild(pointsLabel)
+        
         
         
         btnL.zPosition = 2

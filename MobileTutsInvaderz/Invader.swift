@@ -38,7 +38,7 @@ class Invader: SKSpriteNode {
             self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width*0.35, center: CGPoint(x: self.position.x , y: self.position.y-10))
         }else{
             self.physicsBody =
-                SKPhysicsBody(rectangleOfSize: CGSize(width: self.size.width*0.2, height: self.size.height*0.8), center: CGPoint(x:self.position.x,y:self.position.y-10))
+                SKPhysicsBody(rectangleOfSize: CGSize(width: self.size.width*0.15, height: self.size.height*0.7), center: CGPoint(x:self.position.x,y:self.position.y-10))
         }
         
         self.physicsBody?.dynamic = true
