@@ -15,7 +15,7 @@ class HighScoreManager {
         // load existing high scores or set up an empty array
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         let documentsDirectory = paths[0] as! String
-        let path = documentsDirectory.stringByAppendingPathComponent("HighScores.plist")
+        let path = documentsDirectory.stringByAppendingPathComponent("HighScores1.plist")
         let fileManager = NSFileManager.defaultManager()
         
         // check if file exists
@@ -39,15 +39,15 @@ class HighScoreManager {
         let saveData = NSKeyedArchiver.archivedDataWithRootObject(self.scores);
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray;
         let documentsDirectory = paths.objectAtIndex(0) as! NSString;
-        let path = documentsDirectory.stringByAppendingPathComponent("HighScores.plist");
+        let path = documentsDirectory.stringByAppendingPathComponent("HighScores1.plist");
         
         saveData.writeToFile(path, atomically: true);
     }
     
     // a simple function to add a new high score, to be called from your game logic
     // note that this doesn't sort or filter the scores in any way
-    func addNewScore(newScore:Int) {
-        let newHighScore = HighScore(score: newScore, dateOfScore: NSDate());
+    func addNewScore(newScore:Int, name: String) {
+        let newHighScore = HighScore(score: newScore, dateOfScore: NSDate(), name:name);
         self.scores.append(newHighScore);
         self.save();
     }

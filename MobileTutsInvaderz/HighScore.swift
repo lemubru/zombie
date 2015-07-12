@@ -9,25 +9,39 @@
 import Foundation
 
 class HighScore: NSObject, NSCoding {
-    let score:Int;
+    var score:Int;
     let dateOfScore:NSDate;
+    var name: String;
     
-    init(score:Int, dateOfScore:NSDate) {
+    init(score:Int, dateOfScore:NSDate, name: String) {
         self.score = score;
         self.dateOfScore = dateOfScore;
+        self.name = name
     }
     
     required init(coder: NSCoder) {
         self.score = coder.decodeObjectForKey("score")! as! Int;
         self.dateOfScore = coder.decodeObjectForKey("dateOfScore")! as! NSDate;
+        self.name = coder.decodeObjectForKey("name")! as! String
         super.init()
+        
     }
     
     func encodeWithCoder(coder: NSCoder) {
         coder.encodeObject(self.score, forKey: "score")
         coder.encodeObject(self.dateOfScore, forKey: "dateOfScore")
+        coder.encodeObject(self.name, forKey: "name")
     }
     func getScore() -> Int{
         return self.score
+    }
+    func getName() -> String{
+        return self.name
+    }
+    func getDate() -> NSDate{
+        return self.dateOfScore
+    }
+    func Score(score: Int){
+        self.score = score
     }
 }

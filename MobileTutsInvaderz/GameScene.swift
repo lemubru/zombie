@@ -432,7 +432,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         var numEnemy = self.numEnemyInWave
         let wait1 = SKAction.waitForDuration(2, withRange: 1)
         let wait2 = SKAction.waitForDuration(4, withRange: 1)
-        let longwait = SKAction.waitForDuration(7)
+        let longwait = SKAction.waitForDuration(15)
         let medwait = SKAction.waitForDuration(4)
         
         let spawnNormal = SKAction.runBlock(){
