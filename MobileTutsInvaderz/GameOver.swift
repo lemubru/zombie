@@ -36,16 +36,12 @@ class GameOver: SKScene {
 
         self.points = points
         self.EnemyFreq = ef - 0.5
-        self.level = level + 1
+        self.level = level
         self.ne = ne + 1
         self.win = win
         txtfield.hidden = true
         self.weaponCap = weaponCap
-        if(self.level == 3){
-            self.weaponCap = weaponCap
-        }else{
-            self.weaponCap = weaponCap + 1
-        }
+      
       
     }
 
@@ -94,6 +90,8 @@ class GameOver: SKScene {
         
         
         if(win){
+            self.level++
+            self.weaponCap++
             gameLabel.fontSize = 30
             gameLabel.text = "Level Complete! +50 points"
             self.points = self.points + 50
@@ -124,11 +122,10 @@ class GameOver: SKScene {
             }
             
         }else{ //loss
-            self.points = 0
+            self.points = 30
             gameLabel.text = "Game Over"
             btnL.text = "Restart"
-            self.ne--
-            self.level--
+      
             pointsLabel.text = "You reached level " + String(level)
             
                 
@@ -155,12 +152,12 @@ class GameOver: SKScene {
                 pointsLabel.text = "New highscore Level " + String(level)
                 
             }
-            NSLog(String(HS.scores[0].getScore()))
+       
             
             
-            self.weaponCap--
-            if(self.weaponCap < 0){
-                self.weaponCap = 0
+           
+            if(self.weaponCap < 1){
+                self.weaponCap = 1
             }
             if(self.level < 1){
                 self.level = 1

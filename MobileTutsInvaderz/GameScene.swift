@@ -53,6 +53,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     var trap = 0
     var canFire = true
     var flamerOn = false
+    var flamerNodesPresent = false
     var machineGunMode = false
     var enableTrapDoor = false
     var autoCrossBow = false
@@ -430,10 +431,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     func startSchedulers1(){
         var iter = 0
         var numEnemy = self.numEnemyInWave
-        let wait1 = SKAction.waitForDuration(2, withRange: 1)
-        let wait2 = SKAction.waitForDuration(4, withRange: 1)
-        let longwait = SKAction.waitForDuration(15)
-        let medwait = SKAction.waitForDuration(4)
+        let shortwait = SKAction.waitForDuration(2, withRange: 1)
+        let medwait = SKAction.waitForDuration(4, withRange: 1)
+        let endlevelwait = SKAction.waitForDuration(15)
+        let betweenwaveswait = SKAction.waitForDuration(9)
         
         let spawnNormal = SKAction.runBlock(){
             self.setupEnemy()
@@ -469,14 +470,18 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             }
         }
         
-        let spawnAndWait = SKAction.repeatAction(SKAction.sequence([spawnNormal,wait1]), count: numEnemy)
-        let spawnAndWaitHeavy = SKAction.repeatAction(SKAction.sequence([spawnHeavy,wait2]), count: numEnemy)
-        let spawnAndWaitSpeeder = SKAction.repeatAction(SKAction.sequence([spawnSpeeder,wait2]), count: numEnemy)
-        let spawnAndWaitZombie = SKAction.repeatAction(SKAction.sequence([spawnZombie,wait2]), count: numEnemy)
-        let spawnAndWaitRandom = SKAction.repeatAction(SKAction.sequence([spawnRandom1,wait1]), count: numEnemy)
-         let spawnAndWaitRandom2 = SKAction.repeatAction(SKAction.sequence([spawnRandom,wait2]), count: numEnemy)
+        let spawnAndWait = SKAction.repeatAction(SKAction.sequence([spawnNormal,shortwait]), count: numEnemy)
+        let spawnAndWaitHeavy = SKAction.repeatAction(SKAction.sequence([spawnHeavy,shortwait]), count: numEnemy)
+        let spawnAndWaitSpeeder = SKAction.repeatAction(SKAction.sequence([spawnSpeeder,shortwait]), count: numEnemy)
+        let spawnAndWaitZombie = SKAction.repeatAction(SKAction.sequence([spawnZombie,shortwait]), count: numEnemy)
+        let spawnAndWaitRandomNS = SKAction.repeatAction(SKAction.sequence([spawnRandom1,shortwait]), count: numEnemy)
         
-        let actionArr = [medwait,spawnAndWaitRandom2,medwait, spawnAndWait ,medwait, spawnAndWaitRandom, longwait]
+        var spawnAndWaitRandomNH = SKAction.repeatAction(SKAction.sequence([spawnRandom,medwait]), count: numEnemy)
+        if(self.level == 3){
+            spawnAndWaitRandomNH = SKAction.repeatAction(SKAction.sequence([spawnRandom1,medwait]), count: numEnemy)
+        }
+        
+        let actionArr = [betweenwaveswait,spawnAndWait,betweenwaveswait, spawnAndWait ,betweenwaveswait, spawnAndWaitRandomNH, endlevelwait]
         
         self.runAction(SKAction.repeatAction(SKAction.sequence(actionArr), count: 1), completion:{
             self.gameOver(true)
@@ -560,7 +565,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                        self.removeFlashText()
                              trapLabel.text = "Turret";
                             flashText("press T to place", x: trapLabel.position.x, y: trapLabel.position.y - 10, z: 22, waitDur: 5, color: SKColor.whiteColor())
-                            flashText("info: place turret on dock upper left corner", x: self.size.width*0.3, y: 10, z: 22, waitDur: 3, color: SKColor.whiteColor())
+                            flashText("info: place turret on dock upper left corner", x: self.size.width*0.7, y: 10, z: 22, waitDur: 3, color: SKColor.whiteColor())
                             
                             
                         }else{
@@ -580,8 +585,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                          placeMudMode = false
                         trapLabel.text = "Spike trap";
                         self.removeFlashText()
-                         flashText("press T to place", x: trapLabel.position.x, y: trapLabel.position.y - 10, z: 22, waitDur: 5, color: SKColor.whiteColor())
-                        flashText("info: place spike trap on the ground", x: self.size.width*0.3, y: 10, z: 22, waitDur: 3, color: SKColor.whiteColor())
+                        flashText("press T to place", x: trapLabel.position.x, y: trapLabel.position.y - 10, z: 22, waitDur: 5, color: SKColor.whiteColor())
+                        flashText("info: place spike trap on the ground", x: self.size.width*0.7, y: 10, z: 22, waitDur: 3, color: SKColor.whiteColor())
                     }
                     
                     
@@ -644,36 +649,35 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         weaponIcon.setScale(0.12)
                         weaponIcon.texture = SKTexture(imageNamed: "Bow")
                         player.setClipSize(16)
-                        player.setShotsFired(0)
+                        player.setShotsFired(15)
                         weaponLabel.text = "bow"
                     }
                     
                     if(!flamerOn && weapon == 3){
                         weaponIcon.setScale(0.13)
                         weaponIcon.texture = SKTexture(imageNamed: "flamer1")
-                        self.runAction(SKAction.playSoundFileNamed("flamersound.mp3", waitForCompletion: false))
-       
-                        //runAction(SKAction.repeatActionForever(SKAction.playSoundFileNamed("flamergoing.wav", waitForCompletion: false)), withKey: "flamer")
-                        flameNode.hidden = true
-                        flameNode.position.x = player.position.x
-                        flameNode.position.y = player.position.y
-                        flameNode.AddPhysics(self, dynamic: false)
-                        flameEmmiter.zPosition = 3
                         
-                        self.addChild(flameEmmiter)
-                        flameEmmiter.position.x = player.position.x
-                        flameEmmiter.position.y = player.position.y
+                        self.runFlamer()
                         flamerOn = true
                         weaponLabel.text = "flamer"
+                      
                     }
                     
                     if(weapon == 4){
+                        player.setClipSize(2)
+                        player.setShotsFired(1)
+                        if(flamerNodesPresent){
+                            self.flameNode.removeFromParent()
+                            self.flameEmmiter.removeFromParent()
+                        }
+                        self.removeActionForKey("flamer")
+                        
                         weaponIcon.setScale(0.14)
+                      
                         weaponIcon.texture = SKTexture(imageNamed: "shotg")
                         weaponLabel.text = "shotgun"
                         removeActionForKey("flamer")
-                        flameEmmiter.removeFromParent()
-                        flameNode.removeFromParent()
+                       
                         flamerOn = false
                         
                         //shotgun
@@ -699,6 +703,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         autoShottie = true
                     }
                     if(weapon == 8){
+                        player.setClipSize(2)
+                        player.setShotsFired(1)
                         weaponIcon.setScale(0.14)
                         weaponIcon.texture = SKTexture(imageNamed: "nader")
                         weaponLabel.text = "nader"
@@ -863,6 +869,51 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             //movingL = true
         }
     }
+    func countDown(){
+        var num = 3
+         let flashNum = SKAction.runBlock(){
+            self.flashTextLeftAlignSc("ready in ", x: self.player.position.x-20, y: self.player.position.y + 30, z: 40, waitDur: 1.2, color: SKColor.whiteColor(), fontsize: 10)
+            self.flashTextLeftAlignSc(String(num), x: self.player.position.x+27, y: self.player.position.y + 30, z: 40, waitDur: 0.5, color: SKColor.whiteColor(), fontsize: 10)
+            
+        }
+        let wait = SKAction.waitForDuration(1)
+        let decrease = SKAction.runBlock(){
+            
+            num--
+        }
+     
+        runAction(SKAction.repeatAction(SKAction.sequence([flashNum,wait, decrease]), count: 3))
+        
+    }
+    
+    func runFlamer(){
+        let switchOn = SKAction.runBlock(){
+            self.runAction(SKAction.playSoundFileNamed("flamersound.mp3", waitForCompletion: false))
+            //runAction(SKAction.repeatActionForever(SKAction.playSoundFileNamed("flamergoing.wav", waitForCompletion: false)), withKey: "flamer")
+            self.flameNode.hidden = true
+            self.flameNode.position.x = self.player.position.x
+            self.flameNode.position.y = self.player.position.y
+            self.flameNode.AddPhysics(self, dynamic: false)
+            self.flameEmmiter.zPosition = 3
+            
+            self.addChild(self.flameEmmiter)
+            self.flameEmmiter.position.x = self.player.position.x
+            self.flameEmmiter.position.y = self.player.position.y
+            self.flamerNodesPresent = true
+        }
+        
+        let switchOff = SKAction.runBlock(){
+            self.countDown()
+            //runAction(SKAction.repeatActionForever(SKAction.playSoundFileNamed("flamergoing.wav", waitForCompletion: false)), withKey: "flamer")
+            self.flameEmmiter.removeFromParent()
+            self.flameNode.removeFromParent()
+            self.flamerNodesPresent = false
+        }
+        let wait = SKAction.waitForDuration(6)
+        let reload = SKAction.waitForDuration(3)
+        let seq = SKAction.sequence([switchOn,wait,switchOff,reload])
+        self.runAction(SKAction.repeatActionForever(seq), withKey: "flamer")
+    }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
        
@@ -905,12 +956,15 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         pointsLabel.text = "Points:" + String(points)
         hits = 0
         ammo = player.getclipSize() - player.getShotsFired()
+        if(!flamerOn){
         if(ammo == 0){
              ammoLabel.text = "reloading..."
         }else{
              ammoLabel.text = "ammo: " + String(ammo)
         }
-       
+        }else{
+            ammoLabel.text = ""
+        }
       
         moveInvaders()
         if(touching){
@@ -1218,6 +1272,30 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         
     }
     
+    func flashTextLeftAlignSc(text: String, x: CGFloat,y: CGFloat, z: CGFloat, waitDur: Double, color:SKColor,fontsize: CGFloat
+        ){
+        let tempL = SKLabelNode(fontNamed: "COPPERPLATE")
+        tempL.fontColor = color
+        tempL.text = text;
+        tempL.name = "flash"
+        tempL.position.x = x
+        tempL.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+        tempL.position.y = y
+        tempL.zPosition = z
+        tempL.fontSize = fontsize
+        self.addChild(tempL)
+        let fadein = SKAction.fadeInWithDuration(0.1)
+        let fadeout = SKAction.fadeOutWithDuration(0.2)
+        let wait = SKAction.waitForDuration(waitDur)
+        let flash = SKAction.sequence([fadein,wait,fadeout])
+        
+        tempL.runAction(flash,completion:{
+            tempL.removeAllActions()
+            tempL.removeFromParent()
+        })
+        
+    }
+    
     func flashTextSc(text: String, x: CGFloat,y: CGFloat, z: CGFloat, waitDur: Double, color:SKColor, scale: CGFloat){
         let tempL = SKLabelNode(fontNamed: "COPPERPLATE")
         tempL.fontColor = color
@@ -1483,7 +1561,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             smoke.zPosition = 3
                             firstBody.node?.addChild(smoke)
                         }
-                        if(invaderObj.gethit() == 10){
+                        if(invaderObj.gethit() == 8){
                             
                             self.flashTextSc("armour destroyed +2", x: invaderObj.position.x-10, y: invaderObj.position.y + invaderObj.size.height*0.25, z: 10, waitDur: 0.3, color: SKColor.yellowColor(), scale: 10)
                             self.points = self.points + 2
