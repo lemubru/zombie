@@ -22,9 +22,6 @@ class Player: SKSpriteNode {
     init(name: String) {
         let texture = SKTexture(imageNamed: "turret")
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
-        
-        
-        
         self.reloadsound = SKAction.playSoundFileNamed("reload1.mp3", waitForCompletion: true)
         self.gunshotSound = SKAction.playSoundFileNamed("gunshot2.wav", waitForCompletion: true)
         self.shotgunSound = SKAction.playSoundFileNamed("shotgun2.mp3", waitForCompletion: true)

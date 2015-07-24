@@ -69,7 +69,8 @@ class Invader: SKSpriteNode {
         
         var playerTextures:[SKTexture] = []
         
-        let numImages = soldieratlas.textureNames.count-1
+        var numImages = soldieratlas.textureNames.count-1
+        
         for i in 0...numImages {
             let texture = animprefix!+"\(i)"
             playerTextures.append(soldieratlas.textureNamed(texture))

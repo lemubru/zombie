@@ -166,20 +166,13 @@ class GameOver: SKScene {
                 self.ne = 1
             }
         }
-        
-
         unlocks.fontColor = SKColor.yellowColor()
-   
-       // backgroundColor = SKColor.blackColor() //add background
         unlocks.fontSize = 20
         unlocks.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.43)
         addChild(unlocks)
-       
         btnL.zPosition = 2
         btnL.position = CGPointMake(size.width/2,size.height/2 - 100)
         addChild(btnL)
-     
-        
         let startGameButton = SKSpriteNode(imageNamed: "gameover")
         startGameButton.position = CGPointMake(size.width/2,size.height/2 - 100)
         startGameButton.hidden = true
@@ -209,7 +202,6 @@ class GameOver: SKScene {
         let touchLocation = touch.locationInNode(self) //all touches in screen
         let touchedNode = self.nodeAtPoint(touchLocation) //touchedNode is the node being touched
         if(touchedNode.name == "restart"){
-            
             audioPlayer.stop()
             var gameOverScene = GameScene(size: size, points:self.points, ef:EnemyFreq, level:level, numEnemy: self.ne, weaponCap: self.weaponCap)
             if(self.win){
