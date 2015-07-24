@@ -20,7 +20,7 @@ class Player: SKSpriteNode {
     var arrowSound = SKAction()
      var nadeL = SKAction()
     init(name: String) {
-        let texture = SKTexture(imageNamed: "turret")
+        let texture = SKTexture(imageNamed: "turret1")
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
         self.reloadsound = SKAction.playSoundFileNamed("reload1.mp3", waitForCompletion: true)
         self.gunshotSound = SKAction.playSoundFileNamed("gunshot2.wav", waitForCompletion: true)
@@ -119,7 +119,7 @@ class Player: SKSpriteNode {
                 bullet.physicsBody?.affectedByGravity = false
             }
             bullet.setScale(bulletScale)
-            if(bullet.name == "bullet"){
+            if(bullet.name == "bullet" || bullet.name == "mbullet"){
                 bullet.zRotation = angle - 90 * DegreesToRadians
             }else{
                 bullet.zRotation = angle

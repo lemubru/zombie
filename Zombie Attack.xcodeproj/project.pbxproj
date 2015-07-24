@@ -144,6 +144,11 @@
 		14BE41371B4497F400528C70 /* slice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE41261B4497F400528C70 /* slice.mp3 */; };
 		14BE41381B4497F400528C70 /* smash.wav in Resources */ = {isa = PBXBuildFile; fileRef = 14BE41271B4497F400528C70 /* smash.wav */; };
 		14BE413B1B44990F00528C70 /* heavy.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 14BE413A1B44990F00528C70 /* heavy.atlas */; };
+		14D118EC1B62E7810019D422 /* flamersound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 14D118EB1B62E7810019D422 /* flamersound.wav */; };
+		14D118EE1B62E8390019D422 /* flamersound1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 14D118ED1B62E8390019D422 /* flamersound1.wav */; };
+		14D118F01B62E8860019D422 /* flamersound2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 14D118EF1B62E8860019D422 /* flamersound2.wav */; };
+		14D118F21B62E9CA0019D422 /* flamersound3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 14D118F11B62E9CA0019D422 /* flamersound3.wav */; };
+		14D118F41B62EA460019D422 /* flamersound4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 14D118F31B62EA460019D422 /* flamersound4.wav */; };
 		745B96291A8BDC36006D014D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B96281A8BDC36006D014D /* AppDelegate.swift */; };
 		745B962D1A8BDC36006D014D /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B962C1A8BDC36006D014D /* GameScene.swift */; };
 		745B962F1A8BDC36006D014D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B962E1A8BDC36006D014D /* GameViewController.swift */; };
@@ -303,6 +308,11 @@
 		14BE41271B4497F400528C70 /* smash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = smash.wav; path = sounds/smash.wav; sourceTree = "<group>"; };
 		14BE413A1B44990F00528C70 /* heavy.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = heavy.atlas; sourceTree = "<group>"; };
 		14BE413E1B449ABC00528C70 /* CONQUEST.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CONQUEST.ttf; sourceTree = "<group>"; };
+		14D118EB1B62E7810019D422 /* flamersound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = flamersound.wav; sourceTree = "<group>"; };
+		14D118ED1B62E8390019D422 /* flamersound1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = flamersound1.wav; sourceTree = "<group>"; };
+		14D118EF1B62E8860019D422 /* flamersound2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = flamersound2.wav; sourceTree = "<group>"; };
+		14D118F11B62E9CA0019D422 /* flamersound3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = flamersound3.wav; sourceTree = "<group>"; };
+		14D118F31B62EA460019D422 /* flamersound4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = flamersound4.wav; sourceTree = "<group>"; };
 		745B96231A8BDC36006D014D /* MobileTutsInvaderz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileTutsInvaderz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		745B96271A8BDC36006D014D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		745B96281A8BDC36006D014D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -465,16 +475,21 @@
 				14BE41181B4497F400528C70 /* autolaser.mp3 */,
 				14BE41191B4497F400528C70 /* beep.mp3 */,
 				14BE411B1B4497F400528C70 /* flamergoing.wav */,
+				14D118EB1B62E7810019D422 /* flamersound.wav */,
 				14BE411C1B4497F400528C70 /* flamersound.mp3 */,
 				14BE411D1B4497F400528C70 /* gunshot.mp3 */,
 				14BE411E1B4497F400528C70 /* hit.mp3 */,
 				1456231D1B4AD78E00F51B6C /* spikesound.mp3 */,
 				14BE411F1B4497F400528C70 /* machinegun.wav */,
+				14D118F31B62EA460019D422 /* flamersound4.wav */,
+				14D118ED1B62E8390019D422 /* flamersound1.wav */,
+				14D118EF1B62E8860019D422 /* flamersound2.wav */,
 				1499E1741B4EB9F1003CF1B2 /* gunshot2.wav */,
 				1499E1781B4F3072003CF1B2 /* shotgun2.mp3 */,
 				1499E17A1B4F31C3003CF1B2 /* nadelaunch.wav */,
 				14BE41201B4497F400528C70 /* mm.wav */,
 				145623211B4C6BB400F51B6C /* reload1.mp3 */,
+				14D118F11B62E9CA0019D422 /* flamersound3.wav */,
 				1456231F1B4C6B1000F51B6C /* reload.mp3 */,
 				14BE41211B4497F400528C70 /* nade.mp3 */,
 				14BE41221B4497F400528C70 /* punch.wav */,
@@ -690,6 +705,7 @@
 				1456231E1B4AD78F00F51B6C /* spikesound.mp3 in Resources */,
 				141997E51B2F98E30087792A /* deadsoldier4.png in Resources */,
 				1499E17B1B4F31C3003CF1B2 /* nadelaunch.wav in Resources */,
+				14D118F01B62E8860019D422 /* flamersound2.wav in Resources */,
 				140476361B43212100447255 /* field7.png in Resources */,
 				14BE412A1B4497F400528C70 /* beep.mp3 in Resources */,
 				14BE41361B4497F400528C70 /* shotgunsound.mp3 in Resources */,
@@ -759,9 +775,11 @@
 				14BE413B1B44990F00528C70 /* heavy.atlas in Resources */,
 				144731851B36F9EF00A34790 /* flamedeath13.png in Resources */,
 				14BE41301B4497F400528C70 /* machinegun.wav in Resources */,
+				14D118EC1B62E7810019D422 /* flamersound.wav in Resources */,
 				1485583D1B2F12A200EBD93A /* blood.sks in Resources */,
 				147E29FD1B41FCBF0043C662 /* dirt.sks in Resources */,
 				14BE40F61B448E0A00528C70 /* images.atlas in Resources */,
+				14D118F41B62EA460019D422 /* flamersound4.wav in Resources */,
 				14BE41151B4497A300528C70 /* GO.mp3 in Resources */,
 				140476341B43212100447255 /* field5.png in Resources */,
 				148123AD1B30B7700056992C /* mummy8.png in Resources */,
@@ -779,6 +797,7 @@
 				145431411B459741004E7336 /* ocean.mp3 in Resources */,
 				141997EE1B2F98E30087792A /* deadsoldier13.png in Resources */,
 				14BE41291B4497F400528C70 /* autolaser.mp3 in Resources */,
+				14D118F21B62E9CA0019D422 /* flamersound3.wav in Resources */,
 				1447315F1B36E4B500A34790 /* expdeath3.png in Resources */,
 				1447317D1B36F9EF00A34790 /* flamedeath5.png in Resources */,
 				14BE412C1B4497F400528C70 /* flamergoing.wav in Resources */,
@@ -786,6 +805,7 @@
 				14BE41311B4497F400528C70 /* mm.wav in Resources */,
 				14BE41141B4497A300528C70 /* Revelations.mp3 in Resources */,
 				14BE412D1B4497F400528C70 /* flamersound.mp3 in Resources */,
+				14D118EE1B62E8390019D422 /* flamersound1.wav in Resources */,
 				148123A51B30B7700056992C /* mummy0.png in Resources */,
 				148123AF1B30B7700056992C /* mummy10.png in Resources */,
 				144731821B36F9EF00A34790 /* flamedeath10.png in Resources */,

@@ -116,7 +116,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
             self.slicedTex.append(SKTexture(imageNamed: "deadsoldier\(i)"))
         }
         
-       // self.flamerSound = SKAction.playSoundFileNamed("flamersound.mp3", waitForCompletion: false)
+       self.flamerSound = SKAction.playSoundFileNamed("flamersound4.wav", waitForCompletion: false)
         self.beepSound = SKAction.playSoundFileNamed("beep.mp3", waitForCompletion: false)
        // self.flamerGoing = SKAction.playSoundFileNamed("flamergoing.wav", waitForCompletion: false)
         self.nadeSound = SKAction.playSoundFileNamed("nade.mp3", waitForCompletion: false)
@@ -188,7 +188,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func loadBG(){
         
-        let background = SKSpriteNode(imageNamed: "BG5")
+        let background = SKSpriteNode(imageNamed: "BGwall")
         background.name = "BG"
         background.anchorPoint = CGPointMake(0, 1)
         background.position = CGPointMake(0, size.height)
@@ -211,10 +211,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         levelLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
         
         ammoLabel.text = "ammo: " + String(ammo)
-        ammoLabel.position.x = 3
-        ammoLabel.position.y = player.position.y + player.size.height/2 + 5
+        ammoLabel.position.x = 50
+        ammoLabel.position.y = player.position.y + player.size.height/2
         ammoLabel.zPosition = 24
-        ammoLabel.fontSize = 11
+        ammoLabel.fontSize = 8
         ammoLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
         
         weaponLabel.text = "pistol";
@@ -298,6 +298,19 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         player.zPosition = 7
         player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width*0.4)
         player.physicsBody?.dynamic = false
+        let pod = SKSpriteNode(imageNamed: "myman")
+        pod.setScale(0.7)
+        pod.zPosition = 19
+        pod.position.x = player.position.x
+        pod.position.y = player.position.y + 30
+        var playerTextures:[SKTexture] = []
+        for i in 0...1 {
+            playerTextures.append(SKTexture(imageNamed: "myman\(i)"))
+        }
+        let playerAnimation = SKAction.repeatActionForever( SKAction.animateWithTextures(playerTextures, timePerFrame: 0.3))
+        pod.runAction(playerAnimation)
+        
+        self.addChild(pod)
         player.physicsBody?.categoryBitMask = CollisionCategories.Player
         player.physicsBody?.contactTestBitMask = CollisionCategories.EnemyBullet
         player.physicsBody?.collisionBitMask =  CollisionCategories.EnemyBullet
@@ -327,7 +340,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         let tempInvader:Invader = Invader(scene: self,scale: CGFloat(1.3), invaderhit: 0, animprefix:"soldierrun", name:"invader", gunner: gunner, atlas: soldieratlas)
         tempInvader.zPosition = 6
         tempInvader.position.x = self.size.width
-        tempInvader.position.y = self.size.height/2-74
+        tempInvader.position.y = self.size.height/2-84
         tempInvader.physicsBody?.velocity = CGVectorMake(-40,0)
         tempInvader.physicsBody?.mass = 10000
         tempInvader.physicsBody?.affectedByGravity = false
@@ -512,6 +525,8 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         if(placeSpikeMode && touchedNode.name == "grass"){
             self.removeFlashText()
             trapLabel.text = "spikes placed!";
+            self.points = self.points - costSpikeTrap
+            self.flashText("-"+String(costSpikeTrap)+" points", x: trapIcon.position.x, y: trapIcon.position.y - 50, z: 10, waitDur: 2, color: SKColor.yellowColor())
             placeSpikeTrap(touchx, y: touchedNode.position.y+10)
             placeSpikeMode  =  false
         }
@@ -533,6 +548,9 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                 flashText("press T to place", x: trapLabel.position.x, y: trapLabel.position.y - 10, z: 22, waitDur: 5, color: SKColor.whiteColor())
                
                 setupTurret(touchx, y: touchy)
+                self.points = self.points - costTurret
+                
+                self.flashText("-"+String(costTurret)+" points", x: trapIcon.position.x, y: trapIcon.position.y - 50, z: 10, waitDur: 2, color: SKColor.yellowColor())
                 placeTurretMode = false
                 numTurrets++
             }else if(touchedNode.name == "turret"){
@@ -676,13 +694,14 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             self.flameNode.removeFromParent()
                             self.flameEmmiter.removeFromParent()
                         }
+                        self.removeActionForKey("flamersound")
                         self.removeActionForKey("flamer")
                         
                         weaponIcon.setScale(0.14)
                       
                         weaponIcon.texture = SKTexture(imageNamed: "shotg")
                         weaponLabel.text = "shotgun"
-                        removeActionForKey("flamer")
+                        
                        
                         flamerOn = false
                         
@@ -754,10 +773,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         if(numTurrets < turretLimit){
                             if(self.points >= costTurret){
                                 
-                                self.points = self.points - costTurret
-                                trapLabel.text = "touch to place";
-                                self.flashText("-"+String(costTurret)+" points", x: touchedNode.position.x, y: touchedNode.position.y - 50, z: 10, waitDur: 2, color: SKColor.yellowColor())
+                                
                                 placeTurretMode = true
+                                trapLabel.text = "touch to place";
+                                flashTextLeftAlignSc("info: place turret on dock upper left corner", x: self.size.width*0.3, y: 10, z: 22, waitDur: 5, color: SKColor.whiteColor(), fontsize: 13)
                             }else{
                                 
                                 self.flashText("no funds!", x: touchedNode.position.x, y: touchedNode.position.y - 50, z: 10, waitDur: 2, color: SKColor.redColor())
@@ -783,9 +802,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                         //spike trap
                         if(self.points >= costSpikeTrap){
                             
-                            self.points = self.points - costSpikeTrap
+                            
                             trapLabel.text = "touch to place";
-                            self.flashText("-"+String(costSpikeTrap)+" points", x: touchedNode.position.x, y: touchedNode.position.y - 50, z: 10, waitDur: 2, color: SKColor.yellowColor())
+                              flashTextLeftAlignSc("info: place spike trap on the ground", x: self.size.width*0.3, y: 10, z: 22, waitDur: 5, color: SKColor.whiteColor(), fontsize: 15)
+                            
                             placeSpikeMode = true
                         }else{
                             
@@ -894,7 +914,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func runFlamer(){
         let switchOn = SKAction.runBlock(){
-            self.runAction(SKAction.playSoundFileNamed("flamersound.mp3", waitForCompletion: false))
+            self.runAction(self.flamerSound, withKey:"flamersound")
             //runAction(SKAction.repeatActionForever(SKAction.playSoundFileNamed("flamergoing.wav", waitForCompletion: false)), withKey: "flamer")
             self.flameNode.hidden = true
             self.flameNode.position.x = self.player.position.x
@@ -1073,10 +1093,10 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
         node.physicsBody?.affectedByGravity = false
         node.position.x = x
         node.position.y = y
-        node.zPosition = 22
+        node.zPosition = 19
      
         let sound = SKAction.playSoundFileNamed("spikesound.mp3", waitForCompletion: false)
-        let erect = SKAction.moveTo(CGPoint(x:x, y: y + 20), duration: 0.1)
+        let erect = SKAction.moveTo(CGPoint(x:x, y: y + 10), duration: 0.1)
         let retract = SKAction.moveTo(CGPoint(x:x, y: y), duration: 0.1)
         let wait = SKAction.waitForDuration(0.7)
         let pullSpike = SKAction.sequence([sound,erect,wait,retract, wait])
@@ -1501,7 +1521,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                             let bullet = secondBody.node as! PlayerBullet
                             let myJoint = SKPhysicsJointFixed.jointWithBodyA(contact.bodyA, bodyB: contact.bodyB, anchor:CGPointMake(contactPoint.x, contactPoint.y))
                             self.physicsWorld.addJoint(myJoint)
-                            bullet.texture = SKTexture(imageNamed: "ArrowHitTexture")
+                            bullet.texture = SKTexture(imageNamed: "AHT.png")
                         }
                         
                         if(contactPoint.y > invaderObj.position.y){
@@ -1519,13 +1539,31 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
                                 self.runAction(self.nadeSound)
                                 let sparkEmmiter = SKEmitterNode(fileNamed: "exp.sks")
                                 let blood = SKEmitterNode(fileNamed: "heavyblood.sks")
-                                sparkEmmiter.zPosition = 3
-                                blood.zPosition = 3
+                                sparkEmmiter.zPosition = 20
+                                blood.zPosition = 20
                                 firstBody.node?.addChild(sparkEmmiter)
                                 firstBody.node?.addChild(blood)
                                 secondBody.node?.removeFromParent()
                                 
+                                var splat = SKSpriteNode(texture: SKTexture(imageNamed: "BS"))
+                                var ran = self.randRange(0, upper: 1)
+                                splat.setScale(self.randRangeFrac(3, upper: 4))
+                                if(ran == 1){
+                                    splat = SKSpriteNode(texture: SKTexture(imageNamed: "BS2"))
+                                     splat.setScale(self.randRangeFrac(4, upper: 6))
+                                }
                                 
+                                splat.zPosition = 19
+                                
+                                splat.position.x = invaderObj.position.x
+                                splat.position.y = invaderObj.position.y - 20 + CGFloat(self.randRange(0, upper: 10))
+                                self.addChild(splat)
+                                let waitforsplat = SKAction.waitForDuration(1)
+                                self.runAction(waitforsplat,completion:{
+                                    
+                                   splat.removeFromParent()
+                                    // secondBody.node?.removeFromParent()
+                                })
                                 let bomb = SKNode()
                                 firstBody.node?.addChild(bomb)
                                 bomb.physicsBody = SKPhysicsBody(circleOfRadius: 60)
