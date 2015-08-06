@@ -188,7 +188,7 @@ class GameScene: SKScene ,SKPhysicsContactDelegate{
     
     func loadBG(){
         
-        let background = SKSpriteNode(imageNamed: "BGwall")
+        let background = SKSpriteNode(imageNamed: "BG6")
         background.name = "BG"
         background.anchorPoint = CGPointMake(0, 1)
         background.position = CGPointMake(0, size.height)
